@@ -1,0 +1,85 @@
+#summary
+{
+    min-height: 150px;
+}
+
+#summary .collapse:not(.show) {
+    height: 150px !important;
+    overflow: hidden;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+#summary .collapsing {
+    min-height: 42px !important;
+}
+
+#summary a.collapsed:after  {
+    content: '+ Развернуть...';
+}
+
+#summary a:not(.collapsed):after {
+    content: '- Свернуть...';
+}
+
+.example {
+    -webkit-transition: color .85s;
+    -o-transition: color .85s;
+    transition: color .85s;
+}
+
+.mrc-btn-wrap {
+    display: inline-block;
+    margin: 15px 0;
+}
+
+.mrc-shadow {
+    pointer-events: none;
+    position: absolute;
+    height: 100px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+    background: -webkit-gradient(linear, left bottom, left top, color-stop(14%, #fff), to(rgba(0, 0, 0, 0)));
+    background: -webkit-linear-gradient(bottom, #fff 14%, rgba(0, 0, 0, 0) 100%);
+    background: -o-linear-gradient(bottom, #fff 14%, rgba(0, 0, 0, 0) 100%);
+    background: linear-gradient(to top, #fff 14%, rgba(0, 0, 0, 0) 100%);
+}
+
+
+.video {
+    height: 0;
+    position: relative;
+    padding-bottom: 56.25%;
+}
+.video iframe {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.cardimage
+ {
+     width:100%;
+     height:200px;
+     background-position: 50% center;
+     background-repeat: no-repeat;
+     background-size: cover;
+     margin: 0px auto;
+ }
+
+.postimage
+{
+    max-height:750px;
+    background-position: 50% center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+    -o-object-fit: cover;
+    object-fit: cover;
+}

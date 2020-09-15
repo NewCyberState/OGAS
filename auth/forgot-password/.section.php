@@ -1,0 +1,3 @@
+<?
+$sSectionName="forgot-password";
+?>

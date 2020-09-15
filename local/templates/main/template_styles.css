@@ -1,0 +1,70 @@
+@font-face {
+    font-family: Venus;
+    src: url(/local/fonts/venus.ttf);
+}
+
+.view
+{
+    position: relative;
+}
+
+.video-intro {
+    position: absolute;
+    z-index:-100;
+    top:50%;
+    left:50%;
+    -webkit-transform:translateX(-50%) translateY(-50%);
+    -ms-transform:translateX(-50%) translateY(-50%);
+    transform:translateX(-50%) translateY(-50%);
+    -webkit-transition:1s opacity;
+    -o-transition:1s opacity;
+    transition:1s opacity;
+    width:100%;
+    height: 100%;
+    overflow: hidden;
+    -o-object-fit: cover;
+    object-fit: cover;
+    opacity: 100%;
+}
+
+.ogas
+{
+    text-align: center;
+    color: white;
+
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+.ogas span
+{
+    font-size: 41px;
+    font-family: Venus;
+}
+
+.ogas i {
+    font-size:80px;
+    font-style: normal;
+}
+
+.ogas #showauth
+{
+    line-height: 2;
+    margin:15px 0 15px;
+    width: 302px;
+}
+
+.auth
+{
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .ogas span{
+        font-size: 16px;
+    }
+    .ogas i {
+        font-size:60px;
+        font-style: normal;
+    }
+}
+

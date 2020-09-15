@@ -1,0 +1,101 @@
+.alx_reviews_elem_vote
+{
+	padding: 0px;
+	margin: 0px 0px 0px 0px;
+}
+.alx_reviews_elem_vote .alx_vote_value
+{
+	float:left;
+	margin-right:10px;
+}
+.alx_reviews_elem_vote .alx_vote_items
+{
+	display: inline-block;
+	/*float:left;*/
+}
+
+*html .alx_reviews_elem_vote .alx_vote_item
+{
+	background:transparent;
+}
+.alx_reviews_elem_vote .alx_vote_item_na
+{
+	width:18px;
+	height:17px;
+	float:left;
+	overflow:hidden;
+	background:url(images/alx_vote_star_reviews.gif) 0px 0px no-repeat;
+}
+.alx_reviews_elem_vote .alx_vote_items img
+{
+	margin: 0px !important;
+	padding: 0px !important
+}
+.alx_reviews_elem_vote .alx_vote_item_a
+{
+	width:18px;
+	height:17px;
+	float:left;
+	overflow:hidden;
+	background:url(images/alx_vote_star_reviews.gif) -18px 0px no-repeat;
+}
+/*стили для не целых звезд*/
+.alx_reviews_elem_vote .alx_vote_item_a1 img
+{
+	background:url(images/alx_vote_star_reviews.gif) -18px -3px no-repeat;
+	width:10%;
+	height:17px;
+}
+.alx_reviews_elem_vote .alx_vote_item_a2 img
+{
+	background:url(images/alx_vote_star_reviews.gif) -18px -3px no-repeat;
+	width:20%;
+	height:17px;
+}
+.alx_reviews_elem_vote .alx_vote_item_a3 img
+{
+	background:url(images/alx_vote_star_reviews.gif) -18px -3px no-repeat;
+	width:30%;
+	height:17px;
+}
+.alx_reviews_elem_vote .alx_vote_item_a4 img
+{
+        background:url(images/alx_vote_star_reviews.gif) -18px -3px no-repeat;
+	width:40%;
+	height:17px;
+}
+.alx_reviews_elem_vote .alx_vote_item_a5 img
+{
+        background:url(images/alx_vote_star_reviews.gif) -18px -3px no-repeat;
+	width:50%;
+	height:17px;
+}
+.alx_reviews_elem_vote .alx_vote_item_a6 img
+{
+        background:url(images/alx_vote_star_reviews.gif) -18px -3px no-repeat;
+	width:60%;
+	height:17px;
+}
+.alx_reviews_elem_vote .alx_vote_item_a7 img
+{
+        background:url(images/alx_vote_star_reviews.gif) -18px -3px no-repeat;
+	width:70%;
+	height:17px;
+}
+.alx_reviews_elem_vote .alx_vote_item_a8 img
+{
+        background:url(images/alx_vote_star_reviews.gif) -18px -3px no-repeat;
+	width:80%;
+	height:17px;
+}
+.alx_reviews_elem_vote .alx_vote_item_a9 img
+{
+        background:url(images/alx_vote_star_reviews.gif) -18px -3px no-repeat;
+	width:90%;
+	height:17px;
+}
+
+.review_rating_txt
+{
+	display: block;
+}

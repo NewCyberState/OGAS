@@ -1,0 +1,39 @@
+#summary
+{
+    min-height: 62px;
+}
+
+#summary .collapse:not(.show) {
+    height: 42px !important;
+    overflow: hidden;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+#summary .collapsing {
+    min-height: 42px !important;
+}
+
+#summary a.collapsed:after  {
+    content: '+ Развернуть...';
+}
+
+#summary a:not(.collapsed):after {
+    content: '- Свернуть...';
+}
+
+
+.video {
+    height: 0;
+    position: relative;
+    padding-bottom: 56.25%;
+}
+.video iframe {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}

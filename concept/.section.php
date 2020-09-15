@@ -1,0 +1,6 @@
+<?
+$sSectionName = "Концепция";
+$arDirProperties = Array(
+
+);
+?>
