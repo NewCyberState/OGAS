@@ -2,7 +2,36 @@
 $post=CBlogPost::GetByID($arResult[VARIABLES][post_id]);
 $blog=CBlog::GetByID($post[BLOG_ID]);
 $arResult[VARIABLES][blog]=$blog[URL];
+
+$arFilter = Array(
+    "ID" => $arResult[VARIABLES][post_id],
+);
+
+$dbPosts = CBlogPost::GetList(
+    array(),
+    $arFilter,
+    false,
+    false,
+    array("*","UF_*")
+);
+
+$arPost = $dbPosts->Fetch();
+
+$dirs[9]="/lkg/gos/petition/";
+$dirs[10]="/lkg/gos/discussion/";
+$dirs[11]="/lkg/gos/referendum/";
+$dirs[12]="/lkg/gos/referendum/add/";
+$dirs[13]="/lkg/gos/law/rejected/";
+$dirs[14]="/lkg/gos/law/approved/";
+$dirs[15]="/lkg/gos/law/execution/";
+$dirs[16]="/lkg/gos/law/executed/";
+
+//Если переход по старой ссылке и статус петиции изменился - редирект по новой ссылке
+if(strstr($APPLICATION->GetCurUri(),$dirs[$arPost[UF_STATUS]])===false)
+   LocalRedirect($dirs[$arPost[UF_STATUS]].$arResult[VARIABLES][post_id]."/");
+
 ?>
+
 <div class="d-flex align-items-start flex-column flex-xl-row">
 
 	<div class="w-100 order-2 order-md-1">
@@ -133,21 +162,6 @@ $APPLICATION->IncludeComponent(
 		$cats[]=$cat["NAME"];
 
 
-	$arFilter = Array(
-		"ID" => $arResult[VARIABLES][post_id],
-	);
-
-	$dbPosts = CBlogPost::GetList(
-		array(),
-		$arFilter,
-		false,
-		false,
-		array("*","UF_*")
-	);
-
-	$arPost = $dbPosts->Fetch();
-
-
 
 	if($arPost[UF_STATUS]==12) {
 		$now = strtotime("now");
@@ -225,7 +239,7 @@ $APPLICATION->IncludeComponent(
 
         <?
 
-
+        $delegatetable=\Ogas\Democracy\LiquidVoting::GetVotingData($arResult[VARIABLES][post_id]);
 
         $myvote="";
         $touser=array();
@@ -239,12 +253,16 @@ $APPLICATION->IncludeComponent(
             {
                 $res=CUSER::GetByID($item[1]);
                 $ar=$res->Fetch();
-                $touser[]=$ar["NAME"]."&nbsp;".$ar["LAST_NAME"];
+                $touser[]="<a href='/user/$ar[ID]/'>".$ar["NAME"]."&nbsp;".$ar["LAST_NAME"]."</a>";
             }
 
         }
         if($touser)
             $touser=implode ("<br>",$touser);
+
+
+        if($arPost[UF_LAW])
+            $law=GetElement($arPost[UF_LAW]);
         ?>
 
 
@@ -271,17 +289,34 @@ $APPLICATION->IncludeComponent(
                     <td class="text-right"><?=$myvote?></td>
                 </tr>
                 <?endif;?>
-                <?if($touser):?>
-                <tr>
-                    <td>Ваши делегаты:</td>
-                    <td class="text-right"><?=$touser?></td>
-                </tr>
-                <?endif;?>
                 </tbody>
             </table>
 
 
         </div>
+
+        <?if($touser):?>
+        <div class="card">
+            <div class="card-header bg-transparent header-elements-inline ">
+                <span class="text-uppercase font-size-sm font-weight-semibold">Ваши делегаты</span>
+                <div class="header-elements">
+                    <div class="list-icons">
+                        <a class="list-icons-item" data-action="collapse"></a>
+                    </div>
+                </div>
+            </div>
+
+            <table class="table table-borderless table-xs my-2">
+                <tbody>
+                    <tr>
+                        <td class="text-center"><?=$touser?></td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+        <?endif;?>
 
 
 		<div class="card">
@@ -294,50 +329,98 @@ $APPLICATION->IncludeComponent(
 				</div>
 			</div>
 
+
+            <?if($law):?>
 			<table class="table table-borderless table-xs my-2">
 				<tbody>
 				<tr>
 					<td>Группа:</td>
-					<td class="text-right"><?=$globalpost[SOCNET_GROUP_NAME]?></td>
+					<td class="text-right"><?=$law["GROUP"]["VALUE"]?></td>
 				</tr>
 				<tr>
 					<td>Участников группы:</td>
-					<td class="text-right"><?=$globalgroup[NUMBER_OF_MEMBERS]?></td>
+					<td class="text-right"><?=$law["MEMBERS"]["VALUE"]?></td>
 				</tr>
 
-                <?if(!empty($delegatetable)):?>
 				<tr>
 					<td>Проголосовали:</td>
-					<td class="text-right"><?=count($endvotes)?></td>
+					<td class="text-right"><?=$law["VOTES"]["VALUE"]?></td>
 				</tr>
 				<tr>
 					<td>Проголосовали с учетом делегирования:</td>
-					<td class="text-right"><?=$za+$protiv?></td>
+					<td class="text-right"><?=$law["DELEGATED_VOTES"]["VALUE"]?></td>
 				</tr>
 				<tr>
 					<td>"За" с учетом делегирования:</td>
-					<td class="text-right"><?=intval($za)?></td>
+					<td class="text-right"><?=$law["ZA"]["VALUE"]?></td>
 				</tr>
 				<tr>
 					<td>"Против" с учетом делегирования:</td>
-					<td class="text-right"><?=intval($protiv)?></td>
+					<td class="text-right"><?=$law["PROTIV"]["VALUE"]?></td>
 				</tr>
-				<tr>
+                <tr>
 					<td>Для принятия закона требуется всего голосов "За":</td>
-					<td class="text-right"><?=ceil($globalgroup[NUMBER_OF_MEMBERS]/2)?></td>
+					<td class="text-right"><?=$law["ZA_NEEDED"]["VALUE"]?></td>
 				</tr>
-				<?if($arPost[UF_STATUS]==12) {?>
-
-				<tr>
-					<td>Для принятия закона требуется еще голосов "За":</td>
-					<td class="text-right"><?=ceil($globalgroup[NUMBER_OF_MEMBERS]/2)-$za?></td>
-				</tr>
-				<?}?>
-                <?endif;?>
 
 
 				</tbody>
 			</table>
+            <?else:?>
+                <table class="table table-borderless table-xs my-2">
+                    <tbody>
+                    <tr>
+                        <td>Группа:</td>
+                        <td class="text-right"><?=$globalpost[SOCNET_GROUP_NAME]?></td>
+                    </tr>
+                    <tr>
+                        <td>Участников группы:</td>
+                        <td class="text-right"><?=$globalgroup[NUMBER_OF_MEMBERS]?></td>
+                    </tr>
+
+                    <?if(!empty($delegatetable)):?>
+                        <tr>
+                            <td>Проголосовали:</td>
+                            <td class="text-right"><?=count($endvotes)?></td>
+                        </tr>
+                        <tr>
+                            <td>Проголосовали с учетом делегирования:</td>
+                            <td class="text-right"><?=$za+$protiv?></td>
+                        </tr>
+                        <tr>
+                            <td>"За" с учетом делегирования:</td>
+                            <td class="text-right"><?=intval($za)?></td>
+                        </tr>
+                        <tr>
+                            <td>"Против" с учетом делегирования:</td>
+                            <td class="text-right"><?=intval($protiv)?></td>
+                        </tr>
+                    <?endif;?>
+                    <?
+                    if(ceil($globalgroup[NUMBER_OF_MEMBERS]/2)==floor($globalgroup[NUMBER_OF_MEMBERS]/2))
+                        $needza=$globalgroup[NUMBER_OF_MEMBERS]/2+1;
+                    else
+                        $needza=ceil($globalgroup[NUMBER_OF_MEMBERS]/2);
+
+                    ?>
+                    <tr>
+                        <td>Для принятия закона требуется всего голосов "За":</td>
+                        <td class="text-right"><?=$needza?></td>
+                    </tr>
+                    <?if(!empty($delegatetable)):?>
+                        <?if($arPost[UF_STATUS]==12) {?>
+
+                            <tr>
+                                <td>Для принятия закона требуется еще голосов "За":</td>
+                                <td class="text-right"><?=$needza-$za?></td>
+                            </tr>
+                        <?}?>
+                    <?endif;?>
+
+
+                    </tbody>
+                </table>
+            <?endif;?>
 
 		</div>
 

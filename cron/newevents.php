@@ -41,7 +41,9 @@ while ($arUser = $rsUsers->GetNext()) {
         array("USER_LAST_NAME" => "ASC", "USER_NAME" => "ASC"),
         array(
             "USER_ID" => $arUser[ID],
-            "USER_ACTIVE" => "Y"
+            "USER_ACTIVE" => "Y",
+            "GROUP_ACTIVE" => "Y"
+
         ),
         false,
         false,
@@ -132,7 +134,7 @@ while ($arUser = $rsUsers->GetNext()) {
     );
 
     if ($dbPosts->SelectedRowsCount() > 0) {
-        $message_text .= "Создайте референдумы<br><br>";
+        $message_text .= "Создайте новые референдумы<br><br>";
 
         while ($arPost = $dbPosts->Fetch()) {
             //pr($arPost);
@@ -177,6 +179,7 @@ while ($arUser = $rsUsers->GetNext()) {
     $arFilter = Array(
         "PUBLISH_STATUS" => BLOG_PUBLISH_STATUS_PUBLISH,
         ">=UF_STATUS_DATE" => date("d.m.Y", strtotime("-1 day")),
+        "SOCNET_GROUP_ID" => $groups,
         "UF_STATUS" => 13
     );
 
@@ -206,6 +209,7 @@ while ($arUser = $rsUsers->GetNext()) {
     $arFilter = Array(
         "PUBLISH_STATUS" => BLOG_PUBLISH_STATUS_PUBLISH,
         ">=UF_STATUS_DATE" => date("d.m.Y", strtotime("-1 day")),
+        "SOCNET_GROUP_ID" => $groups,
         "UF_STATUS" => 14
     );
 
@@ -245,7 +249,7 @@ while ($arUser = $rsUsers->GetNext()) {
 if(trim($message_text)) {
 
 
-    $message_text .= "Рекомендуем вам назначить делегатов, которые смогут принимать участие в голосовании на референдумах вместо вас. Выбрать и назначить делегатов можно в разделе <a  target=_blank href='https://ogasdemo.ru/personal/delegates/adddelegates/'>Назначить делегатов</a>, либо в разделе <a  target=_blank href='https://ogasdemo.ru/user/'>Граждане</a>.<br><br>";
+   /* $message_text .= "Рекомендуем вам назначить делегатов, которые смогут принимать участие в голосовании на референдумах вместо вас. Выбрать и назначить делегатов можно в разделе <a  target=_blank href='https://ogasdemo.ru/personal/delegates/adddelegates/'>Назначить делегатов</a>, либо в разделе <a  target=_blank href='https://ogasdemo.ru/user/'>Граждане</a>.<br><br>";
 
     if(!$arUser["UF_THEMATICS"] || !$arUser["PERSONAL_NOTES"]) {
 
@@ -255,8 +259,8 @@ if(trim($message_text)) {
     }
 
 echo $message_text;
-exit;
-    //CEvent::Send("OGAS_EVENTS", SITE_ID, $arFields_notify);
+exit;*/
+    CEvent::Send("OGAS_EVENTS", SITE_ID, $arFields_notify);
 }
 }
 

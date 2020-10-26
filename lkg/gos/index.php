@@ -430,11 +430,11 @@ if(!in_array(8, $USER->GetUserGroupArray()))
     "bitrix:blog",
     ".default",
     array(
-        "AJAX_PAGINATION" => "N",
+        "AJAX_PAGINATION" => "Y",
         "ALLOW_POST_CODE" => "Y",
         "ALLOW_POST_MOVE" => "N",
         "BLOG_COUNT" => "4",
-        "BLOG_COUNT_MAIN" => "4",
+        "BLOG_COUNT_MAIN" => "12",
         "BLOG_PROPERTY" => array(
         ),
         "BLOG_PROPERTY_LIST" => array(

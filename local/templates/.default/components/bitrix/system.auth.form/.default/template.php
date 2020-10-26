@@ -21,10 +21,11 @@ CJSCore::Init(array("fx"));
                     <div class="card-body">
                         <div class="text-center mb-3">
 
-                            <div class="text-center mb-4 mt-3">
+                            <div class="text-center mb-3 mt-3">
 
                             <img src="/local/img/logosite5.png" width="230px">
                             </div>
+                            <span class="form-text text-center text-muted mb-0"><a href="/about/">Подробнее о проекте</a></span>
                         </div>
                         <div class="form-group text-center text-muted content-divider ">
                             <span class="px-2">Войти в систему</span>

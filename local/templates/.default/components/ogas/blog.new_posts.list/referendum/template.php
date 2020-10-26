@@ -51,10 +51,12 @@ endif;
 
 
 
+<div class="row">
 
 <?
 if(count($arResult["POSTS"])>0)
 {
+
 	foreach($arResult["POSTS"] as $ind => $CurPost)
 	{
 		$className = "blog-post";
@@ -75,6 +77,7 @@ if(count($arResult["POSTS"])>0)
 				{tag:'IMG', attr: 'data-bx-image'}
 			);
 			</script>
+
 
 
         <div class="<?if($APPLICATION->GetCurDir()=="/lkg/gos/"):?>col-lg-6 col-xl-4<?else:?>col-lg-6 col-xl-4<?endif;?>">
@@ -135,7 +138,18 @@ if(count($arResult["POSTS"])>0)
                 <?if(!empty($arPostField["VALUE"]) && $FIELD_NAME=="UF_BLOG_POST_FILE"):?>
                     <a href="<?= $CurPost["urlToPost"] ?>" class="<?if($arParams["STATUS_ID"]==9){echo "";}else{echo "text-white";};?>"
                        title="<?= $CurPost["TITLE"] ?>">
-                        <div class="cardimage" style="background-image: url(<?=CFile::GetPath($arPostField["VALUE"]);?>);"></div>
+                        <?
+                        $arFileTmp = CFile::ResizeImageGet(
+                            $arPostField["VALUE"],
+                            array("width" => 750, "height" => 500),
+                            BX_RESIZE_IMAGE_PROPORTIONAL_ALT,
+                            true,
+                            false,
+                            false,
+                            false
+                        );
+                        ?>
+                        <div class="cardimage" style="background-image: url(<?=$arFileTmp["src"];?>);"></div>
                     </a>
                 <?endif;?>
             <?endforeach;?>
@@ -212,6 +226,8 @@ if(count($arResult["POSTS"])>0)
         </div>
 
         </div>
+
+
 
 
 
@@ -480,14 +496,24 @@ if(count($arResult["POSTS"])>0)
 					</div>
 		<?*/
 	}
-	if(strlen($arResult["NAV_STRING"])>0)
-		echo $arResult["NAV_STRING"];
+
+	?></div><?
+
+    if($APPLICATION->GetCurDir()!="/lkg/gos/"):
+        if (strlen($arResult["NAV_STRING"]) > 0)
+            echo "<div class='row'>".$arResult["NAV_STRING"]."</div>";
+    endif;
+
+
 }
-else
-    if($arParams["STATUS_ID"]==11 || $arParams["STATUS_ID"]==12)
+else {
+    if ($arParams["STATUS_ID"] == 11 || $arParams["STATUS_ID"] == 12)
         echo "<div class=\"col-lg-12\"><div class='card'><div class='card-body'>Не найдено ни одного референдума</div></div></div>";
     else
         echo "<div class=\"col-lg-12\"><div class='card'><div class='card-body'>Не найдено ни одного закона</div></div></div>";
+
+            echo "</div>";
+}
 ?>
 
 <script>

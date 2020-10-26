@@ -36,7 +36,7 @@ while ($arPost = $dbPosts->Fetch())
     foreach ($arPost[UF_THEMATICS] as $item)
         $arResult[UF_THEMATICS][]=GetSection($item);
 
-    if(!$arPost[UF_LAW])
+    /*if(!$arPost[UF_LAW])
     {
         $el = new CIBlockElement;
 
@@ -57,7 +57,11 @@ while ($arPost = $dbPosts->Fetch())
         $arResult[UF_LAW]=$arPost[UF_LAW];
 
     $arResult[LAW]=GetElement($arResult[UF_LAW]);
-    break;
+    break;*/
+
+    $arResult[UF_LAW]=$arPost[UF_LAW];
+
+    $arResult[LAW]=GetElement($arResult[UF_LAW]);
 }
 
 $globalthematics=$arResult[UF_THEMATICS];

@@ -44,10 +44,69 @@ var JqueryUiSliders = function() {
         // Snap to increments
         $('.jui-slider-increments').slider({
             isRTL: $('html').attr('dir') == 'rtl' ? true : false,
-            value: 100,
             min: 0,
-            max: 500,
-            step: 50
+            max: 100,
+            step: 0.01,
+            stop : function(event, ui) {
+
+                var sliders = $(".jui-slider-increments");
+                var length = $(".jui-slider-increments").length;
+
+                var current = $(this);
+
+                var total = 0;
+
+                sliders.each(function() {
+                    total += $(this).slider("option", "value");
+                });
+
+                var extra=total-100;
+
+                sliders.not(this).each(function() {
+                    var t = $(this),
+                        value = t.slider("option", "value");
+
+                    var newval=value-extra/(length-1);
+                    if(newval<=0) {
+                        extra=extra-newval;
+                        newval=0.01;
+                    }
+                    t.slider('value', newval);
+                });
+
+                total = 0;
+
+                sliders.each(function() {
+                    total += $(this).slider("option", "value");
+                });
+
+               var extra=total-100;
+
+
+                current.slider('value', current.slider("option", "value")-total+100);
+
+                total = 0;
+                sliders.each(function() {
+                    total += $(this).slider("option", "value");
+                });
+
+                console.log(total);
+
+                var arr=new Array();
+
+                arr.push(["Статья","Процент"]);
+
+                sliders.each(function() {
+                    var t = $(this);
+                    value = t.slider("option", "value");
+                    arr.push([t.attr('data-text')+" ("+value+"%)",value]);
+                    var id=t.attr('data-id');
+                    $("#input"+id).val(value);
+                });
+
+                drawChart(arr);
+
+            }
         });
 
         // Range slider
@@ -64,8 +123,8 @@ var JqueryUiSliders = function() {
             isRTL: $('html').attr('dir') == 'rtl' ? true : false,
             range: 'min',
             value: 37,
-            min: 1,
-            max: 700,
+            min: 0,
+            max: 100,
         });
 
         // Fixed maximum
@@ -94,7 +153,7 @@ var JqueryUiSliders = function() {
             values: [ 15, 45 ]
         });
 
-        var sliderMethods = document.querySelector('.switchery');
+        /*var sliderMethods = document.querySelector('.switchery');
         var sliderMethodsInit = new Switchery(sliderMethods);
         sliderMethods.onchange = function() {
             if(sliderMethods.checked) {
@@ -103,7 +162,7 @@ var JqueryUiSliders = function() {
             else {
                 $('.jui-slider-methods').slider('disable'); 
             }
-        };
+        };*/
 
         // Disabled slider
         $('.jui-slider-disabled').slider({
@@ -199,12 +258,12 @@ var JqueryUiSliders = function() {
         // Both pips and tooltip
         $('.jui-slider-floats-labels').slider({
             isRTL: $('html').attr('dir') == 'rtl' ? true : false,
-            max: 6,
-            value: 3
+            max: 100,
+            value: 0
         });
         $('.jui-slider-floats-labels').slider('pips');
         $('.jui-slider-floats-labels').slider('float', {
-            pips: true
+            pips: true,
         });
 
 

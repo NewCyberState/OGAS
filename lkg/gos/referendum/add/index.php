@@ -84,6 +84,10 @@ global $USER;
             0 => "UF_BLOG_POST_VOTE",
             1 => "UF_STATUS_ID",
             2 => "UF_NEED_VOTES",
+            3 => "UF_BLOG_POST_FILE",
+            4 => "UF_STATUS_DATE",
+            5 => "UF_THEMATICS",
+            6 => "UF_DECISION",
 		),
 		"POST_PROPERTY_LIST" => array(
 		),

@@ -1071,8 +1071,8 @@ HTML;
                             echo "<label>Текст законопроекта</label>";
                             //pr($arPostField);
 
-                            if(!$arPostField["VALUE"])
-                                $val=$arResult["POST_PROPERTIES"]["DATA"]["UF_DECISION"]["VALUE"];
+                           /* if(!$arPostField["VALUE"])
+                                $val=$arResult["POST_PROPERTIES"]["DATA"]["UF_DECISION"]["VALUE"];*/
                         }
                         elseif($FIELD_NAME=="UF_DECISION") {
                             //pr($arPostField);

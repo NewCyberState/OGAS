@@ -40,7 +40,7 @@ foreach ($arResult["QUESTIONS"] as $arQuestion):
                     Текст <?= ($arParams["STATUS_ID"] >= "14" ? "закона" : "законопроекта") ?><i
                             class="icon-file-text2  ml-2"></i></h5>
 
-                <div class="font-size-lg font-weight-semibold border-1 border-danger p-2 rounded">
+                <div class="font-size-lg font-weight-semibold">
                 <?= $arQuestion["QUESTION"] ?>
                 </div></div>
         </div>
@@ -69,7 +69,7 @@ foreach ($arResult["QUESTIONS"] as $arQuestion):
                 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
                 <div id="sankey_multiple"
-                     style="width: 100%; height: <?= count($delegatetable) * 20 + count($endvotes) * 50; ?>px;"></div>
+                     style="width: 100%; height: <?= count($delegatetable) * 25 + count($endvotes) * 50; ?>px;"></div>
 
                 <script type="text/javascript">
                     google.charts.load("current", {packages: ["sankey"]});
@@ -114,13 +114,13 @@ foreach ($arResult["QUESTIONS"] as $arQuestion):
                             sankey: {
                                 node: {
                                     //colors: colors,
-                                    nodePadding: 60,
+                                    nodePadding: 50,
                                 },
                                 link: {
                                     colorMode: 'gradient',
                                     //colors: colors
                                 },
-                                iterations:200
+                                iterations:300
                             }
 
                         };

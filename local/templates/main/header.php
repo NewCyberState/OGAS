@@ -83,6 +83,7 @@ $arSite = $rsSites->Fetch();
                     <a href="/concept/" class="dropdown-item">Концепция кибергосударства</a>
                     <a href="/lkg/gos/" class="dropdown-item">Управление кибергосударством</a>
                     <a href="/user/" class="dropdown-item">Граждане кибергосударства</a>
+                    <a href="/sourcecode/" class="dropdown-item">Исходный код кибергосударства</a>
                 </div>
             </li>
 

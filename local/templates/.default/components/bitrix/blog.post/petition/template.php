@@ -48,6 +48,142 @@ if (strlen($arResult["FATAL_MESSAGE"]) > 0) {
     if (!empty($arResult["Post"]) > 0) { ?>
 
 
+
+        <?if($arParams["STATUS_ID"]==9):?>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="alert alert-info bg-white alert-styled-left alert-arrow-left">
+                        <div class="card-header header-elements-inline">
+                            <h5 class="card-title">Петиция</h5>
+                            <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
+                        </div>
+
+                        <div class="card-body" style="">
+                            <p>Вам необходимо ознакомиться с петицией и если вы хотите ее поддержать - нужно нажать на ссылку "Поддержать". Для того, чтобы петиция перешла на следующий этап законодательного процесса она должна набрать не менее 10% голосов от общего числа членов группы, в которую она добавлена.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <?endif;?>
+
+        <?if($arParams["STATUS_ID"]==10):?>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="alert alert-info bg-white alert-styled-left alert-arrow-left">
+                        <div class="card-header header-elements-inline">
+                            <h5 class="card-title">Обсуждение</h5>
+                            <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
+                        </div>
+
+                        <div class="card-body" style="">
+                            <p>Вам необходимо ознакомиться с петицией и добавить свои комментарии к ней. Петиция перейдет на следующий этап законодательного процесса спустя 1 неделю с момента перевода в статус "Обсуждение". </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <?endif;?>
+
+        <?if($arParams["STATUS_ID"]==12):?>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="alert alert-info bg-white alert-styled-left alert-arrow-left">
+                        <div class="card-header header-elements-inline">
+                            <h5 class="card-title">Идет референдум</h5>
+                            <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
+                        </div>
+
+                        <div class="card-body" style="">
+                            <p>Вам необходимо ознакомиться с текстом законопроекта и проголосовать "За" или "Против".</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <?endif;?>
+
+        <?if($arParams["STATUS_ID"]==13):?>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="alert alert-info bg-white alert-styled-left alert-arrow-left">
+                        <div class="card-header header-elements-inline">
+                            <h5 class="card-title">Закон отклонен</h5>
+                            <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
+                        </div>
+
+                        <div class="card-body" style="">
+                            <p>Данный законопроект не набрал необходимого количество голосов поддержки и был отклонен.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <?endif;?>
+
+        <?if($arParams["STATUS_ID"]==14):?>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="alert alert-info bg-white alert-styled-left alert-arrow-left">
+                        <div class="card-header header-elements-inline">
+                            <h5 class="card-title">Закон принят</h5>
+                            <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
+                        </div>
+
+                        <div class="card-body" style="">
+                            <p>Закон набрал необходимое количество голосов поддержки и был успешно принят. Ознакомьтесь с текстом принятого закона.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <?endif;?>
+
+        <?if($arParams["STATUS_ID"]==15):?>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="alert alert-info bg-white alert-styled-left alert-arrow-left">
+                        <div class="card-header header-elements-inline">
+                            <h5 class="card-title">Закон на исполнении</h5>
+                            <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
+                        </div>
+
+                        <div class="card-body" style="">
+                            <p>Закон передан на исполнение в органы исполнительной власти.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <?endif;?>
+
+        <?if($arParams["STATUS_ID"]==16):?>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="alert alert-info bg-white alert-styled-left alert-arrow-left">
+                        <div class="card-header header-elements-inline">
+                            <h5 class="card-title">Закон исполнен</h5>
+                            <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
+                        </div>
+
+                        <div class="card-body" style="">
+                            <p>Закон принят и исполнен органами исполнительной власти. Вы можете оценить качество исполнения закона выбрав оценку в блоке "Пожалуйста, оцените качество исполнения закона".</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <?endif;?>
+
+        
+
         <? if ($arParams["STATUS_ID"] >= 12):
 
             if($arParams["STATUS_ID"]==12) {
@@ -81,15 +217,11 @@ if (strlen($arResult["FATAL_MESSAGE"]) > 0) {
 
 
 
-
-
-
-
             <div class="row">
                 <div class="col-lg-12">
 
 
-            <?if($arParams["STATUS_ID"]>12 && $arParams["STATUS_ID"]!=13 && !empty($arResult[UF_THEMATICS])):?>
+            <?if($arParams["STATUS_ID"]>14 && !empty($arResult[UF_THEMATICS])):?>
 
 
             <div class="card">

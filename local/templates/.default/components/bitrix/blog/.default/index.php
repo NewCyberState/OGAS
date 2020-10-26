@@ -87,8 +87,6 @@ $messageperpage=12;
     <!-- Right content -->
     <div class="flex-fill overflow-hidden">
 
-        <div class="row">
-
             <?
             if($arParams["STATUS_ID"]==11) {
                 $arResult["PATH_TO_POST"] = "/lkg/gos/referendum/add/post_edit.php?id=#post_id#";
@@ -183,7 +181,6 @@ $messageperpage=12;
                 ),
                 false
             );?>
-        </div>
     </div>
     <!-- /right content -->
 </div>
