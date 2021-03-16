@@ -1,27 +1,13 @@
 <?
 $aMenuLinks = Array(
-	Array(
-		"О проекте", 
-		"/about/", 
-		Array(), 
-		Array(), 
-		"" 
-	),
-	Array(
-		"Концепция", 
-		"/concept/", 
-		Array(), 
-		Array(), 
-		"" 
-	),
     Array(
-        "Форум",
-        "/forum/",
+        "Исходный код",
+        "/sourcecode/",
         Array(),
         Array(),
         ""
     ),
-	Array(
+    Array(
 		"Соглашение", 
 		"/policy/", 
 		Array(), 

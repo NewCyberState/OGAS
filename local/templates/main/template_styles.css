@@ -53,6 +53,14 @@
     width: 302px;
 }
 
+.ogas #about
+{
+    line-height: 2;
+    margin:15px 0 15px;
+    width: 302px;
+    background: none;
+}
+
 .auth
 {
     display: none;
@@ -68,3 +76,7 @@
     }
 }
 
+
+
+h1, .h1 {
+    font-size: 1.1875rem !important; }

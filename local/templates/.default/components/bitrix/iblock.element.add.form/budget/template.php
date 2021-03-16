@@ -123,7 +123,21 @@ if (strlen($arResult["MESSAGE"]) > 0):?>
 
 </script>
 
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="alert alert-info bg-white alert-styled-left alert-arrow-left ">
+                <div class="card-header header-elements-inline">
+                    <h5 class="card-title">Мой бюджет</h5>
+                    <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
+                </div>
 
+                <div class="card-body" style="">
+                    <p class="text-default">Укажите ваше предложение о распределении государственного бюджета на следующий год по статьям расходов и нажмите "Проголосовать". Ваш голос будет учтен при расчете распределения бюджета по статьям расходов. По умолчанию заданы параметры распределения бюджета на текущий год.</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
 
 <div class="row">
     <div class="col-md-12">
@@ -131,7 +145,7 @@ if (strlen($arResult["MESSAGE"]) > 0):?>
 
             <div class="card-body">
                 <h2>Мой бюджет</h2>
-                <p class="text-default">Укажите ваше распределение государственного бюджета на следующий год по статьям расходов и нажмите "Проголосовать". Ваш голос будет учтен при расчете распределения бюджета по статьям расходов. По умолчанию заданы параметры распределения бюджета на текущий год.</p>
+
                 <div class="chart-container text-center d-none d-md-block" style="width:100%;height: 500px;">
                     <div class="d-inline-block" id="google-pie"></div>
                 </div>

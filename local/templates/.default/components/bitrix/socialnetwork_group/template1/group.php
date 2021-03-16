@@ -16,7 +16,11 @@ use Bitrix\Blog\Copy\Integration\Group as BlogGroup;
 $component = $this->getComponent();
 
 $pageId = "group";
-//include("util_group_menu.php");
+
+?>
+
+<?
+include("util_group_menu.php");
 
 if (Loader::includeModule("blog"))
 {

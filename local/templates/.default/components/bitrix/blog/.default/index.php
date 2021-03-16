@@ -135,7 +135,8 @@ $messageperpage=12;
 
                 $arRes = CSocNetGroup::GetList(array("NUMBER_OF_MEMBERS" => "DESC"), array("ACTIVE" => "Y", "VISIBLE" => "Y", "CHECK_PERMISSIONS" => $USER->GetID()));
                 while ($res = $arRes->Fetch()):
-                    if (CSocNetGroup::CanUserReadGroup($USER->GetID(), $res[ID]))
+                    $Role=CSocNetUserToGroup::GetUserRole($USER->GetID(), $res[ID]);
+                    if ($Role==SONET_ROLES_USER || $Role==SONET_ROLES_OWNER)
                         $socnet_group_id[] = $res[ID];
                 endwhile;
             }

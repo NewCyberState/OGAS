@@ -10,8 +10,29 @@ AddEventHandler("main", "OnBeforeUserRegister", Array("MyClass", "OnBeforeUserRe
 AddEventHandler("main", "OnAfterUserAdd", Array("MyClass", "OnAfterUserAddHandler"));
 AddEventHandler("main", "OnAfterUserAuthorize", Array("MyClass", "OnAfterUserAuthorizeHandler"));
 
+AddEventHandler("socialnetwork", "OnBeforeSocNetGroupAdd", Array("MyClass", "OnBeforeSocNetGroupAddHandler"));
+
+
+
 class MyClass
 {
+
+    function OnBeforeSocNetGroupAddHandler(&$arParams)
+    {
+        pr($arParams);
+        return false;
+        if($arParams["NAME"])
+        {
+            $res=CSocNetGroup::GetList(false,array("NAME"=>$arParams["NAME"]));
+
+            if($res->SelectedRowsCount()>0)
+            {
+                $GLOBALS['APPLICATION']->throwException('Группа с таким названием уже существует!');
+                return false;
+            }
+        }
+    }
+
 
     function OnAfterUserAuthorizeHandler(&$arFields)
     {

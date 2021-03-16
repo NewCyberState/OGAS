@@ -7,57 +7,62 @@ endif;
 ?>
 <?CUtil::InitJSCore(array("image"));?>
 
-        <!-- Archive -->
-        <?/*?>
-        <div class="card">
-            <div class="card-header bg-transparent header-elements-inline">
-                <span class="card-title font-weight-semibold">Архив</span>
-                <div class="header-elements">
-                    <div class="list-icons">
-                        <a class="list-icons-item" data-action="collapse"></a>
+
+<?
+
+if ($arParams["STATUS_ID"] == 9) {
+    $title = "Новые петиции";
+    $all = "Все петиции";
+    $url = "/lkg/gos/petition/";
+} elseif ($arParams["STATUS_ID"] == 10) {
+    $title = "Новые обсуждения";
+    $all = "Все обсуждения";
+    $url = "/lkg/gos/discussion/";
+} elseif ($arParams["STATUS_ID"] == 12) {
+    $title = "Новые референдумы";
+    $all = "Все референдумы";
+    $url = "/lkg/gos/referendum/";
+} elseif ($arParams["STATUS_ID"] == 13) {
+    $title = "Отклоненные законы";
+    $all = "Все отмененные законы";
+    $url = "/lkg/gos/law/rejected/";
+} elseif ($arParams["STATUS_ID"] == 14) {
+    $title = "Принятые законы";
+    $all = "Все законы";
+    $url = "/lkg/gos/law/approved/";
+} elseif ($arParams["STATUS_ID"] == 15) {
+    $title = "Законы на исполнении";
+    $all = "Все законы";
+    $url = "/lkg/gos/law/execution/";
+} elseif ($arParams["STATUS_ID"] == 16) {
+    $title = "Исполненные законы";
+    $all = "Все законы";
+    $url = "/lkg/gos/law/executed/";
+}
+
+if($arParams[SOCNET_GROUP_ID]>0)
+    $groupid="?group_id=".$arParams[SOCNET_GROUP_ID];
+
+
+if(count($arResult["POSTS"])>0)
+{?>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header header-elements-inline bg-white">
+                    <h5 class="card-title"><?=$title?></h5>
+                    <div class="header-elements">
+                        <span><a href="<?=$url.$groupid?>"><?=$all?></a></span>
                     </div>
                 </div>
             </div>
-
-            <div class="card-body p-0">
-                <div class="nav nav-sidebar my-2">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">January 2018</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">December 2017</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">November 2017</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">October 2017</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">September 2017</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">August 2017</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">July 2017</a>
-                    </li>
-                </div>
-            </div>
         </div>
-        <?*/?>
-        <!-- /archive -->
+    </div>
 
+    <div class="row">
 
-
-
-<div class="row">
-
-<?
-if(count($arResult["POSTS"])>0)
-{
-
-	foreach($arResult["POSTS"] as $ind => $CurPost)
+	<?foreach($arResult["POSTS"] as $ind => $CurPost)
 	{
 		$className = "blog-post";
 		if($ind == 0)
@@ -506,14 +511,14 @@ if(count($arResult["POSTS"])>0)
 
 
 }
-else {
+/*else {
     if ($arParams["STATUS_ID"] == 11 || $arParams["STATUS_ID"] == 12)
         echo "<div class=\"col-lg-12\"><div class='card'><div class='card-body'>Не найдено ни одного референдума</div></div></div>";
     else
         echo "<div class=\"col-lg-12\"><div class='card'><div class='card-body'>Не найдено ни одного закона</div></div></div>";
 
             echo "</div>";
-}
+}*/
 ?>
 
 <script>

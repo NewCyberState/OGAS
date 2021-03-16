@@ -83,3 +83,6 @@
     -o-object-fit: cover;
     object-fit: cover;
 }
+
+h1, .h1 {
+    font-size: 1.1875rem !important; }

@@ -160,6 +160,8 @@ class LiquidVoting
 
         if (self::$votedateend)
             $datefilter = array("<UF_DATE" => self::$votedateend);
+        else
+            $datefilter=false;
 
         $rsData = $entity_data_class::getList(array(
             "select" => array("UF_USER", "UF_DELEGATE", "UF_THEMATICS", "UF_ACTION", "MAXID"),

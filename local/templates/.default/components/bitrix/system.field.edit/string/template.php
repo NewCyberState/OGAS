@@ -3,7 +3,7 @@
 foreach ($arResult["VALUE"] as $res):
 ?><div class="fields string"><?
 	if($arParams["arUserField"]["SETTINGS"]["ROWS"] < 2):
-?><input type="text" name="<?=$arParams["arUserField"]["FIELD_NAME"]?>" value="<?=$res?>"<?
+?><input type="text" class="form-control" name="<?=$arParams["arUserField"]["FIELD_NAME"]?>" value="<?=$res?>"<?
 	if (intVal($arParams["arUserField"]["SETTINGS"]["SIZE"]) > 0):
 		?> size="<?=$arParams["arUserField"]["SETTINGS"]["SIZE"]?>"<?
 	endif;
@@ -13,9 +13,9 @@ foreach ($arResult["VALUE"] as $res):
 	if ($arParams["arUserField"]["EDIT_IN_LIST"]!="Y"):
 		?> disabled="disabled"<?
 	endif;
-?> class="fields string form-control"><?
+?> class="form-control"><?
 	else:
-?><textarea class="fields string" name="<?=$arParams["arUserField"]["FIELD_NAME"]?>"<?
+?><textarea class="form-control" name="<?=$arParams["arUserField"]["FIELD_NAME"]?>"<?
 	?> cols="<?=$arParams["arUserField"]["SETTINGS"]["SIZE"]?>"<?
 	?> rows="<?=$arParams["arUserField"]["SETTINGS"]["ROWS"]?>" <?
 	if (intVal($arParams["arUserField"]["SETTINGS"]["MAX_LENGTH"]) > 0):

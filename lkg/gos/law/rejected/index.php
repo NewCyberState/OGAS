@@ -1,6 +1,8 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Отклоненные законы");
+if(intval($_GET["group_id"])>0)
+    $socnet_group_id=intval($_GET["group_id"]);
 
 ?>
 <?

@@ -6,20 +6,6 @@ $aMenuLinks = Array(
 		Array(), 
 		Array(), 
 		"" 
-	),
-	Array(
-		"Предисловие", 
-		"part1/", 
-		Array(), 
-		Array(), 
-		"" 
-	),
-	Array(
-		"История", 
-		"part2/", 
-		Array(), 
-		Array(), 
-		"" 
 	)
 );
 ?>

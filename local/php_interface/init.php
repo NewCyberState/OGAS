@@ -18,7 +18,6 @@ use Bitrix\Highloadblock as HL,
     Bitrix\Blog,
     Bitrix\Main\Loader;
 
-
 CModule::IncludeModule("blog");
 
 require_once $_SERVER['DOCUMENT_ROOT'] .'/local/ogas/ogas.php';;
@@ -31,8 +30,26 @@ AddEventHandler("main", "OnBeforeUserRegister", Array("MyClass", "OnBeforeUserRe
 AddEventHandler("main", "OnAfterUserAdd", Array("MyClass", "OnAfterUserAddHandler"));
 AddEventHandler("main", "OnAfterUserAuthorize", Array("MyClass", "OnAfterUserAuthorizeHandler"));
 
+AddEventHandler("socialnetwork", "OnBeforeSocNetGroupAdd", Array("MyClass", "OnBeforeSocNetGroupAddHandler"));
+
 class MyClass
 {
+
+    function OnBeforeSocNetGroupAddHandler(&$arParams)
+    {
+        if($arParams["NAME"])
+        {
+            $res=CSocNetGroup::GetList(false,array("NAME"=>$arParams["NAME"]));
+
+            if($res->SelectedRowsCount()>0)
+            {
+                global $APPLICATION;
+                $APPLICATION->throwException('Группа с таким названием уже существует!');
+                return false;
+            }
+        }
+    }
+
 
     function OnAfterUserAuthorizeHandler(&$arFields)
     {

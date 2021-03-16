@@ -105,3 +105,9 @@ $this->setFrameMode(true);
 	),
 	$component
 );?>
+<div>
+    <a href="/concept/ncs.pdf">Скачать "Концепцию Нового Кибернетического Государства" (PDF, 1,7 Мб)</a><br>
+</div>
+<div>
+    <a href="/concept/npe.pdf">Скачать "Концепцию Новой Плановой Экономики" (PDF, 600 Кб)</a><br>
+</div>

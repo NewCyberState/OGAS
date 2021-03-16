@@ -3,8 +3,10 @@
 <?
 $pageId = "group_forum";
 include("util_group_menu.php");
-include("util_group_profile.php");
+//include("util_group_profile.php");
 ?>
+<div class="card">
+	<div class="card-body">
 <?$arInfo = $APPLICATION->IncludeComponent(
 	"bitrix:socialnetwork.forum.topic.new",
 	"",
@@ -75,3 +77,5 @@ if (!empty($arInfo) && $arInfo["PERMISSION"] >= "I"):
 ?><?
 endif;
 ?>
+	</div>
+</div>

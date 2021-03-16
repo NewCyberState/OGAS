@@ -90,15 +90,56 @@ $arSite = $rsSites->Fetch();
     <div class="collapse navbar-collapse" id="navbar-mobile">
         <span class="ml-md-3 mr-md-auto"></span>
         <ul class="navbar-nav">
+
             <li class="nav-item dropdown">
                 <a href="#" class="navbar-nav-link d-flex align-items-center dropdown-toggle"
-                   data-toggle="dropdown">Кибергосударство</a>
+                   data-toggle="dropdown">ОГАС</a>
 
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a href="/concept/" class="dropdown-item">Концепция кибергосударства</a>
-                    <a href="/lkg/gos/" class="dropdown-item">Управление кибергосударством</a>
-                    <a href="/user/" class="dropdown-item">Граждане кибергосударства</a>
-                    <a href="/sourcecode/" class="dropdown-item">Исходный код кибергосударства</a>
+                    <? $APPLICATION->IncludeComponent(
+                        "bitrix:menu",
+                        "top2",
+                        array(
+                            "ALLOW_MULTI_SELECT" => "N",
+                            "CHILD_MENU_TYPE" => "top2",
+                            "DELAY" => "N",
+                            "MAX_LEVEL" => "2",
+                            "MENU_CACHE_GET_VARS" => array(),
+                            "MENU_CACHE_TIME" => "360000",
+                            "MENU_CACHE_TYPE" => "A",
+                            "MENU_CACHE_USE_GROUPS" => "N",
+                            "ROOT_MENU_TYPE" => "top2",
+                            "USE_EXT" => "N",
+                            "COMPONENT_TEMPLATE" => "top"
+                        ),
+                        false
+                    ); ?>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a href="#" class="navbar-nav-link d-flex align-items-center dropdown-toggle"
+                   data-toggle="dropdown">Войти как</a>
+
+                <div class="dropdown-menu dropdown-menu-right">
+                    <? $APPLICATION->IncludeComponent(
+                        "bitrix:menu",
+                        "top2",
+                        array(
+                            "ALLOW_MULTI_SELECT" => "N",
+                            "CHILD_MENU_TYPE" => "top3",
+                            "DELAY" => "N",
+                            "MAX_LEVEL" => "2",
+                            "MENU_CACHE_GET_VARS" => array(),
+                            "MENU_CACHE_TIME" => "360000",
+                            "MENU_CACHE_TYPE" => "A",
+                            "MENU_CACHE_USE_GROUPS" => "N",
+                            "ROOT_MENU_TYPE" => "top3",
+                            "USE_EXT" => "N",
+                            "COMPONENT_TEMPLATE" => "top2"
+                        ),
+                        false
+                    ); ?>
                 </div>
             </li>
 
@@ -200,7 +241,7 @@ $arSite = $rsSites->Fetch();
 		"MENU_CACHE_TIME" => "360000",
 		"MENU_CACHE_TYPE" => "A",
 		"MENU_CACHE_USE_GROUPS" => "N",
-		"ROOT_MENU_TYPE" => "bottom",
+		"ROOT_MENU_TYPE" => "top2",
 		"USE_EXT" => "Y",
 		"COMPONENT_TEMPLATE" => "left2"
 	),

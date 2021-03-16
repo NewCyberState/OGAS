@@ -14,7 +14,7 @@
     </div>
 
     <div class="navbar-collapse collapse" id="navbar-footer">
-					<span class="navbar-text">
+					<span class="navbar-text text-nowrap">
 						&copy; 2020 <a href="/">ОГАС ДЕМО</a>
 					</span>
 
@@ -48,6 +48,6 @@
 
 </div>
 <!-- /page content -->
-
+<? /*$APPLICATION->IncludeComponent("bitrix:im.messenger", "", Array(), null, array("HIDE_ICONS" => "Y")); */?>
 </body>
 </html>

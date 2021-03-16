@@ -23,7 +23,7 @@ foreach($arResult as $arItem):?>
 	<?if ($arItem["IS_PARENT"]):?>
 
 		<?if ($arItem["DEPTH_LEVEL"] == 1):?>
-        <li class="nav-item">
+        <li class="nav-item text-nowrap">
             <a href="<?=$arItem["LINK"]?>" class="navbar-nav-link"><?=$arItem["TEXT"]?></a>
         </li>
 		<?endif?>

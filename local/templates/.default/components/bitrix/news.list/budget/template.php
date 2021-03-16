@@ -55,21 +55,35 @@ function array_sum_col($arr,$col) {
 
 ?>
 
+<div class="row">
+    <div class="col-lg-12">
+        <div class="alert alert-info bg-white alert-styled-left alert-arrow-left ">
+            <div class="card-header header-elements-inline">
+                <h5 class="card-title">Государственный бюджет</h5>
+                <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
+            </div>
 
+            <div class="card-body" style="">
+                <p class="text-default">На данной странице отображается результат общественного голосования за распределение государственного бюджета. Все граждане могут оставить свои предложения по распределению государственного бюджета по статьям расходов. Общественное распределение по статьям расходов рассчитывается программно, как среднее арифметическое от распределения, предложенного всеми гражданами в процессе голосования.</p>
+
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="card">
     <div class="card-body">
 <?//pr($arResult)?>
         <h2>Государственный бюджет</h2>
-        <p class="text-default">На данной странице отображается результат общественного голосования за государственный бюджет. Процентное распределение по статьям расходов рассчитывается программно, как среднее арифметическое от распределения, предложенного гражданами в процессе голосования.</p>
+
 
         <div class="chart-container text-center d-none d-md-block" style="width:100%;height: 500px;">
             <div class="d-inline-block" id="google-pie"></div>
         </div>
 
         <h6>Результаты общественного голосования</h6>
-        <div class="datatable-scroll">
-<table class="table table-bordered table-hover table-scrollable table-condensed datatable-highlight dataTable table-bordered"  id="DataTables_Table_2" role="grid" aria-describedby="DataTables_Table_2_info">
+        <div class="datatable-scroll overflow-auto">
+<table class="table table-bordered table-striped table-hover table-scrollable table-condensed datatable-highlight dataTable table-bordered"  id="DataTables_Table_2" role="grid" aria-describedby="DataTables_Table_2_info">
     <thead>
     <tr role="row">
         <?foreach ($arResult["ITEMS"][0][PROPERTIES] as $prop):

@@ -3,8 +3,10 @@
 <?
 $pageId = "group_forum";
 include("util_group_menu.php");
-include("util_group_profile.php");
+//include("util_group_profile.php");
 ?>
+<div class="card">
+    <div class="card-body">
 <?$APPLICATION->IncludeComponent("bitrix:socialnetwork.forum.topic.list", "", 
 	Array(
 		"FID"	=>	$arParams["FORUM_ID"],
@@ -39,3 +41,5 @@ include("util_group_profile.php");
 	$component,
 	array("HIDE_ICONS" => "Y") 
 );?>
+    </div>
+</div>

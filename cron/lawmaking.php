@@ -154,7 +154,8 @@ while ($arPost = $dbPosts->Fetch()) {
     if ($groupid) {
         $group = CSocNetGroup::GetByID($groupid);
 
-        if ($arPost["UF_STATUS_DATE"]<=date("d.m.Y H:i:s",strtotime("-1 week")) && floatval($za) > floatval($group["NUMBER_OF_MEMBERS"] * 50 / 100))
+
+        if (strtotime($arPost["UF_STATUS_DATE"])<=strtotime("-1 week") && floatval($za) > floatval($group["NUMBER_OF_MEMBERS"] * 50 / 100))
         {
             //Количество голосов "ЗА" больше половины членов группы
 
@@ -204,7 +205,7 @@ while ($arPost = $dbPosts->Fetch()) {
 
         }
 
-        if($arPost["UF_STATUS_DATE"]<=date("d.m.Y H:i:s",strtotime("-1 week")) && floatval($za) <= floatval($group["NUMBER_OF_MEMBERS"] * 50 / 100)) {
+        if(strtotime($arPost["UF_STATUS_DATE"])<=strtotime("-1 week") && floatval($za) <= floatval($group["NUMBER_OF_MEMBERS"] * 50 / 100)) {
 
             //Количество голосов "ЗА" меньше половины членов группы и прошло больше 1 недели с момента начала голосования
 

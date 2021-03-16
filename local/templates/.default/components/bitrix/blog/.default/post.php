@@ -19,8 +19,8 @@ $arPost = $dbPosts->Fetch();
 
 $dirs[9]="/lkg/gos/petition/";
 $dirs[10]="/lkg/gos/discussion/";
-$dirs[11]="/lkg/gos/referendum/";
-$dirs[12]="/lkg/gos/referendum/add/";
+$dirs[12]="/lkg/gos/referendum/";
+$dirs[11]="/lkg/gos/referendum/add/";
 $dirs[13]="/lkg/gos/law/rejected/";
 $dirs[14]="/lkg/gos/law/approved/";
 $dirs[15]="/lkg/gos/law/execution/";
@@ -143,6 +143,7 @@ $APPLICATION->IncludeComponent(
 	if(isset($arParams["USER_CONSENT_IS_LOADED"]))
 		$componentCommentParams["USER_CONSENT_IS_LOADED"] = $arParams["USER_CONSENT_IS_LOADED"];
 	$componentCommentParams["USER_CONSENT_FOR_REGISTERED"] = "Y";	// get consent for registered
+
 	$APPLICATION->IncludeComponent(
 		$componentCommentName,
 		'',
@@ -263,6 +264,8 @@ $APPLICATION->IncludeComponent(
 
         if($arPost[UF_LAW])
             $law=GetElement($arPost[UF_LAW]);
+
+
         ?>
 
 

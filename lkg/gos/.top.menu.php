@@ -34,6 +34,14 @@ $aMenuLinks = Array(
 		Array(),
         Array("icon"=>"<i class=\"icon-cash4 \"></i>"),
         ""
-	)
+	),
+    Array(
+        "Госплан",
+        "/lkg/gos/gosplan/",
+        Array(),
+        Array("icon"=>"<i class=\"icon-rulers \"></i>"),
+        ""
+    )
+
 );
 ?>

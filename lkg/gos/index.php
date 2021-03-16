@@ -10,6 +10,10 @@ use Bitrix\Main\Entity;
 
 global $USER;
 
+if(intval($_GET["group_id"])>0)
+    $socnet_group_id=intval($_GET["group_id"]);
+
+
 /*
 $hlbl = 3; // Указываем ID нашего highloadblock блока к которому будет делать запросы.
 $hlblock = HL\HighloadBlockTable::getById($hlbl)->fetch();
@@ -74,20 +78,7 @@ if(!in_array(8, $USER->GetUserGroupArray()))
     </div>
 </div>
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header header-elements-inline bg-light">
-                    <h5 class="card-title">Новые петиции</h5>
-                    <div class="header-elements">
-                        <span><a href="/lkg/gos/petition/">Все петиции</a></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-<?$APPLICATION->IncludeComponent(
+ <?$APPLICATION->IncludeComponent(
     "bitrix:blog",
     ".default",
     array(
@@ -192,18 +183,6 @@ if(!in_array(8, $USER->GetUserGroupArray()))
     false
 );?>
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header header-elements-inline bg-light">
-                    <h5 class="card-title">Новые обсуждения</h5>
-                    <div class="header-elements">
-                        <span><a href="/lkg/gos/discussion/">Все обсуждения</a></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 <?$APPLICATION->IncludeComponent(
     "bitrix:blog",
     ".default",
@@ -293,20 +272,7 @@ if(!in_array(8, $USER->GetUserGroupArray()))
     )
 );?>
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header header-elements-inline bg-light">
-                    <h5 class="card-title">Новые референдумы</h5>
-                    <div class="header-elements">
-                        <span><a href="/lkg/gos/referendum/">Все референдумы</a></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-<?$APPLICATION->IncludeComponent(
+ <?$APPLICATION->IncludeComponent(
     "bitrix:blog",
     ".default",
     array(
@@ -413,19 +379,6 @@ if(!in_array(8, $USER->GetUserGroupArray()))
 );?>
 
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header header-elements-inline bg-light">
-                    <h5 class="card-title">Принятые законы</h5>
-                    <div class="header-elements">
-                        <span><a href="/lkg/gos/law/approved/">Все законы</a></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 <?$APPLICATION->IncludeComponent(
     "bitrix:blog",
     ".default",
@@ -531,19 +484,6 @@ if(!in_array(8, $USER->GetUserGroupArray()))
     ),
     false
 );?>
-
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header header-elements-inline bg-light">
-                    <h5 class="card-title">Исполненные законы</h5>
-                    <div class="header-elements">
-                        <span><a href="/lkg/gos/law/executed/">Все законы</a></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
 <?$APPLICATION->IncludeComponent(
     "bitrix:blog",

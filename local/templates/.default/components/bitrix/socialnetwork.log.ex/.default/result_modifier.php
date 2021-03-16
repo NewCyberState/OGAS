@@ -49,6 +49,25 @@ $arResult['TOP_RATING_DATA'] = (
 $arResult["FORM_TARGET_ID"] = $formTargetId;
 $arResult["INFORMER_TARGET_ID"] = $informerTargetId;
 
+$arResult["EMPTY_AJAX_FEED"] = (
+	$arResult["AJAX_CALL"]
+	&& (
+		!$arResult["Events"]
+		|| !is_array($arResult["Events"])
+		|| empty($arResult["Events"])
+	)
+);
+
+$arResult['PAGE_MODE'] = 'first';
+if ($arResult["bReload"])
+{
+	$arResult['PAGE_MODE'] = 'refresh';
+}
+elseif ($arResult["AJAX_CALL"])
+{
+	$arResult['PAGE_MODE'] = 'next';
+}
+
 $arResult["SHOW_NOTIFICATION_NOTASKS"] = false;
 if (
 	$arParams["IS_CRM"] != "Y"

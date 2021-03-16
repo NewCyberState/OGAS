@@ -24,7 +24,5 @@ robots.txt
 !/tests/api/
 /tests/api/node_modules
 .htaccess.restore
-
 /restore.php
 /local/log
-

@@ -17,7 +17,7 @@
     </div>
 
     <div class="navbar-collapse collapse" id="navbar-footer">
-					<span class="navbar-text">
+					<span class="navbar-text  text-nowrap">
 						&copy; 2020 <a href="/">ОГАС ДЕМО</a>
 					</span>
 

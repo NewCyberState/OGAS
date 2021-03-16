@@ -10,7 +10,7 @@ $city=$result->getGeoData()->cityName;
 
 <!-- Registration form -->
 <form action="<?=POST_FORM_ACTION_URI?>" method="post" name="regform" class="flex-fill" enctype="multipart/form-data">
-        <div class="content d-flex justify-content-center align-items-center ">
+        <div class="content d-flex justify-content-center align-items-center">
             <div class="row">
                 <div class="col-lg-12">
 

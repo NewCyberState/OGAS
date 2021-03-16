@@ -25,6 +25,16 @@ CUtil::InitJSCore($array);
 \Bitrix\Main\UI\Extension::load("ui.selector");
 
 
+
+//Если петиция создается из группы, то подставлять сразу группу в новую петицию
+if(intval($_GET["group_id"]))
+    $arParams["DESTINATION"]["SELECTED"]=array("SG".intval($_GET["group_id"])=>"sonetgroups");
+
+
+
+
+
+
 if($arParams["DESTINATION_SHOW"] == "Y" || !empty($arParams["TAGS"]))
 {
 ?><ol class="feed-add-post-strings-blocks feed-add-vote-wrap"><?
@@ -66,10 +76,10 @@ if($arParams["DESTINATION_SHOW"] == "Y" || !empty($arParams["TAGS"]))
                     'enableSonetgroups' => 'Y',
                     'departmentSelectDisable' => 'N',
                     'showVacations' => 'Y',
-                    'useClientDatabase' => ($arParams["DESTINATION_USE_CLIENT_DATABASE"] != "N" ? 'Y' : 'N'),
-                    'allowSearchEmailUsers' => ($arResult["ALLOW_EMAIL_INVITATION"] ? 'Y' : 'N'),
-                    'allowSearchCrmEmailUsers' => ($arResult["ALLOW_CRM_EMAILS"] ? 'Y' : 'N'),
-                    'allowEmailInvitation' => (!$arResult["bExtranetUser"] && $arResult["ALLOW_EMAIL_INVITATION"] ? 'Y' : 'N'),
+                    'useClientDatabase' => 'N',
+                    'allowSearchEmailUsers' => 'N',
+                    'allowSearchCrmEmailUsers' =>'N',
+                    'allowEmailInvitation' => 'N',
                     'allowAddCrmContact' => (
                     !$arResult["bExtranetUser"]
                     && $arResult["ALLOW_EMAIL_INVITATION"]

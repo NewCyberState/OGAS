@@ -2,7 +2,7 @@
 $MESS["SONET_C8_SUBTITLE"] = "Параметры группы";
 $MESS["SONET_C8_NAME"] = "Название группы";
 $MESS["SONET_C8_DESCR"] = "Описание группы";
-$MESS["SONET_C8_IMAGE"] = "Изображение группы";
+$MESS["SONET_C8_IMAGE"] = "Изображение группы (формат JPG, PNG, не более 1Мб)";
 $MESS["SONET_C8_IMAGE_DEL"] = "Удалить изображение";
 $MESS["SONET_C8_SUBJECT"] = "Тема группы";
 $MESS["SONET_C8_TO_SELECT"] = "-Не выбрано-";

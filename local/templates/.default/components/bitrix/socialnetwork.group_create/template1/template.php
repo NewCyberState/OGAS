@@ -1,5 +1,8 @@
 <?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
+<div class="card">
+    <div class="card-body">
 <?
+
 if ($arResult["NEED_AUTH"] == "Y")
 {
 	$APPLICATION->AuthForm("");
@@ -7,7 +10,7 @@ if ($arResult["NEED_AUTH"] == "Y")
 elseif (strlen($arResult["FatalError"])>0)
 {
 	?>
-	<span class='errortext'><?=$arResult["FatalError"]?></span><br /><br />
+	<div class='alert alert-danger border-0 alert-dismissible'><?=$arResult["FatalError"]?></div>
 	<?
 }
 else
@@ -15,7 +18,7 @@ else
 	if(strlen($arResult["ErrorMessage"])>0)
 	{
 		?>
-		<span class='errortext'><?=$arResult["ErrorMessage"]?></span><br /><br />
+		<div class='alert alert-danger border-0 alert-dismissible'><?=$arResult["ErrorMessage"]?></div>
 		<?
 	}
 
@@ -31,13 +34,13 @@ else
 				<tr>
 					<td valign="top" class="form-group">
                         <label class="col-form-label"><span class="required-field">*</span> <?= GetMessage("SONET_C8_NAME") ?>:</label>
-						<input type="text" class="form-control" name="GROUP_NAME" style="width:98%" value="<?= $arResult["POST"]["NAME"]; ?>">
+						<input type="text" class="form-control" name="GROUP_NAME" value="<?= $arResult["POST"]["NAME"]; ?>">
 					</td>
 				</tr>
 				<tr>
 					<td valign="top"  class="form-group">
                         <label class="col-form-label"><span class="required-field">*</span> <?= GetMessage("SONET_C8_DESCR") ?>:</label>
-                        <textarea name="GROUP_DESCRIPTION" style="width:98%" class="form-control" rows="5"><?= $arResult["POST"]["DESCRIPTION"]; ?></textarea></td>
+                        <textarea name="GROUP_DESCRIPTION" class="form-control" rows="5"><?= $arResult["POST"]["DESCRIPTION"]; ?></textarea></td>
 				</tr>
 				<?// ********************* Group properties ***************************************************?>
 				<?foreach ($arResult["GROUP_PROPERTIES"] as $FIELD_NAME => $arUserField):?>
@@ -218,3 +221,5 @@ else
 	}
 }
 ?>
+</div>
+</div>

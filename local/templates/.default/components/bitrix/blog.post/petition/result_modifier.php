@@ -29,6 +29,7 @@ while ($arPost = $dbPosts->Fetch())
 {
 //pr($arPost);
     $arGroup = CSocNetGroup::GetByID($arPost[SOCNET_GROUP_ID]);
+    $arResult[SOCNET_GROUP_ID] = $arGroup[ID];
     $arResult[SOCNET_GROUP_NAME] = $arGroup[NAME];
     $arResult[UF_STATUS_DATE] = $arPost[UF_STATUS_DATE];
 

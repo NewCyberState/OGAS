@@ -16,7 +16,12 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)
 ?><div class="feed-blog-post-list"><?
 $pageId = "group_blog";
 include("util_group_menu.php");
-include("util_group_profile.php");
+//include("util_group_profile.php");
+
+    ?>
+    <div class="card">
+        <div class="card-body">
+            <?
 
 $APPLICATION->IncludeComponent(
 	"bitrix:socialnetwork.blog.menu",
@@ -39,6 +44,8 @@ $APPLICATION->IncludeComponent(
 	),
 	$this->getComponent()
 );
+
+
 
 if(COption::GetOptionString("blog", "socNetNewPerms", "N") == "N" && $USER->IsAdmin() && !file_exists($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/bitrix24"))
 {
@@ -130,3 +137,4 @@ $APPLICATION->IncludeComponent(
 );
 ?>
 </div>
+</div></div>

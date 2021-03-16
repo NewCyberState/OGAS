@@ -1,0 +1,40 @@
+<?
+$aMenuLinks = Array(
+	Array(
+		"О проекте",
+		"/about/",
+		Array(),
+		Array(),
+		""
+	),
+	Array(
+		"Кибергосударство",
+		"/concept/",
+		Array(),
+		Array(),
+		""
+	),
+    Array(
+        "Экономика",
+        "/economy/",
+        Array(),
+        Array(),
+        ""
+    ),
+    Array(
+        "Форум",
+        "/forum/",
+        Array(),
+        Array(),
+        ""
+    ),
+    Array(
+        "Граждане",
+        "/user/",
+        Array(),
+        Array(),
+        ""
+    ),
+
+);
+?>

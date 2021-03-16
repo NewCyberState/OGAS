@@ -15,7 +15,7 @@ foreach ($arResult["VALUE"] as $res):
 	endif;
 ?> class="fields string"><?
 	else:
-?><textarea class="fields string" name="<?=$arParams["arUserField"]["FIELD_NAME"]?>"<?
+?><textarea class="form-control" name="<?=$arParams["arUserField"]["FIELD_NAME"]?>"<?
 	?> cols="<?=$arParams["arUserField"]["SETTINGS"]["SIZE"]?>"<?
 	?> rows="<?=$arParams["arUserField"]["SETTINGS"]["ROWS"]?>" <?
 	if (intVal($arParams["arUserField"]["SETTINGS"]["MAX_LENGTH"]) > 0):

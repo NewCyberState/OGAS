@@ -19,6 +19,8 @@ $bodyClass = $APPLICATION->GetPageProperty("BodyClass");
 $bodyClass = $bodyClass ? $bodyClass." no-paddings" : "no-paddings";
 $APPLICATION->SetPageProperty("BodyClass", $bodyClass);
 
+global $USER;
+
 if(strlen($arResult["FatalError"])>0)
 {
 	?><span class="sonet-groups-menu-errortext"><?=$arResult["FatalError"]?></span><br /><br /><?
@@ -194,7 +196,7 @@ else
 	);
 
 	?><div id="sonet-groups-content-wrap" class="sonet-groups-content-wrap<?=(!$notEmptyList ? " no-groups" : "")?>">
-    <?/*?>
+
 		<div class="sonet-groups-content-sort-container"><?
 			?><span id="bx-sonet-groups-sort"><?
 				?><?=GetMessage('SONET_C33_T_F_SORT')?><?
@@ -209,7 +211,7 @@ else
 					array("HIDE_ICONS" => "Y")
 				);
 			?></span><?
-		?></div><?*/
+		?></div><?
 
 		if (
 			!$arResult["AJAX_CALL"]
@@ -252,23 +254,19 @@ else
 
 				if ($notEmptyList)
 				{
-					?><div class="sonet-groups-group-block-shift">
-						<div class="sonet-groups-group-block-row"><?
+					?><div class="">
+						<div class="row row-flex row-flex-wrap">
+						<?
 
 					/**/$i = 1;/**/
 					foreach ($arResult["Groups"]["List"] as $group)
 					{
 
 
-
-
-
-						/**/if ($i > 1 && $i % 2)
-						{
-							?></div><div class="sonet-groups-group-block-row"><?
-						}/**/
-
-						?><div class="sonet-groups-group-block"><?
+						?>
+                            <div class="col-md-12 col-lg-6 col-xl-4 card-group mb-3">
+                        <div class="card sonet-groups-group-block "><div class="card-body">
+                        <div class=""><?
 							?><span class="sonet-groups-group-img"<?=($group["GROUP_PHOTO_RESIZED_COMMON"] ? " style=\"background:#fff url('".$group["GROUP_PHOTO_RESIZED_COMMON"]["src"]."') no-repeat; background-size: cover;\"" : "")?>></span><?
 							?><span class="sonet-groups-group-text"><?
 								?><span class="sonet-groups-group-title<?=($group["IS_EXTRANET"] == "Y" ? " sonet-groups-group-title-extranet" : "")?>"><?
@@ -316,7 +314,7 @@ else
 										});
 									</script><?
 								?></span><?
-								?><?=(strlen($group["GROUP_DESCRIPTION_FULL"]) > 0 ? '<span class="sonet-groups-group-description">'.$group["GROUP_DESCRIPTION_FULL"].'</span>' : "")?><?
+								?><?
 								$membersCount = $group["NUMBER_OF_MEMBERS"];
 								$suffix = (
 									($membersCount % 100) > 10
@@ -332,18 +330,22 @@ else
 								)
 								{
 									?><span class="sonet-groups-group-btn-container"><?
-
+//pr($group);
 										$requestSent = (isset($group['ROLE']) && $group['ROLE'] == \Bitrix\Socialnetwork\UserToGroupTable::ROLE_REQUEST);
 										?><span id="bx-sonet-groups-request-sent-<?=intval($group['GROUP_ID'])?>" class="sonet-groups-group-desc-container<?=($requestSent ? " sonet-groups-group-desc-container-active" : "")?>"><span class="sonet-groups-group-desc-check"></span><?=GetMessage('SONET_C33_T_F_DO_REQUEST_SENT')?></span><?
 
-										if (
-											isset($group['ROLE'])
-											&& empty($group['ROLE'])
-										)
+                                    $Role=CSocNetUserToGroup::GetUserRole($USER->GetID(),$group['GROUP_ID']);
+
+										if (!$Role)
 										{
-										    $argroup=CSocNetGroup::GetByID($group['GROUP_ID']);
-										    if($argroup[OPENED]=="Y"):
-											?><span id="bx-sonet-groups-request-<?=intval($group['GROUP_ID'])?>" class="btn btn-primary cursor-pointer"><?=GetMessage('SONET_C33_T_F_DO_REQUEST')?></span><?endif;
+										    $argroup=CSocNetGroup::GetByID($group['GROUP_ID'],true);
+
+
+
+                                            if($argroup[OPENED]=="Y"):
+											?><span id="bx-sonet-groups-request-<?=intval($group['GROUP_ID'])?>" class="btn btn-primary cursor-pointer"><?=GetMessage('SONET_C33_T_F_DO_REQUEST')?></span>
+
+                                            <?endif;
 											?><script>
 												BX.bind(BX('bx-sonet-groups-request-<?=intval($group['GROUP_ID'])?>'), 'click', function(e) {
 													var button = BX('bx-sonet-groups-request-<?=intval($group['GROUP_ID'])?>');
@@ -368,12 +370,23 @@ else
 												});
 											</script><?
 										}
+										elseif($Role==SONET_ROLES_USER) {
 
-									?></span><?
+										    echo "Вы участник группы";
+
+                                        }
+                                        elseif($Role==SONET_ROLES_OWNER) {
+
+                                            echo "Вы владелец группы";
+
+                                        }
+										else{
+                                            echo "Вы участник группы";
+                                        }
 								}
 
 							?></span><?
-						?></div><?
+						?></div></div></div></div><?
 
 						/**/$i++;/**/
 					}
