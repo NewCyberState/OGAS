@@ -1,7 +1,7 @@
 <?
 $MESS ['SONET_SM_SETTINGS_TITLE_1'] = "Настройка функционала: ";
 $MESS ['SONET_SM_SETTINGS_TITLE_forum'] = "форум";
-$MESS ['SONET_SM_SETTINGS_TITLE_blog'] = "сообщения";
+$MESS ['SONET_SM_SETTINGS_TITLE_blog'] = "Демократия";
 $MESS ['SONET_SM_SETTINGS_TITLE_microblog'] = "микроблог";
 
 $MESS ['SONET_SM_SETTINGS_TITLE_photo'] = "фото";

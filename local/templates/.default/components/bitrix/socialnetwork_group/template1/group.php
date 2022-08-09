@@ -17,7 +17,22 @@ $component = $this->getComponent();
 
 $pageId = "group";
 
+
 ?>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="alert alert-info bg-white alert-styled-left alert-arrow-left alert-dismissible alert">
+				<div class="card-body" style="">
+					<button type="button" class="close" data-dismiss="alert"><span>×</span></button>
+					<p>На странице группы вы можете ознакомиться с описанием группы, со списком участников группы, пригласить в группу других участников по ссылке, принять участие в обсуждениях на закладке <a href="forum/">Обсуждения</a>, а также вынести свои предложения на рассмотрение участников группы по любым вопросам, требущим принятия коллективного решения всеми участниками группы. Участники группы смогут обсудить данные предложения, проголосовать за них на референдуме среди  участников данной группы, после чего предложение будет утверждено в качестве закона и будет обязательно для исполнения всеми участниками группы.</p>
+
+
+
+				</div>
+			</div>
+		</div>
+	</div>
 
 <?
 include("util_group_menu.php");
@@ -59,6 +74,48 @@ if (Loader::includeModule("landing"))
 		["HIDE_ICONS" => "Y"]
 	);
 }
+
+
+
+$APPLICATION->IncludeComponent(
+    "bitrix:socialnetwork.log.ex",
+    "",
+    Array(
+        "USER_VAR" => $arResult["ALIASES"]["user_id"],
+        "GROUP_VAR" => $arResult["ALIASES"]["group_id"],
+        "PAGE_VAR" => $arResult["ALIASES"]["page"],
+        "GROUP_ID" => $arResult["VARIABLES"]["group_id"],
+        "ENTITY_TYPE" => "G",
+        "PATH_TO_LOG_ENTRY" => $arParams["PATH_TO_USER_LOG_ENTRY"],
+        "PATH_TO_USER_BLOG_POST_EDIT" => $arParams["PATH_TO_USER_BLOG_POST_EDIT"],
+        "PATH_TO_USER" => $arParams["PATH_TO_USER"],
+        "PATH_TO_MESSAGES_CHAT" => $arResult["PATH_TO_MESSAGES_CHAT"],
+        "PATH_TO_VIDEO_CALL" => $arResult["PATH_TO_VIDEO_CALL"],
+        "PATH_TO_GROUP" => $arResult["PATH_TO_GROUP"],
+        "PATH_TO_SEARCH_TAG" => $arParams["PATH_TO_SEARCH_TAG"],
+        "USE_RSS" => "Y",
+        "PATH_TO_LOG_RSS" => $arResult["PATH_TO_GROUP_LOG_RSS"],
+        "PATH_TO_LOG_RSS_MASK" => $arResult["PATH_TO_GROUP_LOG_RSS_MASK"],
+        "SET_NAV_CHAIN" => $arResult["SET_NAV_CHAIN"],
+        "SET_TITLE" => $arResult["SET_TITLE"],
+        "PAGE_SIZE" => $arParams["ITEM_DETAIL_COUNT"],
+        "NAME_TEMPLATE" => $arParams["NAME_TEMPLATE"],
+        "SHOW_LOGIN" => $arParams["SHOW_LOGIN"],
+        "DATE_TIME_FORMAT" => $arResult["DATE_TIME_FORMAT"],
+        "DATE_TIME_FORMAT_WITHOUT_YEAR" => $arResult["DATE_TIME_FORMAT_WITHOUT_YEAR"],
+        "SHOW_YEAR" => $arParams["SHOW_YEAR"],
+        "CACHE_TYPE" => $arParams["CACHE_TYPE"],
+        "CACHE_TIME" => $arParams["CACHE_TIME"],
+        "PATH_TO_CONPANY_DEPARTMENT" => $arParams["PATH_TO_CONPANY_DEPARTMENT"],
+        "SUBSCRIBE_ONLY" => "N",
+        "SHOW_EVENT_ID_FILTER" => "Y",
+        "SHOW_FOLLOW_FILTER" => "Y",
+        "CHECK_COMMENTS_PERMS" => "N",
+        "BLOG_NO_URL_IN_COMMENTS" => $arParams["BLOG_NO_URL_IN_COMMENTS"],
+        "BLOG_NO_URL_IN_COMMENTS_AUTHORITY" => $arParams["BLOG_NO_URL_IN_COMMENTS_AUTHORITY"],
+    ),
+    $this->getComponent()
+);
 
 $APPLICATION->IncludeComponent(
 	"bitrix:socialnetwork.group",

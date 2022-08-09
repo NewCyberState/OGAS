@@ -66,7 +66,7 @@ $arSite = $rsSites->Fetch();
 <div class="navbar navbar-expand-md navbar-dark <?if($APPLICATION->GetCurDir()=="/"):?>d-none<?endif;?>">
     <div class="navbar-brand">
         <a href="/" class="d-inline-block">
-            <img src="/local/img/ogaslogo3.png" alt="">
+            <img src="/local/img/ogaslogo5.png" alt="">
         </a>
     </div>
 

@@ -1,29 +1,22 @@
 <?
 $aMenuLinks = Array(
     Array(
-        "Мои данные",
-        "/personal/",
-        Array(),
-        Array(),
-        ""
-    ),
-    Array(
         "Мои группы",
-        "/personal/groups/",
+        "/groups/my/",
         Array(),
         Array(),
         ""
     ),
     Array(
         "Все группы",
-        "/personal/groups/all/",
+        "/groups/",
         Array(),
         Array(),
         ""
     ),
     Array(
         "Создать группу",
-        "/personal/groups/create/",
+        "/groups/create/",
         Array(),
         Array(),
         ""

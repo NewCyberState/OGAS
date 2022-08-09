@@ -1,7 +1,7 @@
 <?
 $sSectionName = "Главная";
 $arDirProperties = array(
-   "description" => "Новое Кибернетическое Государство. Общегосударственная Автоматизированная Система",
+   "description" => "Общегосударственная Автоматизированная Система",
    "keywords" => "",
    "robots" => "index, follow"
 );

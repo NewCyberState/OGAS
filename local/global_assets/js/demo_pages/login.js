@@ -25,7 +25,11 @@ var LoginRegistration = function () {
         }
 
         // Initialize
-        $('.form-input-styled').uniform();
+        $('.form-input-styled').uniform({
+                fileDefaultText: 'Не выбран файл',
+                fileBtnText: 'Выбрать файл',
+            }
+        );
     };
 
 

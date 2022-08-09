@@ -17,7 +17,6 @@ $rsUsers = CUser::GetList(($by="ID"), ($order="DESC"),
     )
 );
 
-
 ?><div id="log_external_container"></div><?
 /*$APPLICATION->IncludeComponent(
 	"bitrix:socialnetwork.log.ex",

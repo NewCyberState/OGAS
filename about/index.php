@@ -65,4 +65,30 @@ $APPLICATION->SetTitle("Общегосударственная Автомати�
     <h3>
         ВОЙТИ В СИСТЕМУ</h3>
     <a href="/auth/" class="btn btn-primary">Войти в систему<i class="icon-circle-right2 ml-2"></i></a>
+
+    <div class="row mt-3">
+        <div class="col-lg-6 ">
+            <div class="card  mb-lg-0 bg-light">
+                <div class="card-body text-center">
+                    <i class="icon-library2 icon-2x text-warning-400 border-warning-400 border-3 rounded-round p-3 mb-3 mt-1"></i>
+                    <h5 class="card-title">Новое Кибернетическое Государство</h5>
+                    <p class="">Принципы построения кибернетического государства будущего</p>
+                    <a href="/concept/" class="btn bg-warning-400">Читать концепцию</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card mb-lg-0 bg-light">
+                <div class="card-body text-center">
+                    <i class="icon-stats-growth  icon-2x text-success-400 border-success-400 border-3 rounded-round p-3 mb-3 mt-1"></i>
+                    <h5 class="card-title">Новая Плановая Экономика</h5>
+                    <p>Принципы устройства экономической системы государства будущего</p>
+                    <a href="/economy/" class="btn bg-success-400">Читать концепцию</a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
 </div><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

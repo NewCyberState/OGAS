@@ -1,7 +1,7 @@
 <?
 if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die(); //Защита от подключения файла напрямую без подключения ядра
 use Bitrix\Main\Page\Asset; //Подключение библиотеки для использования  Asset::getInstance()->addCss()
-global $USER;
+global $USER, $APPLICATION;
 $rsSites = CSite::GetByID(SITE_ID);
 $arSite = $rsSites->Fetch();
 ?>
@@ -14,9 +14,9 @@ $arSite = $rsSites->Fetch();
     <title><? $APPLICATION->ShowTitle(); ?></title>
     <meta content="<?= $APPLICATION->ShowProperty("description"); ?>" property="og:description"/>
     <meta content="<?= $APPLICATION->ShowTitle(); ?>" property="og:title"/>
-    <meta content="<?= "https://".$_SERVER['HTTP_HOST'].$APPLICATION->GetCurDir(); ?>" property="og:url"/>
+    <meta content="<?= "https://" . $_SERVER['HTTP_HOST'] . $APPLICATION->GetCurPage(); ?>" property="og:url"/>
     <meta content="<?= $arSite[NAME] ?>" property="og:site_name"/>
-    <meta content="<?= "https://".$_SERVER['HTTP_HOST']."/local/img/about.png" ?>" property="og:image"/>
+    <meta content="<?= $APPLICATION->ShowProperty("og:image"); ?>" property="og:image"/>
     <meta content="website" property="og:type"/>
     <? $APPLICATION->ShowHead(); ?>
 
@@ -31,6 +31,9 @@ $arSite = $rsSites->Fetch();
     Asset::getInstance()->addCss("/local/assets/css/components.min.css");
     Asset::getInstance()->addCss("/local/assets/css/colors.min.css");
     Asset::getInstance()->addCss("/local/css/jquery.expandable.css");
+    Asset::getInstance()->addCss("/local/global_assets/css/icons/fontawesome/styles.min.css");
+    Asset::getInstance()->addCss("/local/assets/css/swiper-bundle.min.css");
+
     ?>
     <!-- /global stylesheets -->
 
@@ -40,34 +43,44 @@ $arSite = $rsSites->Fetch();
     Asset::getInstance()->addJs("/local/global_assets/js/main/bootstrap.bundle.min.js");
     Asset::getInstance()->addJs("/local/global_assets/js/plugins/loaders/blockui.min.js");
     Asset::getInstance()->addJs("/local/global_assets/js/plugins/forms/styling/uniform.min.js");
+    Asset::getInstance()->addJs("/local/global_assets/js/plugins/forms/styling/switch.min.js");
+    Asset::getInstance()->addJs("/local/global_assets/js/plugins/forms/styling/switchery.min.js");
+    Asset::getInstance()->addJs("/local/global_assets/js/demo_pages/form_checkboxes_radios.js");
+
     Asset::getInstance()->addJs("/local/global_assets/js/demo_pages/login.js");
+    Asset::getInstance()->addJs("/local/global_assets/js/demo_pages/form_inputs.js");
     //Asset::getInstance()->addJs("/local/global_assets/js/plugins/forms/selects/bootstrap_multiselect.js");
     //Asset::getInstance()->addJs("/local/global_assets/js/demo_pages/form_multiselect.js");
     Asset::getInstance()->addJs("/local/js/jquery.expandable.js");
 
-    if($APPLICATION->GetCurPage()!="/personal/wizard/")
+    Asset::getInstance()->addJs("/local/assets/js/swiper-bundle.min.js");
+
+    if ($APPLICATION->GetCurPage() != "/personal/wizard/")
         Asset::getInstance()->addJs("/local/assets/js/app.js");
+
+    Asset::getInstance()->addJs(SITE_TEMPLATE_PATH . "/script.js");
     ?>
     <!-- /JS files -->
 
 </head>
 
 <body>
-<? if (!CUSER::IsAUthorized()) LocalRedirect("/auth/"); ?>
+<? if (!CUSER::IsAUthorized() && !(strstr($APPLICATION->GetCurDir(), "/lkg/gos/initiatives/")) && !(strstr($APPLICATION->GetCurDir(), "/lkg/gos/discussions/")))
+    LocalRedirect("/auth/?back_url=" . $APPLICATION->GetCurUri()); ?>
 <div id="panel"><? $APPLICATION->ShowPanel(); ?></div>
 
 
-<?$APPLICATION->IncludeComponent("bitrix:main.include","",Array(
+<? $APPLICATION->IncludeComponent("bitrix:main.include", "", Array(
         "AREA_FILE_SHOW" => "file",
         "PATH" => "/local/includes/counters.php",
         "EDIT_TEMPLATE" => ""
     )
-);?>
+); ?>
 <!-- Main navbar -->
 <div class="navbar navbar-expand-md navbar-dark">
     <div class="navbar-brand">
         <a href="/" class="d-inline-block">
-            <img src="/local/img/ogaslogo3.png" alt="">
+            <img src="/local/img/ogaslogo5.png" alt="">
         </a>
     </div>
 
@@ -77,6 +90,9 @@ $arSite = $rsSites->Fetch();
         </button>
         <button class="navbar-toggler sidebar-mobile-main-toggle" type="button">
             <i class="icon-paragraph-justify3"></i>
+        </button>
+        <button class="navbar-toggler sidebar-mobile-component-toggle" type="button">
+            <i class="icon-unfold"></i>
         </button>
     </div>
 
@@ -93,6 +109,12 @@ $arSite = $rsSites->Fetch();
         <span class="ml-md-3 mr-md-auto"></span>
         <ul class="navbar-nav">
 
+
+            <li class="nav-item">
+                <a href="/donate/" class="navbar-nav-link d-flex align-items-center"
+                >
+                    Поддержать</a>
+            </li>
 
             <li class="nav-item dropdown">
                 <a href="#" class="navbar-nav-link d-flex align-items-center dropdown-toggle"
@@ -156,21 +178,25 @@ $arSite = $rsSites->Fetch();
                 <li class="nav-item dropdown dropdown-user">
                     <a href="#" class="navbar-nav-link d-flex align-items-center dropdown-toggle"
                        data-toggle="dropdown">
-                        <div style="background-image: url(<?= CFile::GetPath($arUser["PERSONAL_PHOTO"]); ?>);background-size: cover; height: 34px; width: 34px" class="rounded-circle mr-2"></div>
+                        <div style="background-image: url(<?= CFile::GetPath($arUser["PERSONAL_PHOTO"]); ?>);background-size: cover; height: 34px; width: 34px"
+                             class="rounded-circle mr-2"></div>
                         <span><?= trim($USER->GetFirstName()); ?></span>
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right">
+                        <a href="/lkg/" class="dropdown-item"><i class="mi-account-circle"></i> Мой кабинет</a>
                         <a href="/personal/" class="dropdown-item"><i class="icon-cog5"></i> Мои данные</a>
-                        <a href="/personal/groups/" class="dropdown-item"><i class="icon-make-group "></i> Мои группы</a>
-                        <a href="/personal/delegates/" class="dropdown-item"><i class="icon-collaboration "></i> Мои делегаты</a>
+                        <a href="/personal/groups/" class="dropdown-item"><i class="icon-make-group "></i> Мои
+                            группы</a>
+                        <a href="/personal/delegates/" class="dropdown-item"><i class="icon-collaboration "></i> Мои
+                            делегаты</a>
 
                         <a href="/?logout=yes" class="dropdown-item"><i class="icon-switch2"></i> Выйти</a>
                     </div>
                 </li>
-            <?else:?>
+            <? else:?>
                 <li class="nav-item">
-                    <a href="/auth/" class="navbar-nav-link d-flex align-items-center" >Войти</a>
+                    <a href="/auth/" class="navbar-nav-link d-flex align-items-center">Войти</a>
                 </li>
             <? endif; ?>
         </ul>
@@ -202,34 +228,35 @@ $arSite = $rsSites->Fetch();
         <!-- Sidebar content -->
         <div class="sidebar-content">
 
-            <?if ($USER->isAuthorized()):?>
+            <? if ($USER->isAuthorized()): ?>
 
-            <div class="sidebar-user">
-                <div class="card-body">
-                    <div class="media">
-                        <div class="mr-3">
-                            <a href="/personal/" class="text-white">
+                <div class="sidebar-user">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="mr-3">
+                                <a href="/personal/" class="text-white">
 
-                                <div style="background-image: url(<?= CFile::GetPath($arUser["PERSONAL_PHOTO"]); ?>);background-size: cover; height: 34px; width: 34px" class="rounded-circle"></div>
-                            </a>
+                                    <div style="background-image: url(<?= CFile::GetPath($arUser["PERSONAL_PHOTO"]); ?>);background-size: cover; height: 34px; width: 34px"
+                                         class="rounded-circle"></div>
+                                </a>
 
 
-                        </div>
+                            </div>
 
-                        <div class="media-body">
-                            <div class="media-title font-weight-semibold mt-1">
+                            <div class="media-body">
+                                <div class="media-title font-weight-semibold mt-1">
 
                                     <span><?= trim($USER->GetFullName()); ?></span></div>
 
-                        </div>
+                            </div>
 
-                        <div class="ml-3 align-self-center">
-                            <a href="/personal/" class="text-white"><i class="icon-cog3"></i></a>
+                            <div class="ml-3 align-self-center">
+                                <a href="/personal/" class="text-white"><i class="icon-cog3"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <?endif;?>
+            <? endif; ?>
 
             <!-- Main navigation -->
 
@@ -262,7 +289,7 @@ $arSite = $rsSites->Fetch();
 
 
     <!-- Main content -->
-    <div class="content-wrapper">
+    <div class="content-wrapper overflow-hidden">
 
         <!-- Page header -->
         <div class="page-header page-header-light">
@@ -272,10 +299,30 @@ $arSite = $rsSites->Fetch();
                     <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
                 </div>
 
+                <div class="header-elements d-none">
+                    <div class="d-flex justify-content-center">
+                        <a href="/personal/wallet/" class="btn btn-link btn-float text-default"><i class="icon-wallet text-primary"></i> <span>Кошелек</span></a>
+                        <a href="/personal/cart/" class="btn btn-link btn-float text-default"><i class="icon-cart text-primary"></i> <span>Корзина</span></a>
+
+                <? if (strstr($APPLICATION->GetCurDir(), "/lkg/gos/")): ?>
+                            <a href="/lkg/gos/initiatives/add/" class="btn btn-link btn-float text-default"><i
+                                        class="icon-plus-circle2  text-primary"></i><span>Добавить инициативу</span></a>
+
+                <? endif; ?>
+
+                <? //pr($GLOBALS)?>
+                <? if (strstr($APPLICATION->GetCurDir(), "/groups/group/")): ?>
+                            <a href="/lkg/gos/initiatives/add/?group_id=<? $APPLICATION->ShowProperty("group_id") ?>"
+                               class="btn btn-link btn-float text-default"><i
+                                        class="icon-plus-circle2  text-primary"></i><span>Добавить инициативу</span></a>
+                <? endif; ?>
+                    </div>
+                </div>
 
             </div>
 
-            <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline overflow-hidden" style="height: 42px">
+            <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline overflow-hidden"
+                 style="height: 42px">
                 <div class="d-flex">
                     <? $APPLICATION->IncludeComponent("bitrix:breadcrumb", "main", Array(
                         "PATH" => "",    // Путь, для которого будет построена навигационная цепочка (по умолчанию, текущий путь)
@@ -297,6 +344,10 @@ $arSite = $rsSites->Fetch();
         <!-- Content area -->
         <div class="content">
 
+            <? if ($APPLICATION->GetProperty("text_page") == "Y"): ?>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card mb-0">
 
-
-
+                        <div class="card-body" style="">
+                            <? endif; ?>

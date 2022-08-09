@@ -13,7 +13,7 @@
 
     <div class="navbar-collapse collapse" id="navbar-footer">
 					<span class="navbar-text">
-						&copy; 2020 <a href="/">ОГАС ДЕМО</a>
+						&copy; 2020-<?=date("Y");?> <a href="/">ОГАС ДЕМО</a>
 					</span>
         <? $APPLICATION->IncludeComponent(
             "bitrix:menu",

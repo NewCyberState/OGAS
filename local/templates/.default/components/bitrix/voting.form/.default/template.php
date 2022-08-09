@@ -47,11 +47,6 @@ endif;
 
                 <div class="vote-item-header">
 
-                            <h5 class="text-danger">
-                                Текст законопроекта <i class="icon-file-text2  ml-2"></i>
-                            </h5>
-                    <span class="text-muted d-block mb-2">Изучите внимательно текст законопроекта, вынесенного на референдум и проголосуйте в блоке "Голосование", расположенном ниже.</span>
-
 
                     <?
                     if ($arQuestion["IMAGE"] !== false):
@@ -60,7 +55,7 @@ endif;
                     <?
                     endif;
                     ?>
-                    <div class="font-size-lg font-weight-semibold border-1 border-danger p-2 rounded"><?=$arQuestion["QUESTION"]?><?if($arQuestion["REQUIRED"]=="Y"){echo "<span class='starrequired'>*</span>";}?></div>
+                    <div class="font-size-lg font-weight-semibold"><?=$arQuestion["QUESTION"]?><?if($arQuestion["REQUIRED"]=="Y"){echo "<span class='starrequired'>*</span>";}?></div>
                     <div class="vote-clear-float"></div>
                 </div>
 

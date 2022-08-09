@@ -75,7 +75,7 @@
 
 .postimage
 {
-    max-height:750px;
+    /*max-height:750px;*/
     background-position: 50% center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -85,4 +85,29 @@
 }
 
 h1, .h1 {
-    font-size: 1.1875rem !important; }
+    font-size: 1.1875rem !important;
+}
+
+.swiper
+{
+    margin: unset;
+}
+
+.pagination
+{
+    width: fit-content;
+    text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+
+    .bx-im-mobile .bx-notifier-panel
+    {
+        display: none;
+    }
+}
+
+.navbar-expand-md .navbar-brand
+{
+    min-width: 11.2rem;
+}

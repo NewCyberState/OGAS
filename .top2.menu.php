@@ -8,15 +8,22 @@ $aMenuLinks = Array(
 		""
 	),
 	Array(
-		"Кибергосударство",
+		"Концепция государства",
 		"/concept/",
 		Array(),
 		Array(),
 		""
 	),
     Array(
-        "Экономика",
+        "Концепция экономики",
         "/economy/",
+        Array(),
+        Array(),
+        ""
+    ),
+    Array(
+        "Граждане",
+        "/user/",
         Array(),
         Array(),
         ""
@@ -29,8 +36,8 @@ $aMenuLinks = Array(
         ""
     ),
     Array(
-        "Граждане",
-        "/user/",
+        "Поддержать проект",
+        "/donate/",
         Array(),
         Array(),
         ""

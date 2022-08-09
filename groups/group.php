@@ -6,7 +6,7 @@ $APPLICATION->SetTitle("Сообщества");
 
 <?$APPLICATION->IncludeComponent(
 	"bitrix:socialnetwork_group", 
-	"template1",
+	"2021", 
 	array(
 		"ITEM_DETAIL_COUNT" => "32",
 		"ITEM_MAIN_COUNT" => "100",
@@ -18,8 +18,8 @@ $APPLICATION->SetTitle("Сообщества");
 			0 => "3",
 		),
 		"CAN_OWNER_EDIT_DESKTOP" => "Y",
-		"PATH_TO_USER" => SITE_DIR."people/user/#user_id#/",
-		"PATH_TO_SUBSCRIBE" => SITE_DIR."people/subscribe/",
+		"PATH_TO_USER" => SITE_DIR."user/#user_id#/",
+		"PATH_TO_SUBSCRIBE" => SITE_DIR."subscribe/",
 		"PATH_TO_GROUP_CREATE" => SITE_DIR."people/user/#user_id#/groups/create/",
 		"PATH_TO_SEARCH_EXTERNAL" => SITE_DIR."people/index.php",
 		"PATH_TO_MESSAGES_CHAT" => SITE_DIR."people/messages/chat/#user_id#/",
@@ -114,7 +114,7 @@ $APPLICATION->SetTitle("Сообщества");
 		"SEARCH_TAGS_COLOR_OLD" => "C0C0C0",
 		"AJAX_OPTION_ADDITIONAL" => "",
 		"LOG_NEW_TEMPLATE" => "Y",
-		"COMPONENT_TEMPLATE" => "template1",
+		"COMPONENT_TEMPLATE" => "2021",
 		"GROUP_USE_KEYWORDS" => "Y",
 		"GROUP_THUMBNAIL_SIZE" => "",
 		"LOG_THUMBNAIL_SIZE" => "",
@@ -159,6 +159,7 @@ $APPLICATION->SetTitle("Сообщества");
 		"SEARCH_FILTER_DATE_NAME" => "sonet_search_filter_date",
 		"SEARCH_RESTART" => "N",
 		"SEARCH_USE_LANGUAGE_GUESS" => "Y",
+		"MAIN_MENU_TYPE" => "top",
 		"SEF_URL_TEMPLATES" => array(
 			"index" => "index.php",
 			"search" => "index.php",

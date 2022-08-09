@@ -30,7 +30,7 @@ $aMenuLinks = Array(
 	),
 	Array(
 		"Мои законы", 
-		"my/", 
+		"?my=Y",
 		Array(), 
 		Array(), 
 		"" 

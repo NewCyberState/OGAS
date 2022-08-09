@@ -6,6 +6,7 @@
 /** @global CUser $USER */
 /** @global CMain $APPLICATION */
 CUtil::InitJSCore(array("ajax", "popup"));
+
 ?>
 <?
 		$APPLICATION->IncludeComponent(

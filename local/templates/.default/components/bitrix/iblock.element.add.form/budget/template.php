@@ -108,7 +108,7 @@ if (strlen($arResult["MESSAGE"]) > 0):?>
 
         var options = {
             is3D :true,
-            forceIFrame:true,
+            //forceIFrame:true,
             width: w,
             height : h,
             legend : { textStyle : {color: 'black', fontSize: 12}},

@@ -31,6 +31,7 @@ $arSite = $rsSites->Fetch();
     Asset::getInstance()->addCss("/local/assets/css/layout.min.css");
     Asset::getInstance()->addCss("/local/assets/css/components.min.css");
     Asset::getInstance()->addCss("/local/assets/css/colors.min.css");
+    Asset::getInstance()->addCss("/local/global_assets/css/icons/fontawesome/styles.min.css");
     ?>
     <!-- /global stylesheets -->
 
@@ -61,7 +62,7 @@ $arSite = $rsSites->Fetch();
 <div class="navbar navbar-expand-md navbar-dark">
     <div class="navbar-brand">
         <a href="/" class="d-inline-block">
-            <img src="/local/img/ogaslogo3.png" alt="">
+            <img src="/local/img/ogaslogo5.png" alt="">
         </a>
     </div>
 
@@ -71,6 +72,9 @@ $arSite = $rsSites->Fetch();
         </button>
         <button class="navbar-toggler sidebar-mobile-main-toggle" type="button">
             <i class="icon-paragraph-justify3"></i>
+        </button>
+        <button class="navbar-toggler sidebar-mobile-component-toggle" type="button">
+            <i class="icon-unfold"></i>
         </button>
     </div>
 
@@ -90,6 +94,11 @@ $arSite = $rsSites->Fetch();
     <div class="collapse navbar-collapse" id="navbar-mobile">
         <span class="ml-md-3 mr-md-auto"></span>
         <ul class="navbar-nav">
+            <li class="nav-item">
+                <a href="/donate/" class="navbar-nav-link d-flex align-items-center"
+                >
+                    Поддержать</a>
+            </li>
 
             <li class="nav-item dropdown">
                 <a href="#" class="navbar-nav-link d-flex align-items-center dropdown-toggle"
@@ -157,6 +166,7 @@ $arSite = $rsSites->Fetch();
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right">
+                        <a href="/lkg/" class="dropdown-item"><i class="mi-account-circle"></i> Мой кабинет</a>
                         <a href="/personal/" class="dropdown-item"><i class="icon-cog5"></i> Мои данные</a>
                         <a href="/personal/groups/" class="dropdown-item"><i class="icon-make-group "></i> Мои группы</a>
                         <a href="/personal/delegates/" class="dropdown-item"><i class="icon-collaboration "></i> Мои делегаты</a>
@@ -258,7 +268,7 @@ $arSite = $rsSites->Fetch();
 
 
     <!-- Main content -->
-    <div class="content-wrapper">
+    <div class="content-wrapper  overflow-hidden">
 
         <!-- Page header -->
         <div class="page-header page-header-light">

@@ -55,7 +55,7 @@ if (strlen($arResult["ErrorMessage"]) > 0) {
 
         foreach ($arResult['ALL_FEATURES'] as $feature => $arFeature) {
 
-            if(in_array($feature,array('blog','photo','search','chat','marketplace'))) continue;
+            if(in_array($feature,array('photo','forum','blog','search','chat','marketplace'))) continue;
 
             if ($arFeature["Url"] == $APPLICATION->GetCurPage())
                 $active = 'active';

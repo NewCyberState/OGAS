@@ -15,15 +15,16 @@ $this->setFrameMode(true);
 
 use Bitrix\Main\Page\Asset; //Подключение библиотеки для использования  Asset::getInstance()->addCss()
 global $USER;
+?>
+<script src="https://www.gstatic.com/charts/loader.js"></script>
 
-
-Asset::getInstance()->addJs("/local/global_assets/js/demo_pages/charts/google/pies/pie.js");
-Asset::getInstance()->addJs("https://www.gstatic.com/charts/loader.js");
+<?
+//Asset::getInstance()->addJs("/local/global_assets/js/demo_pages/charts/google/pies/pie.js");
 Asset::getInstance()->addJs("/local/global_assets/js/plugins/extensions/jquery_ui/widgets.min.js");
 Asset::getInstance()->addJs("/local/global_assets/js/plugins/extensions/jquery_ui/touch.min.js");
 Asset::getInstance()->addJs("/local/global_assets/js/plugins/sliders/slider_pips.min.js");
 //Asset::getInstance()->addJs("/local/global_assets/js/plugins/forms/styling/switchery.min.js");
-Asset::getInstance()->addJs("/local/assets/js/app.js");
+//Asset::getInstance()->addJs("/local/assets/js/app.js");
 //Asset::getInstance()->addJs("/local/global_assets/js/demo_pages/jqueryui_sliders.js");
 
 $oldbudget = array(
@@ -141,6 +142,7 @@ function array_sum_col($arr,$col) {
 
 <script type="text/javascript">
 
+
     function drawChart(d) {
 
         var w = $("#google-pie").parent().width();
@@ -165,7 +167,7 @@ function array_sum_col($arr,$col) {
 
         var options = {
             is3D :true,
-            forceIFrame:true,
+            //forceIFrame:true,
             width: w,
             height : h,
             legend : { textStyle : {color: 'black', fontSize: 12}},

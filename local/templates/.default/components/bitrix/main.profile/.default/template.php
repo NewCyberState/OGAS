@@ -21,6 +21,7 @@ Asset::getInstance()->addJs("/local/assets/js/app.js");
 ?>
 <div class="row">
 <div class="col-lg-12">
+<div class="card">
 
 <?
 if($arResult["strProfileError"]) {
@@ -109,8 +110,8 @@ var cookie_prefix = '<?=$arResult["COOKIE_PREFIX"]?>';
 <input type="hidden" name="lang" value="<?=LANG?>" />
 <input type="hidden" name="ID" value=<?=$arResult["ID"]?> />
 
-<div  id="user_div_reg">
-<table class="profile-table data-table">
+<div  id="user_div_reg" class="table-responsive">
+<table class="table table-scrollable table-striped">
 	<tbody>
 
 
@@ -204,18 +205,10 @@ document.getElementById('bx_auth_secure').style.display = 'inline-block';
             }
             ?></td>
     </tr>
-	</table>
-	</div>
+
 
 
 	<?// ********************* User properties ***************************************************?>
-	<table class="data-table profile-table">
-		<thead>
-			<tr>
-				<td colspan="2">&nbsp;</td>
-			</tr>
-		</thead>
-		<tbody>
 		<?$first = true;?>
 		<?foreach ($arResult["USER_PROPERTIES"]["DATA"] as $FIELD_NAME => $arUserField):?>
 		<tr><td class="field-name"><?//pr($arUserField)?>
@@ -239,50 +232,56 @@ document.getElementById('bx_auth_secure').style.display = 'inline-block';
             <td><textarea class="form-control"  cols="30" rows="10" name="PERSONAL_NOTES"><?=$arResult["arUser"]["PERSONAL_NOTES"]?></textarea></td>
         </tr>
 
-		</tbody>
-	</table>
 
 	<?// ******************** /User properties ***************************************************?>
 
     <?if($arResult["IS_ADMIN"]):?>
-        <div class="profile-link profile-user-div-link"><a title="<?=GetMessage("USER_SHOW_HIDE")?>" href="javascript:void(0)" onclick="SectionClick('admin')"><?=GetMessage("USER_ADMIN_NOTES")?></a></div>
-        <div id="user_div_admin" class="profile-block-<?=strpos($arResult["opened"], "admin") === false ? "hidden" : "shown"?>">
-            <table class="data-table profile-table">
-                <thead>
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                </tr>
-                </thead>
-                <tbody>
+
                 <tr>
                     <td><?=GetMessage("USER_ADMIN_NOTES")?>:</td>
-                    <td><textarea cols="30" rows="5" name="ADMIN_NOTES"><?=$arResult["arUser"]["ADMIN_NOTES"]?></textarea></td>
+                    <td><textarea cols="30" rows="5" class="form-control" name="ADMIN_NOTES"><?=$arResult["arUser"]["ADMIN_NOTES"]?></textarea></td>
                 </tr>
-                </tbody>
-            </table>
-        </div>
     <?endif;?>
 
-	<p><?echo $arResult["GROUP_POLICY"]["PASSWORD_REQUIREMENTS"];?></p>
+    <tr>
+        <td colspan="2">
+
+        <p><?echo $arResult["GROUP_POLICY"]["PASSWORD_REQUIREMENTS"];?></p>
 	<p><input type="submit" class="btn btn-primary" name="save" value="<?=(($arResult["ID"]>0) ? GetMessage("MAIN_SAVE") : GetMessage("MAIN_ADD"))?>">&nbsp;&nbsp;<input type="reset" class="btn btn-secondary"  value="<?=GetMessage('MAIN_RESET');?>"></p>
+        </td>
+    </tr>
+
+    <?
+    if($arResult["SOCSERV_ENABLED"])
+    {
+        ?><tr>
+        <td colspan="2"><?
+        $APPLICATION->IncludeComponent(
+            "bitrix:socserv.auth.split",
+            ".default",
+            array(
+                "SHOW_PROFILES" => "Y",
+                "ALLOW_DELETE" => "Y",
+                "COMPONENT_TEMPLATE" => ".default"
+            ),
+            false
+        );
+        ?>
+        </td>
+        </tr>
+            <?
+    }
+    ?>
+
+    <?endif?>
+
+    </tbody>
+</table>
+</div>
+
 </form>
-<?
-if($arResult["SOCSERV_ENABLED"])
-{
-	$APPLICATION->IncludeComponent(
-	"bitrix:socserv.auth.split", 
-	".default", 
-	array(
-		"SHOW_PROFILES" => "Y",
-		"ALLOW_DELETE" => "Y",
-		"COMPONENT_TEMPLATE" => ".default"
-	),
-	false
-);
-}
-?>
 
-<?endif?>
 
+</div>
 </div>
 </div>

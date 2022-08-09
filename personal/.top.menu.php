@@ -8,6 +8,13 @@ $aMenuLinks = Array(
         ""
 	),
     Array(
+        "Группы",
+        "/groups/",
+        Array(),
+        Array("icon"=>"<i class=\"icon-make-group\"></i>"),
+        ""
+    ),
+    Array(
         "Делегирование",
         "/personal/delegates/",
         Array(),

@@ -42,6 +42,9 @@ CJSCore::Init(array("fx"));
                             <? if ($arResult["BACKURL"] <> ''): ?>
                                 <input type="hidden" name="backurl" value="<?= $arResult["BACKURL"] ?>"/>
                             <? endif; ?>
+                            <? if ($arParams["BACK_URL"] <> ''): ?>
+                                <input type="hidden" name="back_url" value="<?= $arParams["BACK_URL"] ?>"/>
+                            <? endif; ?>
                             <? foreach ($arResult["POST"] as $key => $value): ?>
                                 <? if ($key !== 'captcha_word'): ?>
                                     <input type="hidden" name="<?= $key ?>" value="<?= $value ?>"/>

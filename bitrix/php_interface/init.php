@@ -1,4 +1,6 @@
 <?php
+
+/*
 CModule::IncludeModule("blog");
 use \Bitrix\Main\Service\GeoIp;
 
@@ -38,15 +40,15 @@ class MyClass
     {
 
         //AddMessage2Log($arFields);
-        /*if($arFields[user_fields][LAST_LOGIN]==null)
-            LocalRedirect("/personal/wizard/");*/
+        //if($arFields[user_fields][LAST_LOGIN]==null)
+          //  LocalRedirect("/personal/wizard/");
 
     }
 
     function OnBlogUpdateHandler($ID, &$arFields)
     {
-        /*AddMessage2Log($ID);
-        AddMessage2Log($arFields);*/
+        //AddMessage2Log($ID);
+        //AddMessage2Log($arFields);
 
     }
 
@@ -99,7 +101,9 @@ function plural_form($n, $forms)
 function pr($o)
 {
     global $USER;
-    if(true/*$USER->IsAdmin()*/) {
+    if(true
+        //$USER->IsAdmin()
+    ) {
         $bt = debug_backtrace();
         $bt = $bt[0];
         $dRoot = $_SERVER["DOCUMENT_ROOT"];
@@ -146,3 +150,4 @@ function pre($arr)
     print_r($arr);
     echo "</pre>";
 }
+*/

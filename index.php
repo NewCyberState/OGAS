@@ -16,7 +16,7 @@ global $USER;
         )
     );
 else:
-    LocalRedirect("/lkg/gos/");
+    LocalRedirect("/lkg/");
 endif;
 ?>
 </div>

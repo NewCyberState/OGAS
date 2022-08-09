@@ -8,22 +8,22 @@ $aMenuLinks = Array(
 		"" 
 	),
 	Array(
-		"Мои группы", 
-		"/personal/groups/", 
+		"Моя корзина",
+		"/personal/cart/", 
 		Array(), 
 		Array(), 
 		"" 
 	),
-    Array(
-        "Все группы",
-        "/personal/groups/all/",
-        Array(),
-        Array(),
-        ""
-    ),
 	Array(
-		"Создать группу", 
-		"/personal/groups/create/", 
+		"Мой кошелек", 
+		"/personal/wallet/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Мои заказы", 
+		"/personal/order/", 
 		Array(), 
 		Array(), 
 		"" 

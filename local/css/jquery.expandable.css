@@ -15,10 +15,10 @@
     font-weight: 500;
     box-sizing: border-box;
     padding-left: 0px;
-    padding-right: 30px;
+    padding-right: 0px;
     font-size: 12px;
-    text-transform: uppercase;
     line-height: 20px;
+    color:#2196f3 !important;
 }
 
 .expandable .expand-bar::before {
@@ -59,7 +59,7 @@
     position: absolute;
     width: 10px;
     height: 1px;
-    background: #1d1d1d;
+    background: #2196f3;
     content: "";
     left: 5px;
 }

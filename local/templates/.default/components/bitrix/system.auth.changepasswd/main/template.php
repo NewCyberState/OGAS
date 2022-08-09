@@ -15,8 +15,15 @@ if(isset($APPLICATION->arAuthResult)){
 
 global $arTheme;
 ?>
-<div class="border_block">
-	<div class="module-form-block-wr lk-page">
+<div class="row">
+    <div class="content d-flex justify-content-center align-items-center">
+        <div class="card mb-0">
+            <div class="card-body">
+                <div class="text-center mb-3">
+
+                    <i class="icon-user-lock  icon-2x text-success border-success border-3 rounded-round p-3 mb-3 mt-1"></i>
+                    <h5 class="mb-0">Смена пароля</h5>
+                </div>
 		<?if($arResult['ERROR_MESSAGE']):?>
 			<div class="alert <?=($arResult['ERROR_MESSAGE']['TYPE'] === "OK"? "alert-success" : "alert-danger")?>"><?=$arResult['ERROR_MESSAGE']['MESSAGE'].($arResult['ERROR_MESSAGE']['TYPE'] == 'OK' ? GetMessage("CHANGE_SUCCESS") : '')?></div>
 		<?else:?>
@@ -45,47 +52,47 @@ global $arTheme;
 			<?endif;?>
 		<?endif;?>
 		<?if(!$arResult['ERROR_MESSAGE'] || $arResult['ERROR_MESSAGE']['TYPE'] !== 'OK'):?>
-		    <div class="form-block">
+		    <div class="form-group">
 		        <form method="post" action="/auth/change-password/" name="bform" class="bf">
 					<?if (strlen($arResult["BACKURL"]) > 0): ?><input type="hidden" name="backurl" value="<?=$arResult["BACKURL"]?>" /><?endif;?>
 					<input type="hidden" name="AUTH_FORM" value="Y">
 					<input type="hidden" name="TYPE" value="CHANGE_PWD">
 					<?if($arResult["PHONE_REGISTRATION"]):?>
-						<div class="form-control">
-							<label><?=GetMessage('change_pass_phone_number')?> <span class="star">*</span></label>
-							<input type="text" value="<?=htmlspecialcharsbx($arResult["USER_PHONE_NUMBER"])?>" class="bx-auth-input" disabled required />
+						<div class="form-group">
+							<label class="font-weight-semibold"><?=GetMessage('change_pass_phone_number')?> <span class="star">*</span></label>
+							<input type="text" value="<?=htmlspecialcharsbx($arResult["USER_PHONE_NUMBER"])?>" class="form-control" disabled required />
 							<input type="hidden" name="USER_PHONE_NUMBER" value="<?=htmlspecialcharsbx($arResult["USER_PHONE_NUMBER"])?>" />
 						</div>
-						<div class="form-control">
+						<div class="form-group">
 							<label><?=GetMessage("change_pass_code")?> <span class="star">*</span></label>
-							<input type="text" name="USER_CHECKWORD" required maxlength="50" value="<?=$arResult["USER_CHECKWORD"]?>" class="bx-auth-input"  />
+							<input type="text" name="USER_CHECKWORD" required maxlength="50" value="<?=$arResult["USER_CHECKWORD"]?>" class="form-control"  />
 						</div>
 					<?else:?>
 						<input type="hidden" name="USER_CHECKWORD" maxlength="50" value="<?=$arResult["USER_CHECKWORD"]?>" />
-			            <div class="form-control">
+			            <div class="form-group">
 			            	<?
 							$name = "AUTH_EMAIL";
 							if($arTheme["LOGIN_EQUAL_EMAIL"]["VALUE"] !== "Y"){
 								$name = "AUTH_LOGIN";
 							}
 							?>
-			                <label><?=GetMessage($name)?> <span class="star">*</span></label>
-							<input type="text" maxlength="50" value="<?=$arResult["LAST_LOGIN"]?>" class="bx-auth-input <?=($_POST && empty($_POST["USER_LOGIN"]) ? "error": '')?>" disabled required />
+			                <label class="font-weight-semibold"><?=GetMessage($name)?> <span class="star">*</span></label>
+							<input type="text" maxlength="50" value="<?=$arResult["LAST_LOGIN"]?>" class="form-control <?=($_POST && empty($_POST["USER_LOGIN"]) ? "error": '')?>" disabled required />
 							<input type="hidden" name="USER_LOGIN" value="<?=$arResult["LAST_LOGIN"]?>" />
 			            </div>
 			        <?endif;?>
-		            <div class="form-control">
+		            <div class="form-group">
 						<div class="label_block">
-							<label><?=GetMessage("AUTH_NEW_PASSWORD_REQ")?> <span class="star">*</span></label>
-							<input type="password" name="USER_PASSWORD" maxlength="50" id="pass" required value="<?=$arResult["USER_PASSWORD"]?>" class="bx-auth-input <?=(isset($arResult["ERRORS"]) && array_key_exists("USER_PASSWORD", $arResult["ERRORS"]) ? "error": '')?>" />
+							<label class="font-weight-semibold"><?=GetMessage("AUTH_NEW_PASSWORD_REQ")?> <span class="star">*</span></label>
+							<input type="password" name="USER_PASSWORD" maxlength="50" id="pass" required value="<?=$arResult["USER_PASSWORD"]?>" class="form-control <?=(isset($arResult["ERRORS"]) && array_key_exists("USER_PASSWORD", $arResult["ERRORS"]) ? "error": '')?>" />
 						</div>
-						<div class="text_block">
+						<div class="m-2 text-muted">
 							<?=GetMessage("PASSWORD_MIN_LENGTH")?>
 						</div>
 		            </div>
-		            <div class="form-control">
-		                <label><?=GetMessage("AUTH_NEW_PASSWORD_CONFIRM")?> <span class="star">*</span></label>
-						<input type="password" name="USER_CONFIRM_PASSWORD" maxlength="50" required value="<?=$arResult["USER_CONFIRM_PASSWORD"]?>" class="bx-auth-input <?=(isset($arResult["ERRORS"]) && array_key_exists("USER_CONFIRM_PASSWORD", $arResult["ERRORS"]) ? "error": '')?>"  />
+		            <div class="form-group">
+		                <label class="font-weight-semibold"><?=GetMessage("AUTH_NEW_PASSWORD_CONFIRM")?> <span class="star">*</span></label>
+						<input type="password" name="USER_CONFIRM_PASSWORD" maxlength="50" required value="<?=$arResult["USER_CONFIRM_PASSWORD"]?>" class="form-control <?=(isset($arResult["ERRORS"]) && array_key_exists("USER_CONFIRM_PASSWORD", $arResult["ERRORS"]) ? "error": '')?>"  />
 		            </div>
 		            <?if($arResult["USE_CAPTCHA"]):?>
 						<div class="form-control captcha-row forget_block clearfix">
@@ -101,7 +108,7 @@ global $arTheme;
 						</div>
 					<?endif;?>
 		            <div class="but-r">
-						<button class="btn btn-default" type="submit" name="change_pwd" value="<?=GetMessage("AUTH_CHANGE")?>"><span><?=GetMessage("CHANGE_PASSWORD")?></span></button>
+						<button class="btn btn-primary" type="submit" name="change_pwd" value="<?=GetMessage("AUTH_CHANGE")?>"><span><?=GetMessage("CHANGE_PASSWORD")?></span></button>
 					</div>
 		    	</form>
 		    	<?if($arResult["PHONE_REGISTRATION"]):?>
@@ -150,5 +157,8 @@ global $arTheme;
 				<script>document.bform.USER_PASSWORD.focus();</script>
 			<?endif;?>
 		<?endif;?>
-	</div>
+            </div>
+        </div>
+    </div>
 </div>
+

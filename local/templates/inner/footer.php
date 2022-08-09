@@ -1,3 +1,10 @@
+<? if ($APPLICATION->GetProperty("text_page") == "Y"): ?>
+    </div>
+    </div>
+    </div>
+    </div>
+<? endif; ?>
+
 
 </div>
 <!-- /content area -->
@@ -14,9 +21,16 @@
     </div>
 
     <div class="navbar-collapse collapse" id="navbar-footer">
-					<span class="navbar-text text-nowrap">
-						&copy; 2020 <a href="/">ОГАС ДЕМО</a>
+					<span class="navbar-text text-nowrap mr-3">
+						&copy; 2020-<?= date("Y"); ?> <a href="/">ОГАС ДЕМО</a>
 					</span>
+
+        <a href="https://vk.com/digital_socialism/" target="_blank"><b
+                    class="fab fa-vk mr-2 mt-0 fa-1x font-weight-normal"></b></a>
+        <a href="https://t.me/digitalsocialism" target="_blank"><b
+                    class="fab fa-telegram-plane mr-2 fa-1x font-weight-normal"></b></a>
+        <a href="https://www.youtube.com/channel/UC9g23VIh4tRNf-dW7TdtWsg" target="_blank"><b
+                    class="fab fa-youtube mr-2 fa-1x font-weight-normal"></b></a>
 
         <? $APPLICATION->IncludeComponent(
             "bitrix:menu",
@@ -38,7 +52,6 @@
         ); ?>
 
 
-
     </div>
 </div>
 <!-- /footer -->
@@ -48,6 +61,6 @@
 
 </div>
 <!-- /page content -->
-<? /*$APPLICATION->IncludeComponent("bitrix:im.messenger", "", Array(), null, array("HIDE_ICONS" => "Y")); */?>
+<? //$APPLICATION->IncludeComponent("bitrix:im.messenger", "", Array(), null, array("HIDE_ICONS" => "Y")); ?>
 </body>
 </html>

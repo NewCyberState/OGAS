@@ -64,7 +64,7 @@ var EcommerceCustomers = function() {
 
                 // Add legend
                 legend: {
-                    data: ['New customers','Returned customers','Orders'],
+                    data: ['План','Факт','Заказы'],
                     itemHeight: 8,
                     itemGap: 20,
                     textStyle: {

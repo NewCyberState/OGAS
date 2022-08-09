@@ -1,0 +1,21 @@
+.profile-table
+{
+}
+
+.profile-link
+{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-weight: bold;
+}
+
+.profile-table td {
+    vertical-align: top;
+    width:75%;
+}
+.profile-table td:first-child {
+    width:25%;
+    min-width: 200px;
+}

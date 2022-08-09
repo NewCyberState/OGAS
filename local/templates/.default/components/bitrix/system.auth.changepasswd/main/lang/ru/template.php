@@ -15,7 +15,7 @@ $MESS ["REQUIRED_FIELDS"] = "Обязательные поля";
 $MESS ["CHANGE_PASSWORD"] = "Сменить пароль";
 $MESS ["PASSWORD_MIN_LENGTH"] = "Длина пароля не менее 6 символов";
 $MESS ["WRONG_LOGIN_OR_PASSWORD"] = "Неверный логин или пароль";
-$MESS ["CHANGE_SUCCESS"] = "Для продолжения Вам необходимо авторизоваться с новым паролем.";
+$MESS ["CHANGE_SUCCESS"] = "Для продолжения Вам необходимо авторизоваться с новым паролем.<br><a href='/auth/'>Войти с новым паролем</a>";
 $MESS ["LOGIN"] = "Войти";
 $MESS ["PASSWORDS_DONT_MATCH"] = "Пароли не совпадают";
 $MESS ["REQUIRED_FIELD"] = "Поле обязательно для заполнения.";

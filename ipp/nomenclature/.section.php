@@ -1,0 +1,6 @@
+<?
+$sSectionName = "Номенклатура";
+$arDirProperties = Array(
+
+);
+?>

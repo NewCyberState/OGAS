@@ -214,7 +214,7 @@ $APPLICATION->SetTitle("Граждане");
 			"user_blog_post_edit" => "user/#user_id#/blog/edit/#post_id#/",
 			"user_blog_rss" => "user/#user_id#/blog/rss/#type#/",
 			"user_blog_draft" => "user/#user_id#/blog/draft/",
-			"user_blog_post" => "user/#user_id#/blog/#post_id#/",
+			"user_blog_post" => "#user_id#/blog/#post_id#/",
 			"user_blog_moderation" => "user/#user_id#/blog/moderation/",
 			"user_forum" => "user/#user_id#/forum/",
 			"user_forum_topic_edit" => "user/#user_id#/forum/edit/#topic_id#/",

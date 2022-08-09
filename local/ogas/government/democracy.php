@@ -11,6 +11,7 @@ use Bitrix\Blog;
 Loader::includeModule('main');
 Loader::includeModule('blog');
 Loader::includeModule('socialnetwork');
+Loader::includeModule('vote');
 
 /**/
 
@@ -28,7 +29,7 @@ class LiquidVoting
     private static $delegatetable = array();
     private static $endvotes = array();
     private static $votedateend = false;
-
+    private static $user_groups = false;
 
     public static function cmp($a, $b)
     {
@@ -38,7 +39,7 @@ class LiquidVoting
         return ($a[2] > $b[2]) ? -1 : 1;
     }
 
-        /**
+     /**
      * @param $post_id
      */
     public function GetVotingData($post_id)
@@ -92,6 +93,100 @@ class LiquidVoting
         }
 
         $groupid = $post[SOCNET_GROUP_ID];
+
+        foreach (self::$endvotes as $item) {
+            self::GetDelegates($item[0], $tags, 1,$groupid);
+        }
+
+        //pr(self::$delegatetable);
+
+        usort(self::$delegatetable, array("\Ogas\Democracy\LiquidVoting", "cmp"));
+
+
+        foreach (self::$endvotes as $vote):
+            self::$delegatetable[] = array($vote[0], $vote[1], 0);
+        endforeach;
+
+        //pr( self::$delegatetable);
+
+        foreach (self::$delegatetable as $row) {
+            $w[$row[0]]++;
+        }
+
+
+        foreach (self::$delegatetable as $row) {
+            $t[$row[2]][] = array($row[0], $row[1]);
+        }
+
+        foreach ($t as $key => $row) {
+            foreach ($row as $k => $s) {
+                //pr($s);
+                $p[$s[0]][$s[1]] = 1 / $w[$s[0]];
+            }
+        }
+
+
+        foreach ($p as $key => $row) {
+            foreach ($row as $k => $s) {
+                //pr($s);
+                $r[$k] = $r[$k] + $s + $s * $r[$key];
+            }
+        }
+
+
+        foreach ($t as $key => $row) {
+            foreach ($row as $k => $s) {
+                //pr($r[$s[0]]);
+                $u[] = array($s[0], $s[1], ($r[$s[0]] + 1) / $w[$s[0]]);
+            }
+        }
+        //pr($t);
+        return $u;
+
+
+    }
+
+    /**
+     * @param $post_id
+     */
+    public function GetVotingData2021($element_id)
+    {
+
+        $w = array();
+        $t = array();
+        $p = array();
+        $r = array();
+        $u = array();
+        self::$endvotes = array();
+        self::$groupmembers = array();
+        self::$delegatetable= array();
+
+        $element=GetElement($element_id);
+
+        //pr($post->getFields());
+        //$tags = $post->getTags();
+        $tags = $element["PROPERTIES"]["THEMATICS"]["VALUE"];
+
+        if ($element[STATUS_ID] >= 5)
+            self::$votedateend = $element["PROPERTIES"]["STATUS_DATE"]["VALUE"];
+
+        /*$attach = \Bitrix\Vote\Attach::getData($element["VOTE_ID"]["VALUE"]);
+        $vote_id = $attach[0][OBJECT_ID];*/
+
+        $VOTE_ID = GetVoteDataByID($element["PROPERTIES"]["VOTE_ID"]["VALUE"], $arChannel, $arVote, $arQuestions, $arAnswers, $arDropDown, $arMultiSelect, $arGroupAnswers, "N");
+
+        foreach ($arAnswers as $an) {
+            foreach ($an as $arAnswer) {
+                $db_res = \CVoteEvent::GetUserAnswerStat(array(), array("ANSWER_ID" => $arAnswer[ID], "VALID" => "Y", "bGetVoters" => "Y", "bGetMemoStat" => "N"));
+
+                while ($db_res && ($res = $db_res->Fetch())) {
+                    self::$endvotes[] = array($res[AUTH_USER_ID], $arAnswer["MESSAGE"]);
+                }
+            }
+        }
+
+
+        $groupid = $element["PROPERTIES"]["GROUP_ID"]["VALUE"];
 
         foreach (self::$endvotes as $item) {
             self::GetDelegates($item[0], $tags, 1,$groupid);
@@ -281,8 +376,48 @@ class LiquidVoting
         return self::$endvotes;
     }
 
+    public function GetEndVotes2021($element_id)
+    {
+        self::$endvotes = array();
 
-    private function GetGroupMembers($group_id)
+        /*$SORT = Array("DATE_PUBLISH" => "DESC", "NAME" => "ASC");
+        $arFilter = Array(
+            "ID" => $post_id,
+        );
+
+        $dbPosts = \CBlogPost::GetList(
+            $SORT,
+            $arFilter,
+            false,
+            false,
+            array("*", "UF_*")
+        );
+
+        $post = $dbPosts->Fetch();
+
+        $attach = \Bitrix\Vote\Attach::getData($post["UF_BLOG_POST_VOTE"]);
+        $vote_id = $attach[0][OBJECT_ID];*/
+
+        $element=GetElement($element_id);
+
+        $VOTE_ID = GetVoteDataByID($element["PROPERTIES"]["VOTE_ID"]["VALUE"], $arChannel, $arVote, $arQuestions, $arAnswers, $arDropDown, $arMultiSelect, $arGroupAnswers, "N");
+
+
+        foreach ($arAnswers as $an) {
+            foreach ($an as $arAnswer) {
+                $db_res = \CVoteEvent::GetUserAnswerStat(array(), array("ANSWER_ID" => $arAnswer[ID], "VALID" => "Y", "bGetVoters" => "Y", "bGetMemoStat" => "N"));
+
+                while ($db_res && ($res = $db_res->Fetch())) {
+                    self::$endvotes[] = array($res[AUTH_USER_ID], $arAnswer["MESSAGE"]);
+                }
+            }
+        }
+
+        return self::$endvotes;
+    }
+
+
+    public function GetGroupMembers($group_id)
     {
         $dbRequests = \CSocNetUserToGroup::GetList(
             array("ID" => "ASC"),
@@ -290,6 +425,7 @@ class LiquidVoting
                 "GROUP_ID" => $group_id,
                 "USER_ACTIVE" => "Y",
                 "GROUP_ACTIVE" => "Y",
+                "<=ROLE" => SONET_ROLES_USER
             ),
             false,
             false,
@@ -299,7 +435,32 @@ class LiquidVoting
         {
             self::$groupmembers[]=$arRequests[USER_ID];
         }
+        return self::$groupmembers;
     }
 
+    public function GetUserGroups($user_id)
+    {
+        if(self::$user_groups)
+            return self::$user_groups;
+        else {
+
+            $dbRequests = \CSocNetUserToGroup::GetList(
+                array("ID" => "ASC"),
+                array(
+                    "USER_ID" => $user_id,
+                    "USER_ACTIVE" => "Y",
+                    "GROUP_ACTIVE" => "Y",
+                    "<=ROLE" => SONET_ROLES_USER,
+                ),
+                false,
+                false,
+                false
+            );
+            while ($arRequests = $dbRequests->GetNext()) {
+                self::$user_groups[] = $arRequests[GROUP_ID];
+            }
+            return self::$user_groups;
+        }
+    }
 
 }

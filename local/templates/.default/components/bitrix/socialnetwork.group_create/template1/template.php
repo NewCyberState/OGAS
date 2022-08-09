@@ -1,4 +1,13 @@
 <?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
+
+<?
+use Bitrix\Main\Page\Asset;
+
+Asset::getInstance()->addJs("/local/global_assets/js/plugins/extensions/jquery_ui/interactions.min.js");
+Asset::getInstance()->addJs("/local/global_assets/js/plugins/forms/styling/switch.min.js");
+Asset::getInstance()->addJs("/local/global_assets/js/plugins/forms/styling/switchery.min.js");
+
+?>
 <div class="card">
     <div class="card-body">
 <?
@@ -33,13 +42,13 @@ else
 			<table class="sonet-message-form" cellspacing="0" cellpadding="0">
 				<tr>
 					<td valign="top" class="form-group">
-                        <label class="col-form-label"><span class="required-field">*</span> <?= GetMessage("SONET_C8_NAME") ?>:</label>
+                        <label class="d-block font-weight-semibold mt-0"><span class="required-field">*</span> <?= GetMessage("SONET_C8_NAME") ?>:</label>
 						<input type="text" class="form-control" name="GROUP_NAME" value="<?= $arResult["POST"]["NAME"]; ?>">
 					</td>
 				</tr>
 				<tr>
 					<td valign="top"  class="form-group">
-                        <label class="col-form-label"><span class="required-field">*</span> <?= GetMessage("SONET_C8_DESCR") ?>:</label>
+                        <label class="d-block font-weight-semibold mt-3"><span class="required-field">*</span> <?= GetMessage("SONET_C8_DESCR") ?>:</label>
                         <textarea name="GROUP_DESCRIPTION" class="form-control" rows="5"><?= $arResult["POST"]["DESCRIPTION"]; ?></textarea></td>
 				</tr>
 				<?// ********************* Group properties ***************************************************?>
@@ -47,9 +56,9 @@ else
 				<tr>
 					<td valign="top"  class="form-group">
 						<?if ($arUserField["MANDATORY"]=="Y"):?>
-                            <label class="col-form-label"><span class="starrequired">*</span></label>
+                            <label class="d-block font-weight-semibold mt-3"><span class="starrequired">*</span><?=$arUserField["EDIT_FORM_LABEL"]?>:</label>
 						<?endif;?>
-						<?=$arUserField["EDIT_FORM_LABEL"]?>:
+
 
 						<?$APPLICATION->IncludeComponent(
 							"bitrix:system.field.edit",
@@ -62,7 +71,7 @@ else
 				<?endforeach;?>
 				<?// ******************** /Group properties ***************************************************?>
 				<tr>
-                    <td valign="top"  class="form-group"> <label class="col-form-label"><?= GetMessage("SONET_C8_IMAGE") ?>:</label>
+                    <td valign="top"  class="form-group"> <label class="d-block font-weight-semibold mt-3"><?= GetMessage("SONET_C8_IMAGE") ?>:</label>
 						<input name="GROUP_IMAGE_ID" type="file"/><br /><?
 						if ($arResult["POST"]["IMAGE_ID_FILE"]):?>
 							<input type="checkbox" name="GROUP_IMAGE_ID_DEL" id="GROUP_IMAGE_ID_DEL" value="Y"<?= ($arResult["POST"]["IMAGE_ID_DEL"] == "Y") ? " checked" : ""?>/>
@@ -88,25 +97,35 @@ else
 <?*/?>
 					</td>
 				</tr>
-				<? 
-				if (!CModule::IncludeModule('extranet') || !CExtranet::IsExtranetSite() || intval($arParams["GROUP_ID"]) > 0):
-					?>
-					<tr>
-						<td valign="top"  class="form-group">
-                            <input type="hidden" id="GROUP_VISIBLE" value="Y" name="GROUP_VISIBLE"<?= ($arResult["POST"]["VISIBLE"] == "Y") ? " checked" : ""?>>
-                            <input type="hidden" id="GROUP_OPENED" value="Y" name="GROUP_OPENED">
-                            <?/*?>
 
-                            <?= GetMessage("SONET_C8_PARAMS") ?>:
+
+					<tr>
+						<td valign="top" >
+                            <div class="form-group">
+                          <p><label class="d-block font-weight-semibold mt-3"><?= GetMessage("SONET_C8_PARAMS") ?>:</label></p>
                             <?
 						if (!CModule::IncludeModule('extranet') || !CExtranet::IsExtranetSite()):
-							?><input type="checkbox" id="GROUP_VISIBLE" value="Y" name="GROUP_VISIBLE"<?= ($arResult["POST"]["VISIBLE"] == "Y") ? " checked" : ""?>> <label for="GROUP_VISIBLE"><?= GetMessage("SONET_C8_PARAMS_VIS") ?></label><br><?
+							?>
+                            <div class="form-check form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input"  id="GROUP_VISIBLE" value="Y" name="GROUP_VISIBLE"<?= ($arResult["POST"]["VISIBLE"] == "Y") ? " checked" : ""?>>
+                                <?= GetMessage("SONET_C8_PARAMS_VIS") ?>
+                            </label>
+                            </div><br><?
 						else:
 							?><input type="hidden" value="N" name="GROUP_VISIBLE"><?
 						endif;
 
 						if (!CModule::IncludeModule('extranet') || !CExtranet::IsExtranetSite()):
-							?><input type="checkbox" id="GROUP_OPENED" value="Y" name="GROUP_OPENED"<?= ($arResult["POST"]["OPENED"] == "Y") ? " checked" : ""?>> <label for="GROUP_OPENED"><?= GetMessage("SONET_C8_PARAMS_OPEN") ?></label><br><?
+							?>
+
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" id="GROUP_OPENED" value="Y" name="GROUP_OPENED" checked>
+                                    <?= GetMessage("SONET_C8_PARAMS_OPEN")?>
+                                </label>
+                            </div>
+                        <br><?
 						else:
 							?><input type="hidden" value="N" name="GROUP_OPENED"><?
 						endif;
@@ -125,11 +144,10 @@ else
 							?><input type="checkbox" value="Y"<?=($arResult["POST"]["IS_EXTRANET_GROUP"] ? " checked" : "")?> name="IS_EXTRANET_GROUP"> <label for="IS_EXTRANET_GROUP"><?= GetMessage("SONET_C8_IS_EXTRANET_GROUP") ?></label><?
 						endif;
 
-						?><?*/?></td>
+						?>
+                            </div></td>
 					</tr>
-					<?
-				endif;
-				?>
+
                 <?/*?>
 				<tr>
 					<td valign="top"  class="form-group"><?= GetMessage("SONET_C8_KEYWORDS") ?>:

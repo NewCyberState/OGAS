@@ -338,32 +338,32 @@ $APPLICATION->IncludeComponent(
 				<tbody>
 				<tr>
 					<td>Группа:</td>
-					<td class="text-right"><?=$law["GROUP"]["VALUE"]?></td>
+					<td class="text-right"><?=$law["PROPERTIES"]["GROUP"]["VALUE"]?></td>
 				</tr>
 				<tr>
 					<td>Участников группы:</td>
-					<td class="text-right"><?=$law["MEMBERS"]["VALUE"]?></td>
+					<td class="text-right"><?=$law["PROPERTIES"]["MEMBERS"]["VALUE"]?></td>
 				</tr>
 
 				<tr>
 					<td>Проголосовали:</td>
-					<td class="text-right"><?=$law["VOTES"]["VALUE"]?></td>
+					<td class="text-right"><?=$law["PROPERTIES"]["VOTES"]["VALUE"]?></td>
 				</tr>
 				<tr>
 					<td>Проголосовали с учетом делегирования:</td>
-					<td class="text-right"><?=$law["DELEGATED_VOTES"]["VALUE"]?></td>
+					<td class="text-right"><?=$law["PROPERTIES"]["DELEGATED_VOTES"]["VALUE"]?></td>
 				</tr>
 				<tr>
 					<td>"За" с учетом делегирования:</td>
-					<td class="text-right"><?=$law["ZA"]["VALUE"]?></td>
+					<td class="text-right"><?=$law["PROPERTIES"]["ZA"]["VALUE"]?></td>
 				</tr>
 				<tr>
 					<td>"Против" с учетом делегирования:</td>
-					<td class="text-right"><?=$law["PROTIV"]["VALUE"]?></td>
+					<td class="text-right"><?=$law["PROPERTIES"]["PROTIV"]["VALUE"]?></td>
 				</tr>
                 <tr>
 					<td>Для принятия закона требуется всего голосов "За":</td>
-					<td class="text-right"><?=$law["ZA_NEEDED"]["VALUE"]?></td>
+					<td class="text-right"><?=$law["PROPERTIES"]["ZA_NEEDED"]["VALUE"]?></td>
 				</tr>
 
 

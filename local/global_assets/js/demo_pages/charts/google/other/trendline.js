@@ -10,7 +10,7 @@
 // Setup module
 // ------------------------------
 
-var GoogleTrendline = function() {
+var GoogleTrendline = function () {
 
 
     //
@@ -18,7 +18,7 @@ var GoogleTrendline = function() {
     //
 
     // Trendline chart
-    var _googleTrendline = function() {
+    var _googleTrendline = function () {
         if (typeof google == 'undefined') {
             console.warn('Warning - Google Charts library is not loaded.');
             return;
@@ -34,39 +34,97 @@ var GoogleTrendline = function() {
                 // Resize on sidebar width change
                 $(document).on('click', '.sidebar-control', drawTrendline);
 
+                $(document).on('change', '#date', drawTrendline);
+
                 // Resize on window resize
                 var resizeTrendline;
-                $(window).on('resize', function() {
+                $(window).on('resize', function () {
                     clearTimeout(resizeTrendline);
                     resizeTrendline = setTimeout(function () {
                         drawTrendline();
                     }, 200);
                 });
             },
-            packages: ['corechart']
+            packages: ['corechart', 'controls']
         });
 
         // Chart settings
         function drawTrendline() {
 
-            // Define charts element
-            var trendline_element = document.getElementById('google-trendline');
+            /*var dashboard = new google.visualization.Dashboard(
+                document.getElementById('programmatic_dashboard_div'));
 
-            // Data
-            var data = google.visualization.arrayToDataTable([
-                ['Week', 'Bugs', 'Tests'],
-                [1, 175, 10],
-                [2, 159, 20],
-                [3, 126, 35],
-                [4, 129, 40],
-                [5, 108, 60],
-                [6, 92, 70],
-                [7, 55, 72],
-                [8, 50, 97]
-            ]);
+            var Slider = new google.visualization.ControlWrapper({
+                'controlType': 'NumberRangeFilter',
+                'containerId': 'programmatic_control_div',
+                'options': {
+                    'filterColumnLabel': 'Объем производства, шт',
+                }
+            });*/
+
+
+            // Define charts element
+            /*var trendline_element = document.getElementById('google-trendline');*/
+
+            var id = $('#product_id').val();
+            var date = $('#date').val();
+
+            $.ajax({
+                url: "/ajax/getsales.php",
+                data: {ID: id, date: date}
+            })
+                .done(function (data) {
+                    if (data) {
+                        var sales = data;
+
+
+                        var data = google.visualization.arrayToDataTable(
+                            JSON.parse(sales));
+
+                        var options = {
+                            'width': "92%",
+                            'height': 350,
+                            fontName: 'Roboto',
+                            height: 400,
+                            curveType: 'function',
+                            crosshair: {trigger: 'both'},
+                            fontSize: 12,
+                            chartArea: {
+                                left: '5%',
+                                width: '92%',
+                                height: 350
+                            },
+                            hAxis: {format: ''},
+                            trendlines: {
+                                0: {
+                                    type: 'polynomial',
+                                    degree: 5,
+                                    showR2: true,
+                                    color: 'green',
+                                },
+                            },
+                            legend: {
+                                position: 'top',
+                                alignment: 'end',
+                                textStyle: {
+                                    fontSize: 12
+                                }
+                            }
+                        };
+
+                        data.addColumn('number', 'План, шт');
+
+                        var scatter_chart_element = document.getElementById('google-trendline');
+                        //dashboard.bind(Slider, programmaticChart);
+                        var scatter = new google.visualization.ScatterChart(scatter_chart_element);
+                        scatter.draw(data, options);
+
+                    }
+                });
+
 
             // Options
-            var options = {
+            /*var options = {
                 fontName: 'Roboto',
                 height: 400,
                 curveType: 'function',
@@ -76,33 +134,13 @@ var GoogleTrendline = function() {
                     width: '92%',
                     height: 350
                 },
-                hAxis: {
-                    format: '#',
-                    viewWindow: {min: 0, max: 9},
-                    gridlines: {count: 10}
-                },
-                vAxis: {
-                    title: 'Bugs and tests',
-                    titleTextStyle: {
-                        fontSize: 13,
-                        italic: false
-                    },
-                    gridlines:{
-                        color: '#e5e5e5',
-                        count: 10
-                    },
-                    minValue: 0
-                },
-                colors: ['#6D4C41', '#FB8C00'],
+                hAxis: {format: ''},
                 trendlines: {
                     0: {
-                        labelInLegend: 'Bug line',
-                        visibleInLegend: true,
+                        type: 'polynomial',
+                        degree: 5,
+                        color: 'green',
                     },
-                    1: {
-                        labelInLegend: 'Test line',
-                        visibleInLegend: true,
-                    }
                 },
                 legend: {
                     position: 'top',
@@ -111,11 +149,16 @@ var GoogleTrendline = function() {
                         fontSize: 12
                     }
                 }
-            };
+            };*/
 
-            // Draw chart
-            var trendline = new google.visualization.ColumnChart(trendline_element);
-            trendline.draw(data, options);
+
+            /*
+                        // Draw chart
+                        var trendline = new google.visualization.ScatterChart(trendline_element);*/
+
+
+            /*trendline.draw(data, options);
+            Slider.draw();*/
         }
     };
 
@@ -125,7 +168,7 @@ var GoogleTrendline = function() {
     //
 
     return {
-        init: function() {
+        init: function () {
             _googleTrendline();
         }
     }

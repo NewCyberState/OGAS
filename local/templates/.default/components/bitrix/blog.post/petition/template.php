@@ -476,7 +476,7 @@ if (strlen($arResult["FATAL_MESSAGE"]) > 0) {
 
                                 <div id="collapsible-delegates1" class="collapse show" style="">
                                     <div class="card-body">
-
+                                        <div class="text-muted mb-2">Вы назначили этих граждан своими делегатами. В случае, если вы сами не проголосуете на данном референдуме, ваш голос перейдет к вашим делегатам, будет пропорционально разделен между ними и они примут решение за вас.</div>
                                         <div class="row">
 
                                             <? foreach ($myDelegatesThematics as $delegate) {
@@ -552,14 +552,16 @@ if (strlen($arResult["FATAL_MESSAGE"]) > 0) {
                             <div class="card card-group-control card-group-control-left">
                                 <div class="card-header bg-success header-elements-lg-inline header-elements-inline">
                                     <h5 class="card-title">
-                                        <a data-toggle="collapse" class="text-default text-white collapsed"
+                                        <a data-toggle="collapse" class="text-default text-white"
                                            href="#collapsible-delegates2" aria-expanded="false">Возможные делегаты</a>
                                     </h5>
+
                                 </div>
 
-                                <div id="collapsible-delegates2" class="collapse" style="">
+                                <div id="collapsible-delegates2" class="collapse show" style="">
                                     <div class="card-body">
 
+                                        <div class="text-muted mb-2">Вы можете назначить этих граждан своими делегатами, т.к. они состоят в группе данного референдума и указали в своем профиле, что они являются экспертами по теме референдума.</div>
                                         <div class="row">
 
                                             <?

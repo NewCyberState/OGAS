@@ -208,11 +208,6 @@ while($arData = $result->Fetch()) {
 
 
 
-
-
-
-
-
 //pr($user);
 ?>
 
@@ -231,6 +226,32 @@ while($arData = $result->Fetch()) {
             </div>
             <div class="media-body mt-md-2 ">
                 <h4 class="media-title font-weight-semibold"><?=$user[NAME]." ".$user[LAST_NAME]?></h4>
+
+                <?
+                if ($user["UF_SONET"]):?>
+                    <div class="list-icons list-icons-extended mt-2">
+                        <?
+                        foreach ($user["UF_SONET"] as $value):
+                            if (strstr($value, "vk.com")):?>                            <a
+                                    href="<?= $value ?>" target="_blank" class="list-icons-item" data-popup="tooltip"
+                                    title="" data-container="body" data-original-title="VK"><i
+                                        class="fab fa-vk mr-2 mt-0 fa-1x font-weight-normal"></i></a>
+                            <? elseif (strstr($value, "facebook.com")): ?>
+                                <a href="<?= $value ?>" target="_blank" class="list-icons-item" data-popup="tooltip"
+                                   title="" data-container="body" data-original-title="Facebook"><i
+                                            class="fab fa-facebook mr-2 mt-0 fa-1x font-weight-normal"></i></a>
+                            <? elseif (strstr($value, "twitter.com")): ?>
+                                <a href="<?= $value ?>" target="_blank" class="list-icons-item" data-popup="tooltip"
+                                   title="" data-container="body" data-original-title="Twitter"><i
+                                            class="fab fa-twitter mr-2 mt-0 fa-1x font-weight-normal"></i></a>
+                            <? elseif ($value): ?>
+                                <a href="<?= $value ?>" target="_blank" class="list-icons-item" data-popup="tooltip"
+                                   title="" data-container="body" data-original-title="WWW"><b
+                                            class="fab fa-internet-explorer mr-0 mt-0 fa-1x font-weight-normal"></b></a>
+                            <? endif;
+                        endforeach;?>
+                    </div>
+                <? endif; ?>
 
                 <?if($user["PERSONAL_NOTES"]):?>
                     <div class="mt-3">

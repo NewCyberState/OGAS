@@ -13,14 +13,12 @@ global $USER;
 $rsUser = CUser::GetByID($USER->GetID());
 $arFields = $rsUser->Fetch();
 
-if(in_array(8, CUser::GetUserGroup($USER->GetID())))
+if(!in_array(8, CUser::GetUserGroup($USER->GetID()))) {
+    $arGroups[] = 8;
+    $USER->SetUserGroup($USER->GetID(), $arGroups);
+}
+else
     return;
-
-
-$arGroups[] = 8;
-
-$USER->SetUserGroup($USER->GetID(), $arGroups);
-
 //AddMessage2Log($arFields);
 
 $ipAddress = GeoIp\Manager::getRealIp();
@@ -31,7 +29,7 @@ $city = $result->getGeoData()->cityName;
 
 $groups = array("Мир", $city, $country);
 
-AddMessage2Log($groups);
+//AddMessage2Log($groups);
 
 $found = array();
 
@@ -55,8 +53,8 @@ foreach ($groups as $group) {
             "SITE_ID" => SITE_ID,
             "NAME" => trim($group),
             "VISIBLE" => "Y",
-            "OPENED" => "N",
-            "SUBJECT_ID" => 1,
+            "OPENED" => "Y",
+            "SUBJECT_ID" => 3,
             "INITIATE_PERMS" => SONET_ROLES_USER,
             "CLOSED" => "N"
         );
@@ -103,3 +101,9 @@ if (!$arBlog) {
 
 
 }
+/*
+if($_GET["back_url"])
+    LocalRedirect($_GET["back_url"]);
+else
+    LocalRedirect("/lkg/gos/");
+*/

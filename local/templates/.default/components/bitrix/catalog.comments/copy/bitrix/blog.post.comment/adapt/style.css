@@ -1,0 +1,33 @@
+div.blog-comment-form {width: 100% !important;}
+
+div.blog-comment .blog-author {
+  font-size: 1em;
+}
+
+div.blog-comment .blog-author a{
+  color:#333333;
+}
+
+.blog-comment-content {
+  font-size: 13px;
+  overflow: hidden!important;
+  padding-top: 0 !important;
+}
+
+div.blog-comment-buttons input {
+  font-size: 13px !important;
+  padding: 0 3px !important;
+}
+
+.blog-post-rating {
+  padding: 10px 0 0 0;
+}
+
+.workarea_wrap {
+  padding: 0 !important;
+}
+
+.bx_soc_comments_div .bx-catalog-tab-body-container .bx-catalog-tab-container > div
+{
+  padding: 0;
+}

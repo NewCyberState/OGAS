@@ -30,5 +30,5 @@ foreach ($arResult["VALUE"] as $res):
 endforeach;
 ?></div>
 <?if ($arParams["arUserField"]["MULTIPLE"] == "Y" && $arParams["SHOW_BUTTON"] != "N"):?>
-<input type="button" class="btn" value="<?=GetMessage("USER_TYPE_PROP_ADD")?>" onClick="addElement('<?=$arParams["arUserField"]["FIELD_NAME"]?>', this)">
+<input type="button" class="btn btn-light" value="<?=GetMessage("USER_TYPE_PROP_ADD")?>" onClick="addElement('<?=$arParams["arUserField"]["FIELD_NAME"]?>', this)">
 <?endif;?>

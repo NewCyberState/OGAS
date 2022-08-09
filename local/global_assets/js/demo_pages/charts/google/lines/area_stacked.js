@@ -36,7 +36,7 @@ var GoogleAreaStacked = function() {
 
                 // Resize on window resize
                 var resizeAreaStacked;
-                $(window).on('resize', function() {
+                $(window).on('resize', function () {
                     clearTimeout(resizeAreaStacked);
                     resizeAreaStacked = setTimeout(function () {
                         drawAreaStackedChart();
@@ -50,63 +50,78 @@ var GoogleAreaStacked = function() {
         function drawAreaStackedChart() {
 
             // Define charts element
-            var area_stacked_element = document.getElementById('google-area-stacked');
 
-            // Data
-            var data = google.visualization.arrayToDataTable([
-                ['Year', 'Cars', 'Trucks', 'Drones', 'Segways'],
-                ['2013',  870,  460, 310, 220],
-                ['2014',  460,   720, 220, 460],
-                ['2015',  930,  640, 340, 330],
-                ['2016',  1000,  400, 180, 500]
-            ]);
 
-            // Options
-            var options_area_stacked = {
-                fontName: 'Roboto',
-                height: 400,
-                curveType: 'function',
-                fontSize: 12,
-                areaOpacity: 0.4,
-                chartArea: {
-                    left: '5%',
-                    width: '94%',
-                    height: 350
-                },
-                isStacked: true,
-                pointSize: 4,
-                tooltip: {
-                    textStyle: {
-                        fontName: 'Roboto',
-                        fontSize: 13
+            var id = $('#company_id').val();
+            var date = $('#date').val();
+
+            $.ajax({
+                url: "/ajax/getcompanysales.php",
+                data: {ID: id, date: date}
+            })
+                .done(function (data) {
+                    if (data) {
+                        var sales = JSON.parse(data);
+                        console.log(sales);
+
+                         var area_stacked_element = document.getElementById('google-area-stacked');
+
+                         var data = google.visualization.arrayToDataTable(sales
+                             );
+
+                         var options_area_stacked = {
+                             fontName: 'Roboto',
+                             height: 400,
+                             aggregationTarget: 'auto',
+                             curveType: 'function',
+                             fontSize: 12,
+                             areaOpacity: 0.4,
+                             chartArea: {
+                                 left: '5%',
+                                 width: '94%',
+                                 height: 350
+                             },
+                             isStacked: true,
+                             pointSize: 4,
+                             tooltip: {
+                                 textStyle: {
+                                     fontName: 'Roboto',
+                                     fontSize: 13
+                                 }
+                             },
+                             lineWidth: 2,
+                             vAxis: {
+                                 title: 'Продано, шт',
+                                 titleTextStyle: {
+                                     fontSize: 13,
+                                     italic: false
+                                 },
+                                 gridlines:{
+                                     color: '#e5e5e5',
+                                     count: 10
+                                 },
+                                 minValue: 0
+                             },
+                             legend: {
+                                 position: 'top',
+                                 alignment: 'end',
+                                 textStyle: {
+                                     fontSize: 12
+                                 }
+                             }
+                         };
+
+                         // Draw chart
+                         var area_stacked_chart = new google.visualization.AreaChart(area_stacked_element);
+                         area_stacked_chart.draw(data, options_area_stacked);
+
                     }
-                },
-                lineWidth: 1.5,
-                vAxis: {
-                    title: 'Number values',
-                    titleTextStyle: {
-                        fontSize: 13,
-                        italic: false
-                    },
-                    gridlines:{
-                        color: '#e5e5e5',
-                        count: 10
-                    },
-                    minValue: 0
-                },
-                legend: {
-                    position: 'top',
-                    alignment: 'end',
-                    textStyle: {
-                        fontSize: 12
-                    }
-                }
-            };
+                    ;
+                });
 
-            // Draw chart
-            var area_stacked_chart = new google.visualization.AreaChart(area_stacked_element);
-            area_stacked_chart.draw(data, options_area_stacked);
+
         }
+
     };
 
 

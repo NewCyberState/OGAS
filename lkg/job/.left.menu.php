@@ -1,0 +1,60 @@
+<?
+$aMenuLinks = Array(
+    Array(
+        "Место работы",
+        "/lkg/job/job/",
+        Array(),
+        Array(),
+        ""
+    ),
+    Array(
+        "Заработная плата",
+        "/lkg/job/salary/",
+        Array(),
+        Array(),
+        ""
+    ),
+    Array(
+        "Резюме",
+        "/lkg/job/rezume/",
+        Array(),
+        Array(),
+        ""
+    ),
+    Array(
+        "Вакансии",
+        "/lkg/job/vakansii/",
+        Array(),
+        Array(),
+        ""
+    ),
+	Array(
+		"Единая тарифная сетка", 
+		"/lkg/job/ets/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Профессии", 
+		"/lkg/job/professions/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+    Array(
+        "Трудовая книжка",
+        "/lkg/job/trudovaya-knizhka/",
+        Array(),
+        Array(),
+        ""
+    ),
+	Array(
+		"Навыки", 
+		"/lkg/job/skills/", 
+		Array(), 
+		Array(), 
+		"" 
+	)
+);
+?>

@@ -22,12 +22,11 @@ CModule::IncludeModule("blog");
 
 require_once $_SERVER['DOCUMENT_ROOT'] .'/local/ogas/ogas.php';;
 
-
 AddEventHandler("blog", "OnBlogUpdate",Array("MyClass", "OnBlogUpdateHandler"));
 
 
 AddEventHandler("main", "OnBeforeUserRegister", Array("MyClass", "OnBeforeUserRegisterHandler"));
-AddEventHandler("main", "OnAfterUserAdd", Array("MyClass", "OnAfterUserAddHandler"));
+AddEventHandler("main", "OnAfterUserRegister", Array("MyClass", "OnAfterUserRegisterHandler"));
 AddEventHandler("main", "OnAfterUserAuthorize", Array("MyClass", "OnAfterUserAuthorizeHandler"));
 
 AddEventHandler("socialnetwork", "OnBeforeSocNetGroupAdd", Array("MyClass", "OnBeforeSocNetGroupAddHandler"));
@@ -53,6 +52,7 @@ class MyClass
 
     function OnAfterUserAuthorizeHandler(&$arFields)
     {
+        include($_SERVER['DOCUMENT_ROOT']."/ajax/citizen.php");
 
         //AddMessage2Log($arFields);
         /*if($arFields[user_fields][LAST_LOGIN]==null)
@@ -74,9 +74,8 @@ class MyClass
         return $arFields;
     }
 
-    function OnAfterUserAddHandler(&$arFields)
+    public static function OnAfterUserRegisterHandler(&$arFields)
     {
-
 
     }
 }
@@ -88,8 +87,8 @@ function GetElement($ELEMENT_ID)
     $ar_res = $res->GetNextElement();
     if ($ar_res) {
         $temp = $ar_res->GetFields();
-        $temp2 = $ar_res->GetProperties();
-        $temp = array_merge($temp, $temp2);
+        $temp["PROPERTIES"] = $ar_res->GetProperties();
+        //$temp = array_merge($temp, $temp2);
         return $temp;
     } else
         return false;
@@ -116,7 +115,7 @@ function plural_form($n, $forms)
 function pr($o)
 {
     global $USER;
-    if(true/*$USER->IsAdmin()*/) {
+    if($USER->IsAdmin()) {
         $bt = debug_backtrace();
         $bt = $bt[0];
         $dRoot = $_SERVER["DOCUMENT_ROOT"];
@@ -163,3 +162,101 @@ function pre($arr)
     print_r($arr);
     echo "</pre>";
 }
+
+function GetHLElement($HLBL,$HLID)
+{
+    $hlbl = $HLBL;
+    $hlblock = HL\HighloadBlockTable::getById($hlbl)->fetch();
+
+    $entity = HL\HighloadBlockTable::compileEntity($hlblock);
+    $entity_data_class = $entity->getDataClass();
+
+    $rsData = $entity_data_class::getList(array(
+        "select" => array("*"),
+        "order" => array("ID" => "ASC"),
+        "filter" => array("UF_XML_ID"=>$HLID)
+    ));
+
+    $arData = $rsData->Fetch();
+    return $arData;
+}
+
+
+// Событие происходит при формировании списка дополнительного
+// функционала соц.сети
+// В обработчике можно изменить или дополнить список
+AddEventHandler("socialnetwork", "OnFillSocNetFeaturesList", "__AddSocNetFeature");
+
+// Событие происходит при формировании списка закладок
+// В обработчике можно изменить список закладок
+AddEventHandler("socialnetwork", "OnFillSocNetMenu", "__AddSocNetMenu");
+
+// Событие происходит в комплексном компоненте при работе в ЧПУ
+// режиме при формировании списка шаблонов адресов страниц
+// комплексного компонента
+AddEventHandler("socialnetwork", "OnParseSocNetComponentPath", "__OnParseSocNetComponentPath");
+
+// Событие происходит в комплексном компоненте при работе в
+// не ЧПУ режиме при формировании списка псевдонимов переменных
+AddEventHandler("socialnetwork", "OnInitSocNetComponentVariables", "__OnInitSocNetComponentVariables");
+
+// При формировании списка дополнительного функционала
+// добавим дополнительную запись superficha
+function __AddSocNetFeature(&$arSocNetFeaturesSettings)
+{
+    $arSocNetFeaturesSettings["democracy"] = array(
+        "allowed" => array(SONET_ENTITY_USER, SONET_ENTITY_GROUP),
+        "operations" => array(
+            "write" => array(SONET_ENTITY_USER => SONET_RELATIONS_TYPE_NONE, SONET_ENTITY_GROUP => SONET_ROLES_MODERATOR),
+            "view" => array(SONET_ENTITY_USER => SONET_RELATIONS_TYPE_ALL, SONET_ENTITY_GROUP => SONET_ROLES_USER),
+        ),
+        "minoperation" => "view",
+    );
+    $arSocNetFeaturesSettings["docs"] = array(
+        "allowed" => array(SONET_ENTITY_USER, SONET_ENTITY_GROUP),
+        "operations" => array(
+            "write" => array(SONET_ENTITY_USER => SONET_RELATIONS_TYPE_NONE, SONET_ENTITY_GROUP => SONET_ROLES_MODERATOR),
+            "view" => array(SONET_ENTITY_USER => SONET_RELATIONS_TYPE_ALL, SONET_ENTITY_GROUP => SONET_ROLES_USER),
+        ),
+        "minoperation" => "view",
+    );
+}
+
+// При формировании списка закладок добавим дополнительную
+// закладку для функционала superficha
+function __AddSocNetMenu(&$arResult)
+{
+    // Достуна для показа
+    $arResult["CanView"]["democracy"] = true;
+    // Ссылка закладки
+    $arResult["Urls"]["democracy"] = CComponentEngine::MakePathFromTemplate("/groups/group/#group_id#/democracy/",
+        array("group_id" => $arResult["Group"]["ID"]));
+    // Название закладки
+    $arResult["Title"]["democracy"] = "Демократия";
+
+    $arResult["CanView"]["docs"] = true;
+    // Ссылка закладки
+    $arResult["Urls"]["docs"] = CComponentEngine::MakePathFromTemplate("/groups/group/#group_id#/docs/",
+        array("group_id" => $arResult["Group"]["ID"]));
+    // Название закладки
+    $arResult["Title"]["docs"] = "Документы";
+}
+
+// При формировании списка шаблонов адресов страниц
+// комплексного компонента в режиме ЧПУ добавим шаблон
+// для superficha
+function __OnParseSocNetComponentPath(&$arUrlTemplates, &$arCustomPagesPath)
+{
+    // Шаблон адреса страницы
+    $arUrlTemplates["democracy"] = "group/#group_id#/democracy/";
+    // Путь относительно корня сайта,
+    // по которому лежит страница
+    $arCustomPagesPath["democracy"] = "/groups/custom/";
+
+    // Шаблон адреса страницы
+    $arUrlTemplates["docs"] = "group/#group_id#/docs/";
+    // Путь относительно корня сайта,
+    // по которому лежит страница
+    $arCustomPagesPath["docs"] = "/groups/custom/";
+}
+
