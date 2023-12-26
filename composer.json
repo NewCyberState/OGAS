@@ -1,0 +1,25 @@
+{
+    "name": "fgusmao/meter-data",
+    "require": {
+        "numphp/numphp": "1.2.x-dev",
+        "sciphp/numphp": "0.4.0",
+        "symfony/polyfill-ctype": "1.x-dev",
+        "myclabs/deep-copy": "2.x-dev"
+    },
+    "authors": [
+        {
+            "name": "Felipe Gusmao",
+            "email": "fgunix@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Fgunix\\DataInterpolation\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Fgunix\\DataInterpolation\\Test\\": "tests"
+        }
+    }
+}

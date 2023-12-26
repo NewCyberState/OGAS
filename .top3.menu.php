@@ -2,7 +2,7 @@
 global $USER;
 $arSelect = Array("IBLOCK_ID", "ID", "NAME", "DATE_ACTIVE_FROM");
 
-$arFilter = Array("IBLOCK_ID" => COMPANY_IBID, "ACTIVE" => "Y", "CREATED_BY" => $USER->GetID());
+/*$arFilter = Array("IBLOCK_ID" => COMPANY_IBID, "ACTIVE" => "Y", "CREATED_BY" => $USER->GetID());
 
 $res = \CIBlockElement::GetList(Array(), $arFilter, false, Array(), $arSelect);
 
@@ -19,6 +19,14 @@ $res = \CIBlockElement::GetList(Array(), $arFilter, false, Array(), $arSelect);
 while ($ob = $res->GetNext()) {
     $company = GetElement($ob["PROPERTY_COMPANY_VALUE"]);
     $companylist[$company[ID]] = $company[NAME];
+}*/
+
+$arFilter = Array("IBLOCK_ID" => COMPANY_IBID, "ACTIVE" => "Y");
+
+$res = \CIBlockElement::GetList(Array(), $arFilter, false, Array(), $arSelect);
+
+while ($ob = $res->GetNext()) {
+    $companylist[$ob[ID]] = $ob[NAME];
 }
 
 
@@ -44,7 +52,7 @@ foreach ($companylist as $key => $company)
 
 $aMenuLinks[] =
     Array(
-        "Создать новую компанию",
+        "Создать новое предприятие",
         "/ipp/0/company/",
         Array(),
         Array(),

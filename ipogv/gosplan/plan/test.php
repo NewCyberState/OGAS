@@ -15,6 +15,7 @@ Asset::getInstance()->addJs("/local/global_assets/js/demo_pages/picker_date.js")
 Asset::getInstance()->addJs("/local/global_assets/js/plugins/pickers/pickadate/picker.js");
 Asset::getInstance()->addJs("/local/global_assets/js/plugins/pickers/pickadate/picker.date.js");
 
+use NumPHP\LinAlg\LinAlg;
 
 ?>
     <div class="row">
@@ -37,8 +38,67 @@ Asset::getInstance()->addJs("/local/global_assets/js/plugins/pickers/pickadate/p
             <div class="card">
                 <div class="card-body">
                     <?
-                    $plan = new \Ogas\Economy\Plan($_REQUEST[ID]);
-                    echo $plan->Planning("01.01.2023");
+                    /*$plan = new \Ogas\Economy\Plan($_REQUEST[ID]);
+                    echo $plan->Planning("01.01.2023");*/
+/*
+
+                    $matrix =
+	                    [
+		                    [   1, 0,-],
+		                    [-0.1, 1,0],
+		                    [-0.1,-1,1],
+	                    ];
+
+                    $kp = [100,100,100];
+
+
+                    $det = LinAlg::det($matrix);
+
+                    pr($det);
+
+                    $val = LinAlg::solve($matrix,$kp);
+
+                    pr($val);
+
+*/
+                    $date="01.01.2028";
+
+                    $mob = new \Ogas\Economy\MOB(0.01);
+
+                    $mob->FillNetProduct($date);
+
+                    $mob->PrintMOB();
+
+                    pr($mob->Convergence());
+
+/*
+                    foreach ($mob->matrix as $key => $val)
+	                    $mob->matrix[$key]=array_values($mob->matrix[$key]);
+
+                    $mob->matrix=array_values($mob->matrix);
+
+                    foreach ($mob->netproduct as $key => $val)
+	                    $tnp[]=$mob->netproduct[$key];
+
+
+                    pr($tnp);
+
+
+                    $det = LinAlg::det($mob->matrix);
+                    pr( $det);*/
+
+                    /*$mob->FillNetProduct($date);
+                    //$mob->SaveNetProduct($date);
+                    $mob->PrintNetProduct($date);
+                    $mob->PrintMOB();
+                    //$mob->CalculateMOB($date);
+                    //$mob->PrintGrossProduct($date);
+*/
+                  /*  pr($mob->netproduct);
+                    $val = LinAlg::solve($mob->matrix,$tnp);
+
+                    pr($val);*/
+
 
                     ?>
 

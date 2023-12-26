@@ -13,6 +13,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] .'/local/ogas/economy/economy.php';
 
 const   UNITS_HLID = 6; //HL инфоблок Единицы измерения
 const   TYPES_HLID = 8; //HL инфоблок Типы средств
+const   PERIODS_HLID = 9; //HL инфоблок Периоды времени
 
 const   FACTORS_IBID = 27; //Инфоблок Факторы производства
 const   STRUCTURE_IBID = 25; //Инфоблок Структура производства
@@ -22,5 +23,7 @@ const   WORKERS_IBID = 24; //Инфоблок Сотрудники
 const   POSITION_IBID = 23; //Инфоблок Должности
 const   TARIFFGRID_IBID = 29; //Инфоблок Единая тарифная сетка
 const   PRODUCTIONPLANS_IBID = 30; //Инфоблок Планы производства
-const   WORKINGTIME_IBID = 31; //Инфоблок Планы производства
+const   WORKINGTIME_IBID = 31; //Инфоблок Рабочее время
+const   EXPANSION_IBID = 32; //Инфоблок Расширение производства
+
 

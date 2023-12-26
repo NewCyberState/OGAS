@@ -37,3 +37,9 @@
     width: 100%;
     height: 100%;
 }
+
+.forum-new-post
+{
+    font-weight: bold;
+    text-transform: uppercase;
+}

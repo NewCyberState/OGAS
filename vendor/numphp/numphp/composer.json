@@ -1,0 +1,42 @@
+{
+    "name": "numphp/numphp",
+    "type": "library",
+    "description": "Mathematical PHP library for scientific computing",
+    "keywords": ["numeric", "matrix", "linalg"],
+    "homepage": "http://numphp.org/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gordon Lesti",
+            "email": "info@gordonlesti.com",
+            "homepage": "http://gordonlesti.com/",
+            "role": "developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7",
+        "phpmd/phpmd": "^2.7",
+        "squizlabs/php_codesniffer": "^3.5",
+        "sebastian/phpcpd": "^3.0",
+        "satooshi/php-coveralls": "^2.1"
+    },
+    "autoload": {
+        "psr-0": {
+            "NumPHP\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-0": {
+            "NumPHPTest\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "php vendor/bin/phpunit",
+        "phpcs": "php vendor/bin/phpcs --standard=PSR2 src/ tests/",
+        "phpmd": "php vendor/bin/phpmd src/,tests/ text codesize,controversial,design,naming,unusedcode",
+        "phpcpd": "php vendor/bin/phpcpd src/ tests/"
+    }
+}

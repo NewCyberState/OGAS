@@ -67,7 +67,7 @@ class Gosplan
 
         $arSelect = Array("IBLOCK_ID", "ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_PRODUCT", "PROPERTY_PRODUCT.NAME", "PROPERTY_DATE", "PROPERTY_QUANTITY", "PROPERTY_TYPE", "PROPERTY_UNIT");
 
-        $arFilter = Array("IBLOCK_ID" => FACTORS_IBID, "ACTIVE" => "Y", "PROPERTY_COMPANY" => $company_id, "PROPERTY_TYPE" => "ZZM8X4af");
+        $arFilter = Array("IBLOCK_ID" => FACTORS_IBID, "ACTIVE" => "Y", "PROPERTY_COMPANY" => $company_id, "!PROPERTY_ENDPRODUCT" => false);
 
         $res = \CIBlockElement::GetList(Array(), $arFilter, false, Array(), $arSelect);
 

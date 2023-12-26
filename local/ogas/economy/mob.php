@@ -13,6 +13,7 @@ Loader::includeModule('blog');
 Loader::includeModule('socialnetwork');
 Loader::includeModule('vote');
 
+use NumPHP\LinAlg\LinAlg;
 /**/
 
 
@@ -23,10 +24,18 @@ Loader::includeModule('vote');
 class MOB
 {
 
-    private $matrix = array();
-    private $header = array();
+    public $matrix = array();
+	public $matrix2 = array();
+    public $header = array();
     public $netproduct = array();
     public $grossproduct = array();
+    public $capacity = array();
+    public $lack = array();
+    public $addedcapacity = array();
+    public $expansion = array();
+    public $expansionperiod = array();
+
+
     private $razmer;
     private $operations;
     private $stopflag;
@@ -43,21 +52,27 @@ class MOB
 
         $this->errorrate = $errorrate;
 
-        $this->FillMatrix();
+	    $this->FillMatrix();
 
+        $this->FillMatrix2();
+
+        //$this->FillTestMatrix();
 
     }
 
-    public function CalculateMOB($date)
+    public function FillTestMatrix()
     {
-
-        foreach ($this->netproduct as $t => $q) {
-            $this->MOB($t, $q);
-        }
-
-        ksort($this->grossproduct);
-
+        $this->razmer=2;
+        $this->header[0]="Уголь";
+        $this->header[1]="Сталь";
+        $this->netproduct[0]=200000;
+        $this->netproduct[1]=50000;
+        $this->matrix[0][0]=0;
+        $this->matrix[0][1]=0.1;
+        $this->matrix[1][0]=3;
+        $this->matrix[1][1]=0;
     }
+
 
     private function FillMatrix()
     {
@@ -96,9 +111,74 @@ class MOB
         foreach ($this->header as $i => $val)
             $this->grossproduct[$i] = 0;
 
+        foreach ($this->header as $i => $val)
+            $this->capacity[$i] = 0;
+
+        foreach ($this->header as $i => $val)
+            $this->expansion[$i] = 0;
+
         $this->razmer = count($this->netproduct);
     }
 
+	private function FillMatrix2()
+	{
+
+		$arSelect = Array("IBLOCK_ID", "ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_PARENT", "PROPERTY_PARENT.NAME", "PROPERTY_PARENT.PROPERTY_UNIT", "PROPERTY_FACTOR", "PROPERTY_FACTOR.NAME", "PROPERTY_FACTOR.PROPERTY_UNIT", "PROPERTY_QUANTITY", "PROPERTY_UNIT");
+
+		$arFilter = Array("IBLOCK_ID" => STRUCTURE_IBID, "ACTIVE" => "Y");
+
+		$res = \CIBlockElement::GetList(Array(), $arFilter, false, Array(), $arSelect);
+
+		while ($ob = $res->GetNext()) {
+
+			if($ob[PROPERTY_QUANTITY_VALUE]>0)
+				$this->matrix2[$ob[PROPERTY_FACTOR_VALUE]][$ob[PROPERTY_PARENT_VALUE]] = -$ob[PROPERTY_QUANTITY_VALUE];
+
+			if (!$this->header[$ob[PROPERTY_PARENT_VALUE]] && $ob[PROPERTY_QUANTITY_VALUE]>0) {
+				$unit = GetHLElement(UNITS_HLID, $ob[PROPERTY_PARENT_PROPERTY_UNIT_VALUE]);
+				$this->header[$ob[PROPERTY_PARENT_VALUE]] = $ob[PROPERTY_PARENT_NAME] . ", " . $unit[UF_NAME];
+			}
+			if (!$this->header[$ob[PROPERTY_FACTOR_VALUE]] && $ob[PROPERTY_QUANTITY_VALUE]>0) {
+				$unit = GetHLElement(UNITS_HLID, $ob[PROPERTY_FACTOR_PROPERTY_UNIT_VALUE]);
+				$this->header[$ob[PROPERTY_FACTOR_VALUE]] = $ob[PROPERTY_FACTOR_NAME] . ", " . $unit[UF_NAME];
+			}
+
+
+		}
+
+		$copy = $this->header;
+
+		foreach ($this->header as $i => $val)
+			foreach ($copy as $j => $val2) {
+				if ($i==$j)
+					$this->matrix2[$i][$j] = 1;
+				if (!$this->matrix2[$i][$j])
+					$this->matrix2[$i][$j] = 0;
+			}
+
+		ksort($this->matrix2);
+
+		foreach ($this->matrix2 as $key => $val)
+			ksort($this->matrix2[$key]);
+
+	}
+
+
+    public function FillCapacity()
+    {
+
+        $arSelect = Array("IBLOCK_ID", "ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_CAPACITY","PROPERTY_EXPANSION","PROPERTY_EXPANSIONPERIOD");
+
+        $arFilter = Array("IBLOCK_ID" => FACTORS_IBID, "ACTIVE" => "Y");
+
+        $res = \CIBlockElement::GetList(Array(), $arFilter, false, Array(), $arSelect);
+
+        while ($ob = $res->GetNext()) {
+            $this->capacity[$ob["ID"]]=$ob["PROPERTY_CAPACITY_VALUE"];
+            $this->expansion[$ob["ID"]]=$ob["PROPERTY_EXPANSION_VALUE"];
+            $this->expansionperiod[$ob["ID"]]=$ob["PROPERTY_EXPANSIONPERIOD_VALUE"];
+        }
+    }
 
     public function FillNetProduct($date)
     {
@@ -106,6 +186,7 @@ class MOB
         foreach ($this->netproduct as $key => $value) {
             $plan = new \Ogas\Economy\Plan($key);
             $ar = $plan->Planning($date);
+
             $this->netproduct[$key] = $ar;
 
         }
@@ -274,31 +355,38 @@ class MOB
         }
     }
 
-    public function PrintNetProduct()
+    public function PrintNetProduct($date)
     {
+        if($date)
+            $str=" на ".$date;
 
-        echo "<h4 class='mt-3'>Конечный продукт</h4>Плановый объем продукции для конечного потребления,  который необходимо получить в результате работы всех отраслей экономики. Расчитывается программным алгоритмом на основании экстраполяции трендов конечного спроса по результатам продаж продукции конечного потребления в прошлом.";
+        echo "<h4 class='mt-3'>Конечный продукт$str</h4>Плановый объем продукции для конечного потребления,  который необходимо получить в результате работы всех отраслей экономики. Расчитывается программным алгоритмом на основании экстраполяции трендов конечного спроса по результатам продаж продукции конечного потребления в прошлом.";
 
         $this->PrintProduct($this->netproduct);
 
     }
 
-    public function PrintGrossProduct()
+    public function PrintGrossProduct($date,$showstats=true)
     {
+        if($date)
+            $str=" на ".$date;
+
         if ($this->stopflag)
             echo "<br>Несовместная матрица<br><br>";
         else {
-            echo "<h4 class='mt-3'>Валовый продукт</h4>Результат расчета межотраслевого баланса. Плановый объем валовой продукции (план по валу), который необходимо произвести во всех отраслях экономики для получения требуемого количества конечного продукта<br>";
+            echo "<h4 class='mt-3'>Валовый продукт$str</h4>Результат расчета межотраслевого баланса. Плановый объем валовой продукции (план по валу), который необходимо произвести во всех отраслях экономики для получения требуемого количества конечного продукта<br>";
 
             $this->PrintProduct($this->grossproduct);
 
-            echo "<h4 class='mt-3'>Статистика</h4>Размерность матрицы МОБ: <b>" . $this->razmer . "х" . $this->razmer . "</b><br>Относительная погрешность вычислений: <b>" . strval($this->errorrate * 100) . "%</b><br>";
+            if($showstats) {
+                echo "<h4 class='mt-3'>Статистика</h4>Размерность матрицы МОБ: <b>" . $this->razmer . "х" . $this->razmer . "</b><br>Относительная погрешность вычислений: <b>" . strval($this->errorrate * 100) . "%</b><br>";
 
-            $this->endtime = time();
+                $this->endtime = time();
 
-            echo "Количество произведенных операций с плавающей точкой: <b>" . $this->operations . "</b>";
+                echo "Количество произведенных операций с плавающей точкой: <b>" . $this->operations . "</b>";
 
-            echo "<br>Количество секунд, затраченных на вычисление плана: <b>" . strval($this->endtime - $this->starttime) . "</b>";
+                echo "<br>Количество секунд, затраченных на вычисление плана: <b>" . strval($this->endtime - $this->starttime) . "</b>";
+            }
         }
     }
 
@@ -345,7 +433,10 @@ class MOB
         echo "<tr>";
         foreach ($this->header as $i => $val) {
             echo "<td class=m>";
-            echo "<b>" . $m[$i] . "</b>";
+            if($this->capacity[$i]>0 && floatval($this->capacity[$i])<floatval($m[$i]))
+                echo "<b style='color:red'>" . $m[$i] . "</b>";
+            else
+                echo "<b>" . $m[$i] . "</b>";
             echo "</td>";
 
         }
@@ -353,59 +444,227 @@ class MOB
         echo "</table></div>";
     }
 
-    private function MOB($t, $q)
+    private function MOB($key, $val)
     {
         if ($this->stopflag) return;
 
-        if ($this->operations >= pow($this->razmer, 4)) {
-
-            echo "<br>Перегрузка, слишком много операций. Возможно матрица несовместна<br>";
-            exit;
-
-        }
-
         foreach ($this->header as $i => $h) {
 
-            if ($this->matrix[$t][$i] > 0) {
+            if ($this->matrix[$key][$i] > 0) {
 
-                $coeff = $this->matrix[$t][$i] * floor($q);
+                $coeff = $this->matrix[$key][$i] * $val;
+                $this->grossproduct[$i] += $coeff;
                 $this->operations++;
 
             } else
                 continue;
 
-            if ($i == $t && $coeff >= $this->grossproduct[$i] * $this->errorrate) {
 
-                $this->grossproduct[$t] += $coeff;
-                $this->operations++;
-
-            }
-
-            if ($this->matrix[$t][$i] * $this->matrix[$i][$t] > 1 && $i <> $t) {
-
-                echo "<br>Решение не может быть найдено! Несовместная матрица!<br>";
-                pr($coeff);
-                pr($final);
-                pr($i);
-                pr($t);
+            if ($this->matrix[$key][$i] * $this->matrix[$i][$key] > 1 && $i <> $key) {
                 $this->stopflag = true;
                 return;
-
             }
 
-            if ($i <> $t && $coeff >= $this->grossproduct[$i] * $this->errorrate) {
-
-                $this->grossproduct[$i] += $coeff;
+            if ($i <> $key && $coeff >= $this->grossproduct[$i] * $this->errorrate) {
                 $this->MOB($i, $coeff);
-
-            } elseif ($i <> $t && $coeff < $this->grossproduct[$i] * $this->errorrate) {
-
-                $this->grossproduct[$i] += $coeff;
-                $this->operations++;
-
             }
 
         }
         return;
     }
+
+    public function CalculateMOB($date)
+    {
+	    $this->operations=0;
+
+	    //Проверка матрицы МОБа на сходимость;
+	    if($this->Convergence()) {
+
+            foreach ($this->netproduct as $key => $val) {
+                $this->MOB($key, $val);
+            }
+
+            if($this->stopflag) {
+	            echo "Матрица МОБа не сходится. Рассчитать МОБ невозможно.";
+            }
+            else
+            {
+	            ksort($this->grossproduct);
+
+	            foreach ($this->netproduct as $key => $value)
+		            $this->grossproduct[$key] += $this->netproduct[$key];
+
+	            foreach ($this->grossproduct as $key => $value)
+		            $this->grossproduct[$key] = round($this->grossproduct[$key],2);
+            }
+        }
+
+        else
+            echo "Матрица МОБа не сходится. Рассчитать МОБ невозможно.";
+    }
+
+
+    public function OverCapacity()
+    {
+
+        foreach ( $this->netproduct as $key=>$value)
+        {
+            if ($this->netproduct[$key]>$this->capacity[$key] && $this->capacity[$key]>0)
+                return true;
+        }
+
+        foreach ( $this->grossproduct as $key=>$value)
+        {
+            if ($this->grossproduct[$key]>$this->capacity[$key] && $this->capacity[$key]>0)
+                return true;
+        }
+
+        return false;
+
+    }
+
+    public function CalculateLackOfCapacity()
+    {
+
+        $this->lack=array();
+
+        foreach ( $this->netproduct as $key=>$value)
+        {
+            if($this->netproduct[$key]>$this->capacity[$key] && $this->capacity[$key]>0)
+                $this->lack[$key]=$this->netproduct[$key]-$this->capacity[$key];
+        }
+
+        foreach ( $this->grossproduct as $key=>$value)
+        {
+            if($this->grossproduct[$key]>$this->capacity[$key] && $this->capacity[$key]>0)
+                $this->lack[$key]=$this->grossproduct[$key]-$this->capacity[$key];
+        }
+    }
+
+    public function PlanNewCapitalFunds($date)
+    {
+        $expansionperiod=0;
+        $this->addedcapacity=array();
+
+        foreach ( $this->lack as $key=>$value)
+        {
+            if($this->lack[$key] > 0)
+            {
+                $arSelect = Array("IBLOCK_ID", "ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_PARENT", "PROPERTY_PARENT.NAME", "PROPERTY_PARENT.PROPERTY_UNIT", "PROPERTY_FACTOR", "PROPERTY_FACTOR.NAME", "PROPERTY_FACTOR.PROPERTY_UNIT", "PROPERTY_QUANTITY", "PROPERTY_UNIT");
+
+                $arFilter = Array("IBLOCK_ID" => EXPANSION_IBID, "ACTIVE" => "Y","PROPERTY_PARENT_VALUE"=> $key);
+
+                $res = \CIBlockElement::GetList(Array(), $arFilter, false, Array(), $arSelect);
+
+                while ($ob = $res->GetNext()) {
+
+                    if($this->expansion[$key]>$this->lack[$key])
+                    {
+                            $this->addedcapacity[$key]= $this->expansion[$key];
+                            $this->netproduct[$ob[PROPERTY_FACTOR_VALUE]] = $ob[PROPERTY_QUANTITY_VALUE];
+                    }
+                    else
+                    {
+                        $multiplier=ceil($this->lack[$key]/$this->expansion[$key]);
+
+                        $this->addedcapacity[$key]= $this->expansion[$key]*$multiplier;
+                        $this->netproduct[$ob[PROPERTY_FACTOR_VALUE]] += $ob[PROPERTY_QUANTITY_VALUE]*$multiplier;
+
+                    }
+
+                    $periodseconds=intval(GetHLElement(PERIODS_HLID,$this->expansionperiod[$key])["UF_DESCRIPTION"]);
+
+                    if($periodseconds>$expansionperiod)
+                        $expansionperiod=$periodseconds;
+                }
+
+
+
+
+            }
+
+
+        }
+
+        return intval($expansionperiod/86400);
+
+    }
+
+
+
+    public function ExtendCapacity()
+    {
+        foreach ( $this->lack as $key=>$value) {
+            $this->capacity[$key]+=$this->addedcapacity[$key];
+        }
+
+        echo "<h4 class='mt-3'>Производственные мощности расширены</h4>";
+    }
+
+    public function PrintCapacity($date)
+    {
+        if($date)
+            $str=" на ".$date;
+
+        echo "<h4 class='mt-3'>Производственные мощности$str</h4>";
+        $this->PrintProduct($this->capacity);
+    }
+
+    public function PrintLack($date)
+    {
+        if($date)
+            $str=" на ".$date;
+        echo "<h4 class='mt-3'>Недостаток производственных мощностей$str</h4>";
+        $this->PrintProduct($this->lack);
+    }
+
+    public function PrintAdded()
+    {
+        if($date)
+            $str=" на ".$date;
+        echo "<h4 class='mt-3'>Дополнительные производственные мощности$str</h4>";
+        $this->PrintProduct($this->addedcapacity);
+    }
+
+
+    public function CleanProduct()
+    {
+        foreach ($this->header as $i => $val)
+            $this->netproduct[$i] = 0;
+
+        foreach ($this->header as $i => $val)
+            $this->grossproduct[$i] = 0;
+    }
+
+    public function Recalculate($date)
+    {
+        $this->CleanProduct();
+        $this->FillNetProduct($date);
+        $this->CalculateMOB($date);
+    }
+
+
+	public function Determinat()
+	{
+
+		foreach ($this->matrix2 as $key => $val)
+			$this->matrix2[$key]=array_values($this->matrix2[$key]);
+
+		$this->matrix2=array_values($this->matrix2);
+
+		return LinAlg::det($this->matrix2);
+	}
+
+
+	/**
+	 * Метод определяет сходимость матрицы МОБа - имеет ли система линейных уравнений решение.
+	 * @return bool
+	 */
+	public function Convergence()
+	{
+		if($this->Determinat()>0)
+			return true;
+		else
+			return false;
+	}
 }

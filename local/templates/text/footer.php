@@ -24,6 +24,7 @@
         <a href="https://vk.com/digital_socialism/" target="_blank"><b class="fab fa-vk mr-2 mt-0 fa-1x font-weight-normal"></b></a>
         <a href="https://t.me/digitalsocialism" target="_blank"><b class="fab fa-telegram-plane mr-2 fa-1x font-weight-normal"></b></a>
         <a href="https://www.youtube.com/channel/UC9g23VIh4tRNf-dW7TdtWsg" target="_blank"><b class="fab fa-youtube mr-2 fa-1x font-weight-normal"></b></a>
+        <a href="mailto:info@ogasdemo.ru" target="_blank"><b class="fa fa-envelope mr-2 fa-1x font-weight-normal"></b></a>
 
 
         <? $APPLICATION->IncludeComponent(

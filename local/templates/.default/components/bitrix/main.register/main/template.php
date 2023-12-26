@@ -144,6 +144,23 @@ $city=$result->getGeoData()->cityName;
                         </div>
                     </div>
 
+	                <div class="form-group">
+	                <span class="d-block text-muted">Введите символы с картинки</span>
+
+	                <div class="row">
+			                <div class="col-md-6">
+	<img src="/bitrix/tools/captcha.php?captcha_sid=<?=$arResult["CAPTCHA_CODE"]?>" width="150" height="40" alt="CAPTCHA" />
+
+				                <input type="hidden" name="captcha_sid" value="<?=$arResult["CAPTCHA_CODE"]?>" />
+			                </div>
+			                <div class="col-md-6">
+
+	<input type="text" name="captcha_word" class="form-control h-auto" maxlength="50" value="" autocomplete="off" />
+			                </div>
+	                </div>
+	                </div>
+
+
                     <?/*?><div class="form-group">
 
 
@@ -155,6 +172,9 @@ $city=$result->getGeoData()->cityName;
                         </div>
 
                     </div><?*/?>
+
+
+
 
                     <div class="form-group">
                     <button type="submit" class="btn bg-primary btn-block">Регистрация <i class="icon-circle-right2 ml-2"></i></button>
@@ -169,6 +189,7 @@ $city=$result->getGeoData()->cityName;
             </div>
         </div>
             </div>
+
 
 
     </div>

@@ -93,7 +93,7 @@ class Company
 
     public function GetProduct($PID)
     {
-        $arSelect = Array("IBLOCK_ID", "ID", "NAME", "PREVIEW_TEXT", "DETAIL_PICTURE","DATE_ACTIVE_FROM", "PROPERTY_UNIT", "PROPERTY_TYPE", "PROPERTY_QUANTITY", "PROPERTY_COMPANY", "PROPERTY_ENDPRODUCT");
+        $arSelect = Array("IBLOCK_ID", "ID", "NAME", "PREVIEW_TEXT", "DETAIL_PICTURE","DATE_ACTIVE_FROM", "PROPERTY_UNIT","PROPERTY_TYPE","PROPERTY_ENDPRODUCT","PROPERTY_CAPACITY","PROPERTY_PERIOD","PROPERTY_EXPANSION","PROPERTY_EXPANSIONPERIOD");
 
         $arFilter = Array("IBLOCK_ID" => FACTORS_IBID, "ACTIVE" => "Y","ID" => $PID);
 
@@ -115,6 +115,10 @@ class Company
             $PROP["COMPANY"]=$product["PROPERTY_COMPANY"];
             $PROP["UNIT"]=$product["PROPERTY_UNIT"];
             $PROP["ENDPRODUCT"]=$product["PROPERTY_ENDPRODUCT"];
+            $PROP["CAPACITY"]=$product["PROPERTY_CAPACITY"];
+            $PROP["PERIOD"]=$product["PROPERTY_PERIOD"];
+            $PROP["EXPANSION"]=$product["PROPERTY_EXPANSION"];
+            $PROP["EXPANSIONPERIOD"]=$product["PROPERTY_EXPANSIONPERIOD"];
 
             $arLoadProductArray = Array(
                 "MODIFIED_BY"    => $USER->GetID(), // элемент изменен текущим пользователем
@@ -142,6 +146,10 @@ class Company
             $PROP["COMPANY"]=$product["PROPERTY_COMPANY"];
             $PROP["UNIT"]=$product["PROPERTY_UNIT"];
             $PROP["ENDPRODUCT"]=$product["PROPERTY_ENDPRODUCT"];
+            $PROP["CAPACITY"]=$product["PROPERTY_CAPACITY"];
+            $PROP["PERIOD"]=$product["PROPERTY_PERIOD"];
+            $PROP["EXPANSION"]=$product["PROPERTY_EXPANSION"];
+            $PROP["EXPANSIONPERIOD"]=$product["PROPERTY_EXPANSIONPERIOD"];
 
             $arLoadProductArray = Array(
                 "CREATED_BY"    => $USER->GetID(), // элемент изменен текущим пользователем
@@ -220,6 +228,26 @@ class Company
         return $data;
     }
 
+    public function GetPeriods()
+    {
+        $hlbl = PERIODS_HLID;
+        $hlblock = HL\HighloadBlockTable::getById($hlbl)->fetch();
+
+        $entity = HL\HighloadBlockTable::compileEntity($hlblock);
+        $entity_data_class = $entity->getDataClass();
+
+        $rsData = $entity_data_class::getList(array(
+            "select" => array("*"),
+            "order" => array("ID" => "ASC"),
+        ));
+
+        while ($arData = $rsData->Fetch())
+            $data[$arData["UF_XML_ID"]]=$arData;
+
+        return $data;
+    }
+
+
     public function GetProductUnit($ID)
     {
         $arSelect = Array("IBLOCK_ID", "ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_UNIT", "PROPERTY_DATE", "PROPERTY_QUANTITY");
@@ -240,6 +268,24 @@ class Company
         $arSelect = Array("IBLOCK_ID", "ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_PARENT","PROPERTY_FACTOR","PROPERTY_FACTOR.PROPERTY_TYPE", "PROPERTY_QUANTITY","PROPERTY_UNIT",);
 
         $arFilter = Array("IBLOCK_ID" => STRUCTURE_IBID, "ACTIVE" => "Y","PROPERTY_PARENT" => $productID);
+
+        $res = \CIBlockElement::GetList(Array(), $arFilter, false, Array(), $arSelect);
+
+        while ($ob = $res->GetNext()) {
+            $unit = GetHLElement(UNITS_HLID, $ob[PROPERTY_UNIT_VALUE]);
+            $type = GetHLElement(TYPES_HLID, $ob[PROPERTY_FACTOR_PROPERTY_TYPE_VALUE]);
+            $structure[$ob[ID]]=array($ob[PROPERTY_FACTOR_VALUE],$ob[PROPERTY_QUANTITY_VALUE],$unit["UF_NAME"],$type["UF_NAME"]);
+        }
+
+
+        return $structure;
+    }
+
+    public function GetExpansion($productID)
+    {
+        $arSelect = Array("IBLOCK_ID", "ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_PARENT","PROPERTY_FACTOR","PROPERTY_FACTOR.PROPERTY_TYPE", "PROPERTY_QUANTITY","PROPERTY_UNIT",);
+
+        $arFilter = Array("IBLOCK_ID" => EXPANSION_IBID, "ACTIVE" => "Y","PROPERTY_PARENT" => $productID);
 
         $res = \CIBlockElement::GetList(Array(), $arFilter, false, Array(), $arSelect);
 

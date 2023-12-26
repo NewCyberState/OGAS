@@ -59,6 +59,9 @@ $arSite = $rsSites->Fetch();
         Asset::getInstance()->addJs("/local/assets/js/app.js");
 
     Asset::getInstance()->addJs(SITE_TEMPLATE_PATH . "/script.js");
+
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php');
+
     ?>
     <!-- /JS files -->
 
@@ -260,24 +263,24 @@ $arSite = $rsSites->Fetch();
 
             <!-- Main navigation -->
 
-            <? $APPLICATION->IncludeComponent(
-                "bitrix:menu",
-                "left2",
-                array(
-                    "ALLOW_MULTI_SELECT" => "N",
-                    "CHILD_MENU_TYPE" => "left",
-                    "DELAY" => "N",
-                    "MAX_LEVEL" => "2",
-                    "MENU_CACHE_GET_VARS" => array(),
-                    "MENU_CACHE_TIME" => "360000",
-                    "MENU_CACHE_TYPE" => "A",
-                    "MENU_CACHE_USE_GROUPS" => "N",
-                    "ROOT_MENU_TYPE" => "top",
-                    "USE_EXT" => "N",
-                    "COMPONENT_TEMPLATE" => "left2"
-                ),
-                false
-            ); ?>
+            <? $APPLICATION->IncludeComponent("bitrix:menu", "left2", array(
+	"ALLOW_MULTI_SELECT" => "N",
+		"CHILD_MENU_TYPE" => "left",
+		"DELAY" => "N",
+		"MAX_LEVEL" => "2",
+		"MENU_CACHE_GET_VARS" => "",
+		"MENU_CACHE_TIME" => "360000",
+		"MENU_CACHE_TYPE" => "A",
+		"MENU_CACHE_USE_GROUPS" => "N",
+		"ROOT_MENU_TYPE" => "top",
+		"USE_EXT" => "N",
+		"COMPONENT_TEMPLATE" => "left2"
+	),
+	false,
+	array(
+	"ACTIVE_COMPONENT" => "Y"
+	)
+); ?>
 
             <!-- /main navigation -->
 

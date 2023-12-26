@@ -76,7 +76,7 @@ var GoogleTrendline = function () {
                 .done(function (data) {
                     if (data) {
                         var sales = data;
-
+                        console.log(data);
 
                         var data = google.visualization.arrayToDataTable(
                             JSON.parse(sales));
@@ -95,13 +95,23 @@ var GoogleTrendline = function () {
                                 height: 350
                             },
                             hAxis: {format: ''},
+                            series: {
+                                0:{color: 'black', pointShape: 'square'},
+                                1:{color: 'blue'},
+                                2:{color: 'red'},
+                            },
                             trendlines: {
                                 0: {
+                                    type: 'linear',
+                                    color: 'black',
+                                },
+                                1: {
                                     type: 'polynomial',
                                     degree: 5,
                                     showR2: true,
                                     color: 'green',
                                 },
+
                             },
                             legend: {
                                 position: 'top',

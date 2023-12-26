@@ -5,7 +5,22 @@ CModule::IncludeModule("main");
 CModule::IncludeModule("blog");
 CModule::IncludeModule("iblock");
 
+require_once($_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php');
 
+if(!$_REQUEST["factorid"] || !$_REQUEST["parentid"] || !$_REQUEST["quantity"])
+{
+	return false;
+}
+
+
+$mob = new \Ogas\Economy\MOB(0.01);
+
+$mob->matrix2[intval($_REQUEST["factorid"])][intval($_REQUEST["parentid"])]=floatval($_REQUEST["quantity"]);
+
+if(!$mob->Convergence()) {
+	echo "error";
+	return;
+}
 //AddMessage2Log($_REQUEST);
 
 if($_REQUEST["id"]) {

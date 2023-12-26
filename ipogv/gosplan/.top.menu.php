@@ -1,12 +1,5 @@
 <?
 $aMenuLinks = Array(
-	Array(
-		"Межотраслевой баланс",
-		"/ipogv/gosplan/mob/",
-		Array(), 
-		Array("icon"=>"<i class=\"icon-grid52\"></i>"),
-		"" 
-	),
     Array(
         "Планирование",
         "/ipogv/gosplan/plan/",

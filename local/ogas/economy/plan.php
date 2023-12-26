@@ -26,6 +26,7 @@ class Plan
 
     private $sales = array();
     private $products = array();
+    private $capacity = array();
 
     protected $product_id;
     protected $minX;
@@ -44,6 +45,13 @@ class Plan
     {
         $this->product_id = $PRODUCT_ID;
         $this->FillSales();
+
+        $el = GetElement($PRODUCT_ID);
+
+        $this->capacity = $el["PROPERTIES"]["CAPACITY"]["VALUE"];
+
+        $this->period = $el["PROPERTIES"]["PERIOD"]["VALUE"];
+        $this->periodseconds=GetHLElement(PERIODS_HLID,$el["PROPERTIES"]["PERIOD"]["VALUE"])["UF_DESCRIPTION"];
 
         $step = 5;
 
@@ -119,11 +127,11 @@ class Plan
     public
     function GetAjaxData($date)
     {
-        $arr[] = array('Год', 'Объем продаж, шт', array('type' => 'string', 'role' => 'style'));
+        $arr[] = array('Год', 'Производственная мощность, шт', 'Объем продаж, шт', array('type' => 'string', 'role' => 'style'));
         foreach ($this->sales as $key => $value)
-            $arr[] = array(intval($key), intval($value), null);
+            $arr[] = array(intval($key), intval($this->capacity*86400*365/$this->periodseconds), intval($value), null);
 
-        $arr[] = array(ConvertDateTime($date, "YYYYMM"), $this->Planning($date), "point { shape-type: circle; fill-color: red; }");
+        $arr[] = array(ConvertDateTime($date, "YYYYMM"), intval($this->capacity*86400*365/$this->periodseconds), $this->Planning($date), "point { shape-type: circle; fill-color: red; }");
 
         echo json_encode($arr);
 
